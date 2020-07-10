@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-Hamza Makraz Software Engineer that is fascinated by computer science, Cybersecurity and the ocean of the web, I went through the marvels of this breathtaking digital world with a lot of opportunities to be part of many creative projects & start-ups and worked on many exciting projects that shaped my knowledge and gave meaning to my academic and professional achievements.
+I'm a Software Engineer that is fascinated by computer science, Cybersecurity and the ocean of the web, I went through the marvels of this breathtaking digital world with a lot of opportunities to be part of many creative projects & start-ups and worked on many exciting projects that shaped my knowledge and gave meaning to my academic and professional achievements.
 
 The experiences, experiments and challenges that I went through during my high-education journey gave me a clear vision on what I know, what I want and most importantly about what motivates me the most.
 
