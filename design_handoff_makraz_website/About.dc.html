@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<title>À propos — MAKRAZ</title>
+<meta name="description" content="Dix ans d'ingénierie entre la Suisse, l'Italie et Dubaï — installée à Marrakech.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="À propos — MAKRAZ">
+<meta property="og:description" content="Dix ans d'ingénierie entre la Suisse, l'Italie et Dubaï — installée à Marrakech.">
+<meta property="og:image" content="assets/og-image.png">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #fdfdfd; color: #0a0a0a; font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #0a0a0a; text-decoration: none; }
+  a:hover { color: #555555; }
+  ::selection { background: #0a0a0a; color: #ffffff; }
+  html[lang="ar"] body, html[lang="ar"] input, html[lang="ar"] textarea, html[lang="ar"] button { font-family: 'IBM Plex Sans Arabic', 'Instrument Sans', sans-serif; }
+  html[lang="ar"] * { letter-spacing: 0 !important; }
+  @media (max-width: 900px) {
+    .mk-nav { display: none !important; }
+    .mk-ctahead { display: none !important; }
+    .mk-burger { display: inline-flex !important; }
+    .mk-grid3, .mk-grid2, .mk-split, .mk-row { grid-template-columns: 1fr !important; }
+    .mk-sticky { position: static !important; }
+  }
+</style>
+</helmet>
+<header style="position:sticky;top:0;z-index:50;background:rgba(253,253,253,.92);backdrop-filter:blur(12px);border-bottom:1px solid #ececec">
+  <div style="max-width:1240px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="Home.dc.html" style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo-black.png" alt="MAKRAZ" style="width:34px;height:34px;object-fit:contain">
+      <span style="font-weight:700;font-size:16px;letter-spacing:.18em">MAKRAZ</span>
+    </a>
+    <nav class="mk-nav" style="display:flex;align-items:center;gap:36px;font-size:15px;font-weight:500">
+      <a href="Home.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_home">Accueil</a>
+      <a href="Services.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_services">Services</a>
+      <a href="Portfolio.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_portfolio">Portfolio</a>
+      <a href="Blog.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_blog">Blog</a>
+      <a href="About.dc.html" style="border-bottom:2px solid #0a0a0a;padding:4px 0;white-space:nowrap" data-i18n="nav_about">À propos</a>
+      <a href="Contact.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:18px">
+      <button onClick="{{ toggleLang }}" data-i18n="toggle" style="background:none;border:1px solid #d8d8d8;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:.06em;cursor:pointer;color:#0a0a0a" style-hover="border-color:#0a0a0a">EN</button>
+      <button class="mk-burger" onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;background:none;border:1px solid #d8d8d8;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:15px;cursor:pointer;color:#0a0a0a;line-height:1">☰</button>
+      <a class="mk-ctahead" href="Contact.dc.html" data-i18n="nav_cta" style="background:#0a0a0a;color:#ffffff;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600" style-hover="background:#2e2e2e;color:#ffffff">Démarrer un projet</a>
+    </div>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav style="display:flex;flex-direction:column;padding:8px 32px 16px 32px;border-top:1px solid #ececec;font-size:16px;font-weight:600">
+      <a href="Home.dc.html" style="padding:12px 0" data-i18n="nav_home">Accueil</a>
+      <a href="Services.dc.html" style="padding:12px 0" data-i18n="nav_services">Services</a>
+      <a href="Portfolio.dc.html" style="padding:12px 0" data-i18n="nav_portfolio">Portfolio</a>
+      <a href="Blog.dc.html" style="padding:12px 0" data-i18n="nav_blog">Blog</a>
+      <a href="About.dc.html" style="padding:12px 0" data-i18n="nav_about">À propos</a>
+      <a href="Contact.dc.html" style="padding:12px 0" data-i18n="nav_contact">Contact</a>
+    </nav>
+  </sc-if>
+</header>
+<section style="max-width:1240px;margin:0 auto;padding:100px 32px 72px 32px">
+  <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:28px" data-i18n="hero_kicker">À propos</div>
+  <h1 style="font-size:clamp(44px,5.5vw,76px);line-height:1.04;letter-spacing:-0.035em;font-weight:700;margin:0;max-width:16ch;text-wrap:balance" data-i18n="hero_title">De l'ingénierie européenne, installée à Marrakech.</h1>
+  <p style="font-size:19px;line-height:1.6;color:#555555;max-width:58ch;margin:30px 0 0 0;text-wrap:pretty" data-i18n="hero_sub">MAKRAZ est née d'une conviction : les entreprises marocaines et européennes méritent le même niveau d'exigence technique — sans la distance, ni les coûts d'une grande agence.</p>
+</section>
+<section style="border-top:1px solid #ececec;background:#ffffff">
+  <div class="mk-split" style="max-width:1240px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start">
+    <div class="mk-sticky" style="position:sticky;top:104px">
+      <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:18px" data-i18n="j_kicker">Le parcours</div>
+      <h2 style="font-size:clamp(30px,3vw,42px);letter-spacing:-0.03em;font-weight:700;margin:0 0 18px 0" data-i18n="j_title">Dix ans, trois pays, une méthode.</h2>
+      <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="j_desc">Avant MAKRAZ : une décennie d'ingénierie logicielle en entreprise, sur des systèmes critiques et des équipes internationales. Cette discipline est aujourd'hui au service de nos clients.</p>
+    </div>
+    <div style="border-top:1px solid #ececec">
+      <div class="mk-row" style="display:grid;grid-template-columns:200px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid #ececec">
+        <div>
+          <div style="font-size:20px;font-weight:700" data-i18n="j1_t">Suisse</div>
+          <div style="font-size:13px;color:#8a8a8a;margin-top:4px" data-i18n="j1_k">Ingénierie logicielle</div>
+        </div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="j1_d">Des années dans l'un des environnements techniques les plus exigeants d'Europe : qualité de code, fiabilité, précision des livraisons.</p>
+      </div>
+      <div class="mk-row" style="display:grid;grid-template-columns:200px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid #ececec">
+        <div>
+          <div style="font-size:20px;font-weight:700" data-i18n="j2_t">Italie</div>
+          <div style="font-size:13px;color:#8a8a8a;margin-top:4px" data-i18n="j2_k">Produits &amp; équipes</div>
+        </div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="j2_d">Développement de produits au sein d'équipes internationales : architecture, collaboration à distance, culture produit.</p>
+      </div>
+      <div class="mk-row" style="display:grid;grid-template-columns:200px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid #ececec">
+        <div>
+          <div style="font-size:20px;font-weight:700" data-i18n="j3_t">Dubaï</div>
+          <div style="font-size:13px;color:#8a8a8a;margin-top:4px" data-i18n="j3_k">Échelle &amp; croissance</div>
+        </div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="j3_d">Des projets à forte croissance sur le marché MENA : livrer vite, à grande échelle, sans sacrifier la qualité.</p>
+      </div>
+      <div class="mk-row" style="display:grid;grid-template-columns:200px 1fr;gap:24px;padding:30px 0">
+        <div>
+          <div style="font-size:20px;font-weight:700" data-i18n="j4_t">Marrakech</div>
+          <div style="font-size:13px;color:#8a8a8a;margin-top:4px">MAKRAZ SARLAU</div>
+        </div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="j4_d">Tout ce savoir-faire, réuni dans une agence indépendante au service du Maroc, de l'Europe et au-delà.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec">
+  <div style="max-width:1240px;margin:0 auto;padding:88px 32px">
+    <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:20px" data-i18n="v_kicker">Nos valeurs</div>
+    <h2 style="font-size:clamp(34px,3.6vw,50px);letter-spacing:-0.03em;font-weight:700;margin:0 0 56px 0" data-i18n="v_title">Ce qui ne se négocie pas.</h2>
+    <div class="mk-grid2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:28px">
+      <div style="border:1px solid #ececec;border-radius:20px;padding:36px;background:#ffffff">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:14px">01</div>
+        <div style="font-size:21px;font-weight:700;margin-bottom:10px" data-i18n="v1_t">Rigueur d'ingénierie</div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="v1_d">Du code propre dès le premier jour, pour ne pas tout réécrire en année deux. La vitesse d'un MVP, sans le désordre d'un MVP.</p>
+      </div>
+      <div style="border:1px solid #ececec;border-radius:20px;padding:36px;background:#ffffff">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:14px">02</div>
+        <div style="font-size:21px;font-weight:700;margin-bottom:10px" data-i18n="v2_t">Responsabilité de bout en bout</div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="v2_d">De l'architecture à l'adoption : une seule équipe responsable. Pas de transferts, pas de renvois de responsabilité.</p>
+      </div>
+      <div style="border:1px solid #ececec;border-radius:20px;padding:36px;background:#ffffff">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:14px">03</div>
+        <div style="font-size:21px;font-weight:700;margin-bottom:10px" data-i18n="v3_t">Transparence</div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="v3_d">Des progrès visibles chaque semaine, des rapports honnêtes. Si quelque chose ne fonctionne pas, nous le disons — et nous le corrigeons.</p>
+      </div>
+      <div style="border:1px solid #ececec;border-radius:20px;padding:36px;background:#ffffff">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:14px">04</div>
+        <div style="font-size:21px;font-weight:700;margin-bottom:10px" data-i18n="v4_t">Présence dans la durée</div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="v4_d">Nous ne disparaissons pas après le lancement. Maintenance, évolutions et accompagnement font partie du métier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec;background:#ffffff">
+  <div class="mk-split" style="max-width:1240px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:340px 1fr;gap:64px;align-items:start">
+    <div>
+      <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:18px" data-i18n="t_kicker">L'équipe</div>
+      <h2 style="font-size:clamp(30px,3vw,42px);letter-spacing:-0.03em;font-weight:700;margin:0 0 18px 0" data-i18n="t_title">Une équipe resserrée, un réseau étendu.</h2>
+      <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="t_desc">Autour du fondateur, un réseau de développeurs certifiés, designers et spécialistes de la communication — mobilisés selon les besoins de chaque projet.</p>
+    </div>
+    <div class="mk-grid2" style="display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:center">
+      <div style="width:100%;aspect-ratio:1/1;max-width:280px">
+        <image-slot id="team-founder" shape="rounded" radius="24" placeholder="Photo — fondateur"></image-slot>
+      </div>
+      <div>
+        <div style="font-size:24px;font-weight:700;letter-spacing:-0.01em">Hamza Makraz</div>
+        <div style="font-size:14px;color:#8a8a8a;margin:6px 0 18px 0" data-i18n="t_role">Fondateur — Ingénieur logiciel</div>
+        <p style="font-size:15px;line-height:1.65;color:#555555;margin:0" data-i18n="t_bio">Plus de dix ans d'ingénierie logicielle entre la Suisse, l'Italie et Dubaï, sur des plateformes web, e-commerce et SaaS. De retour à Marrakech pour construire des produits — et des relations — qui durent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="background:#0a0a0a;color:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:100px 32px;text-align:center">
+    <h2 style="font-size:clamp(34px,4vw,54px);letter-spacing:-0.03em;font-weight:700;margin:0 auto;max-width:22ch;text-wrap:balance" data-i18n="cta_title">Envie de travailler avec nous ?</h2>
+    <a href="Contact.dc.html" data-i18n="cta_btn" style="display:inline-flex;align-items:center;background:#ffffff;color:#0a0a0a;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:600;margin-top:40px" style-hover="background:#e2e2e2;color:#0a0a0a">Réserver un appel découverte</a>
+  </div>
+</section>
+<footer style="background:#0a0a0a;color:#ffffff;border-top:1px solid #262626">
+  <div style="max-width:1240px;margin:0 auto;padding:64px 32px 48px 32px;display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:320px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/logo-white.png" alt="MAKRAZ" style="width:30px;height:30px;object-fit:contain">
+        <span style="font-weight:700;font-size:15px;letter-spacing:.18em">MAKRAZ</span>
+      </div>
+      <p style="font-size:14px;line-height:1.6;color:#a3a3a3;margin:0" data-i18n="footer_about">Agence digitale basée à Marrakech. Développement, design et communication pour le Maroc, l'Europe et au-delà.</p>
+    </div>
+    <div style="display:flex;gap:80px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#737373;font-weight:600;margin-bottom:6px" data-i18n="ft_nav">Navigation</div>
+        <a href="Home.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_home2">Accueil</a>
+        <a href="Services.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_services">Services</a>
+        <a href="Portfolio.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_portfolio">Portfolio</a>
+        <a href="Blog.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_blog">Blog</a>
+        <a href="About.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_about2">À propos</a>
+        <a href="Contact.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_contact">Contact</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#737373;font-weight:600;margin-bottom:6px" data-i18n="ft_contact">Contact</div>
+        <a href="mailto:contact@makraz.com" style="color:#d4d4d4" style-hover="color:#ffffff">contact@makraz.com</a>
+        <a href="tel:+212661764392" style="color:#d4d4d4" style-hover="color:#ffffff">+212 6 61 76 43 92</a>
+        <a href="https://share.google/WllPHd9fKnFBdVmS0" target="_blank" rel="noopener" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="footer_addr">Centre d'affaires Itrane, Marrakech</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1240px;margin:0 auto;padding:0 32px 40px 32px;border-top:1px solid #262626">
+    <div style="padding-top:24px;font-size:13px;color:#737373;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <span>© 2026 MAKRAZ SARLAU · <a href="Legal.dc.html" style="color:#737373" style-hover="color:#a3a3a3" data-i18n="footer_legal">Mentions légales</a></span>
+      <span data-i18n="footer_tag">Construit avec rigueur, à Marrakech.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  componentDidMount() {
+    this.lang = 'fr';
+    this.frCache = null;
+    const sv = localStorage.getItem('mk-lang');
+    if (sv && sv !== 'fr') this.applyLang(sv);
+  }
+  componentDidUpdate() { if (this.lang && this.lang !== 'fr') this.applyLang(this.lang); }
+  cacheFr() {
+    if (this.frCache) return;
+    this.frCache = {};
+    document.querySelectorAll('[data-i18n]').forEach(el => { this.frCache[el.getAttribute('data-i18n')] = el.textContent; });
+  }
+  applyLang(lang) {
+    this.cacheFr();
+    const EN = {
+      toggle: 'AR', nav_home: 'Home', nav_home2: 'Home', nav_about: 'About', nav_about2: 'About', nav_cta: 'Start a project', nav_services: 'Services', nav_portfolio: 'Portfolio', nav_contact: 'Contact', ft_nav: 'Navigation', ft_contact: 'Contact', nav_blog: 'Blog', j4_t: 'Marrakech',
+      hero_kicker: 'About',
+      hero_title: 'European engineering, based in Marrakech.',
+      hero_sub: 'MAKRAZ was born from a conviction: Moroccan and European businesses deserve the same technical standards — without the distance or the price tag of a big agency.',
+      j_kicker: 'The journey', j_title: 'Ten years, three countries, one method.',
+      j_desc: 'Before MAKRAZ: a decade of enterprise software engineering, on critical systems and international teams. That discipline now serves our clients.',
+      j1_t: 'Switzerland', j1_k: 'Software engineering',
+      j1_d: "Years in one of Europe's most demanding technical environments: code quality, reliability, delivery precision.",
+      j2_t: 'Italy', j2_k: 'Products & teams',
+      j2_d: 'Product development within international teams: architecture, remote collaboration, product culture.',
+      j3_t: 'Dubai', j3_k: 'Scale & growth',
+      j3_d: 'High-growth projects in the MENA market: shipping fast, at scale, without sacrificing quality.',
+      j4_d: 'All that know-how, brought together in an independent agency serving Morocco, Europe and beyond.',
+      v_kicker: 'Our values', v_title: 'What we never negotiate.',
+      v1_t: 'Engineering discipline', v1_d: "Clean code from day one, so nothing gets rewritten in year two. MVP speed without MVP mess.",
+      v2_t: 'End-to-end ownership', v2_d: 'From architecture to adoption: one accountable team. No handoffs, no finger-pointing.',
+      v3_t: 'Transparency', v3_d: "Visible progress every week, honest reporting. If something isn't working, we say so — and fix it.",
+      v4_t: 'In it for the long run', v4_d: "We don't disappear after launch. Maintenance, evolutions and support are part of the job.",
+      t_kicker: 'The team', t_title: 'A tight team, an extended network.',
+      t_desc: 'Around the founder, a network of certified developers, designers and communication specialists — assembled to fit each project.',
+      t_role: 'Founder — Software engineer',
+      t_bio: 'Over ten years of software engineering across Switzerland, Italy and Dubai, on web, e-commerce and SaaS platforms. Back in Marrakech to build products — and relationships — that last.',
+      cta_title: 'Want to work with us?', cta_btn: 'Book a free discovery call',
+      footer_about: 'Digital agency based in Marrakech. Development, design and communication for Morocco, Europe and beyond.',
+      footer_addr: 'Itrane Business Center, Marrakech',
+      footer_tag: 'Built with care, in Marrakech.', footer_legal: 'Legal notice'
+    };
+    const AR = {
+      toggle: 'FR', nav_home: 'الرئيسية', nav_home2: 'الرئيسية', nav_about: 'من نحن', nav_about2: 'من نحن', nav_cta: 'ابدأ مشروعك', nav_services: 'الخدمات', nav_portfolio: 'الأعمال', nav_contact: 'اتصل بنا', ft_nav: 'روابط', ft_contact: 'التواصل', nav_blog: 'المدونة', j4_t: 'مراكش',
+      footer_about: 'وكالة رقمية مقرها مراكش. تطوير وتصميم وتواصل للمغرب وأوروبا والعالم.',
+      footer_addr: 'مركز أعمال إتران، مراكش',
+      footer_tag: 'بُني بإتقان، في مراكش.',
+      footer_legal: 'إشعار قانوني',
+      hero_kicker: 'من نحن',
+      hero_title: 'هندسة أوروبية، مقرّها مراكش.',
+      hero_sub: 'وُلدت MAKRAZ من قناعة: الشركات المغربية والأوروبية تستحق نفس المستوى من الصرامة التقنية — دون بُعد المسافة أو تكلفة الوكالات الكبرى.',
+      j_kicker: 'المسار', j_title: 'عشر سنوات، ثلاث دول، منهج واحد.',
+      j_desc: 'قبل MAKRAZ: عقد من هندسة البرمجيات في الشركات، على أنظمة حساسة وفرق دولية. هذا الانضباط اليوم في خدمة عملائنا.',
+      j1_t: 'سويسرا', j1_k: 'هندسة البرمجيات', j1_d: 'سنوات في واحدة من أكثر البيئات التقنية تطلّباً في أوروبا: جودة الكود والموثوقية ودقة التسليم.',
+      j2_t: 'إيطاليا', j2_k: 'منتجات وفرق', j2_d: 'تطوير منتجات ضمن فرق دولية: بنية، تعاون عن بُعد، ثقافة منتج.',
+      j3_t: 'دبي', j3_k: 'توسّع ونمو', j3_d: 'مشاريع عالية النمو في سوق الشرق الأوسط: تسليم سريع وواسع دون التضحية بالجودة.',
+      j4_d: 'كل هذه الخبرة، مجموعة في وكالة مستقلة تخدم المغرب وأوروبا والعالم.',
+      v_kicker: 'قيمنا', v_title: 'ما لا نساوم عليه.',
+      v1_t: 'انضباط هندسي', v1_d: 'كود نظيف من اليوم الأول، حتى لا يُعاد كل شيء في السنة الثانية. سرعة إطلاق MVP دون الفوضى.',
+      v2_t: 'مسؤولية من البداية للنهاية', v2_d: 'من البنية إلى التبنّي: فريق واحد مسؤول. لا تسليمات متقطعة ولا تبادل للّوم.',
+      v3_t: 'الشفافية', v3_d: 'تقدّم مرئي كل أسبوع وتقارير صادقة. إن لم يعمل شيء، نقولها — ونصلحه.',
+      v4_t: 'حضور طويل الأمد', v4_d: 'لا نختفي بعد الإطلاق. الصيانة والتطوير والمرافقة جزء من المهنة.',
+      t_kicker: 'الفريق', t_title: 'فريق مركّز، وشبكة ممتدة.',
+      t_desc: 'حول المؤسس، شبكة من المطوّرين المعتمدين والمصمّمين ومتخصصي التواصل — يُجمعون حسب حاجة كل مشروع.',
+      t_role: 'المؤسس — مهندس برمجيات',
+      t_bio: 'أكثر من عشر سنوات من هندسة البرمجيات بين سويسرا وإيطاليا ودبي، على منصات ويب وتجارة إلكترونية و SaaS. عاد إلى مراكش ليبني منتجات — وعلاقات — تدوم.',
+      cta_title: 'تريدون العمل معنا؟', cta_btn: 'احجز مكالمة تعارف مجانية'
+    };
+    const dict = lang === 'en' ? EN : lang === 'ar' ? AR : this.frCache;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k] != null) el.textContent = dict[k];
+    });
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    this.lang = lang;
+  }
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      toggleLang: () => {
+        const next = ({ fr: 'en', en: 'ar', ar: 'fr' })[this.lang || 'fr'] || 'fr';
+        localStorage.setItem('mk-lang', next);
+        this.applyLang(next);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

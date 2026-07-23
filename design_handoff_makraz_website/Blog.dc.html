@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<title>Blog — MAKRAZ</title>
+<meta name="description" content="Conseils et retours d'expérience : développement, SEO et stratégie digitale au Maroc et en Europe.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blog — MAKRAZ">
+<meta property="og:description" content="Conseils et retours d'expérience : développement, SEO et stratégie digitale.">
+<meta property="og:image" content="assets/og-image.png">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #fdfdfd; color: #0a0a0a; font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #0a0a0a; text-decoration: none; }
+  a:hover { color: #555555; }
+  ::selection { background: #0a0a0a; color: #ffffff; }
+  html[lang="ar"] body, html[lang="ar"] input, html[lang="ar"] textarea, html[lang="ar"] button { font-family: 'IBM Plex Sans Arabic', 'Instrument Sans', sans-serif; }
+  html[lang="ar"] * { letter-spacing: 0 !important; }
+  @media (max-width: 900px) {
+    .mk-nav { display: none !important; }
+    .mk-ctahead { display: none !important; }
+    .mk-burger { display: inline-flex !important; }
+    .mk-grid3 { grid-template-columns: 1fr !important; }
+  }
+</style>
+</helmet>
+<header style="position:sticky;top:0;z-index:50;background:rgba(253,253,253,.92);backdrop-filter:blur(12px);border-bottom:1px solid #ececec">
+  <div style="max-width:1240px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="Home.dc.html" style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo-black.png" alt="MAKRAZ" style="width:34px;height:34px;object-fit:contain">
+      <span style="font-weight:700;font-size:16px;letter-spacing:.18em">MAKRAZ</span>
+    </a>
+    <nav class="mk-nav" style="display:flex;align-items:center;gap:36px;font-size:15px;font-weight:500">
+      <a href="Home.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_home">Accueil</a>
+      <a href="Services.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_services">Services</a>
+      <a href="Portfolio.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_portfolio">Portfolio</a>
+      <a href="Blog.dc.html" style="border-bottom:2px solid #0a0a0a;padding:4px 0;white-space:nowrap" data-i18n="nav_blog">Blog</a>
+      <a href="About.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_about">À propos</a>
+      <a href="Contact.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:18px">
+      <button onClick="{{ toggleLang }}" data-i18n="toggle" style="background:none;border:1px solid #d8d8d8;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:.06em;cursor:pointer;color:#0a0a0a" style-hover="border-color:#0a0a0a">EN</button>
+      <button class="mk-burger" onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;background:none;border:1px solid #d8d8d8;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:15px;cursor:pointer;color:#0a0a0a;line-height:1">☰</button>
+      <a class="mk-ctahead" href="Contact.dc.html" data-i18n="nav_cta" style="background:#0a0a0a;color:#ffffff;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600" style-hover="background:#2e2e2e;color:#ffffff">Démarrer un projet</a>
+    </div>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav style="display:flex;flex-direction:column;padding:8px 32px 16px 32px;border-top:1px solid #ececec;font-size:16px;font-weight:600">
+      <a href="Home.dc.html" style="padding:12px 0" data-i18n="nav_home">Accueil</a>
+      <a href="Services.dc.html" style="padding:12px 0" data-i18n="nav_services">Services</a>
+      <a href="Portfolio.dc.html" style="padding:12px 0" data-i18n="nav_portfolio">Portfolio</a>
+      <a href="Blog.dc.html" style="padding:12px 0" data-i18n="nav_blog">Blog</a>
+      <a href="About.dc.html" style="padding:12px 0" data-i18n="nav_about">À propos</a>
+      <a href="Contact.dc.html" style="padding:12px 0" data-i18n="nav_contact">Contact</a>
+    </nav>
+  </sc-if>
+</header>
+<section style="max-width:1240px;margin:0 auto;padding:100px 32px 72px 32px">
+  <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:28px" data-i18n="kicker_page">Blog</div>
+  <h1 style="font-size:clamp(44px,5.5vw,76px);line-height:1.04;letter-spacing:-0.035em;font-weight:700;margin:0;max-width:16ch;text-wrap:balance" data-i18n="hero_title">Ce que nous apprenons en construisant.</h1>
+  <p style="font-size:19px;line-height:1.6;color:#555555;max-width:56ch;margin:30px 0 0 0;text-wrap:pretty" data-i18n="hero_sub">Retours d'expérience et conseils concrets : développement, SEO et stratégie digitale — pour le Maroc et l'Europe.</p>
+</section>
+<section style="border-top:1px solid #ececec;background:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:88px 32px">
+    <div class="mk-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+      <a href="Article.dc.html" style="display:flex;flex-direction:column;gap:18px;border:1px solid #ececec;border-radius:20px;padding:24px;background:#fdfdfd" style-hover="border-color:#0a0a0a">
+        <div style="width:100%;aspect-ratio:16/10">
+          <image-slot id="blog-mvp" shape="rounded" radius="14" placeholder="Visuel article — MVP"></image-slot>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8a8a8a;font-weight:600" data-i18n="b1_meta">Ingénierie — Juillet 2026</div>
+          <div style="font-size:21px;font-weight:700;letter-spacing:-0.01em;line-height:1.25" data-i18n="b1_t">MVP : lancer vite sans accumuler de dette technique</div>
+          <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="b1_d">Pourquoi la plupart des MVP doivent être réécrits en année deux — et comment l'éviter dès le premier sprint.</p>
+          <span style="font-size:14px;font-weight:600;margin-top:6px" data-i18n="b1_link">Lire l'article →</span>
+        </div>
+      </a>
+      <div style="display:flex;flex-direction:column;gap:18px;border:1px solid #ececec;border-radius:20px;padding:24px;background:#fdfdfd">
+        <div style="width:100%;aspect-ratio:16/10">
+          <image-slot id="blog-seo" shape="rounded" radius="14" placeholder="Visuel article — SEO"></image-slot>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8a8a8a;font-weight:600" data-i18n="b2_meta">SEO — À venir</div>
+          <div style="font-size:21px;font-weight:700;letter-spacing:-0.01em;line-height:1.25" data-i18n="b2_t">SEO au Maroc : être trouvé en trois langues</div>
+          <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="b2_d">Français, arabe, anglais : comment structurer un site pour capter un public trilingue sans diluer son référencement.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px;border:1px solid #ececec;border-radius:20px;padding:24px;background:#fdfdfd">
+        <div style="width:100%;aspect-ratio:16/10">
+          <image-slot id="blog-choix" shape="rounded" radius="14" placeholder="Visuel article — Conseil"></image-slot>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8a8a8a;font-weight:600" data-i18n="b3_meta">Conseil — À venir</div>
+          <div style="font-size:21px;font-weight:700;letter-spacing:-0.01em;line-height:1.25" data-i18n="b3_t">Site vitrine ou plateforme sur mesure : comment choisir</div>
+          <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="b3_d">Les bonnes questions à se poser avant d'investir — et les signes que vous avez dépassé le prêt-à-porter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="background:#0a0a0a;color:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:100px 32px;text-align:center">
+    <h2 style="font-size:clamp(34px,4vw,54px);letter-spacing:-0.03em;font-weight:700;margin:0 auto;max-width:22ch;text-wrap:balance" data-i18n="cta_title">Une question que le blog ne couvre pas ?</h2>
+    <a href="Contact.dc.html" data-i18n="cta_btn" style="display:inline-flex;align-items:center;background:#ffffff;color:#0a0a0a;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:600;margin-top:40px" style-hover="background:#e2e2e2;color:#0a0a0a">Posez-la directement</a>
+  </div>
+</section>
+<footer style="background:#0a0a0a;color:#ffffff;border-top:1px solid #262626">
+  <div style="max-width:1240px;margin:0 auto;padding:64px 32px 48px 32px;display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:320px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/logo-white.png" alt="MAKRAZ" style="width:30px;height:30px;object-fit:contain">
+        <span style="font-weight:700;font-size:15px;letter-spacing:.18em">MAKRAZ</span>
+      </div>
+      <p style="font-size:14px;line-height:1.6;color:#a3a3a3;margin:0" data-i18n="footer_about">Agence digitale basée à Marrakech. Développement, design et communication pour le Maroc, l'Europe et au-delà.</p>
+    </div>
+    <div style="display:flex;gap:80px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#737373;font-weight:600;margin-bottom:6px" data-i18n="ft_nav">Navigation</div>
+        <a href="Home.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_home2">Accueil</a>
+        <a href="Services.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_services">Services</a>
+        <a href="Portfolio.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_portfolio">Portfolio</a>
+        <a href="Blog.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_blog">Blog</a>
+        <a href="About.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_about2">À propos</a>
+        <a href="Contact.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_contact">Contact</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#737373;font-weight:600;margin-bottom:6px" data-i18n="ft_contact">Contact</div>
+        <a href="mailto:contact@makraz.com" style="color:#d4d4d4" style-hover="color:#ffffff">contact@makraz.com</a>
+        <a href="tel:+212661764392" style="color:#d4d4d4" style-hover="color:#ffffff">+212 6 61 76 43 92</a>
+        <a href="https://share.google/WllPHd9fKnFBdVmS0" target="_blank" rel="noopener" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="footer_addr">Centre d'affaires Itrane, Marrakech</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1240px;margin:0 auto;padding:0 32px 40px 32px;border-top:1px solid #262626">
+    <div style="padding-top:24px;font-size:13px;color:#737373;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <span>© 2026 MAKRAZ SARLAU · <a href="Legal.dc.html" style="color:#737373" style-hover="color:#a3a3a3" data-i18n="footer_legal">Mentions légales</a></span>
+      <span data-i18n="footer_tag">Construit avec rigueur, à Marrakech.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  componentDidMount() {
+    this.lang = 'fr';
+    this.frCache = null;
+    const sv = localStorage.getItem('mk-lang');
+    if (sv && sv !== 'fr') this.applyLang(sv);
+  }
+  componentDidUpdate() { if (this.lang && this.lang !== 'fr') this.applyLang(this.lang); }
+  cacheFr() {
+    if (this.frCache) return;
+    this.frCache = {};
+    document.querySelectorAll('[data-i18n]').forEach(el => { this.frCache[el.getAttribute('data-i18n')] = el.textContent; });
+  }
+  applyLang(lang) {
+    this.cacheFr();
+    const EN = {
+      toggle: 'AR', nav_home: 'Home', nav_home2: 'Home', nav_about: 'About', nav_about2: 'About', nav_cta: 'Start a project',
+      nav_services: 'Services', nav_portfolio: 'Portfolio', nav_contact: 'Contact', nav_blog: 'Blog', ft_nav: 'Navigation', ft_contact: 'Contact',
+      kicker_page: 'Blog',
+      hero_title: 'What we learn while building.',
+      hero_sub: 'Field notes and practical advice: development, SEO and digital strategy — for Morocco and Europe.',
+      b1_meta: 'Engineering — July 2026', b1_t: 'MVPs: launch fast without piling up technical debt',
+      b1_d: 'Why most MVPs get rewritten in year two — and how to avoid it from the first sprint.', b1_link: 'Read the article →',
+      b2_meta: 'SEO — Coming soon', b2_t: 'SEO in Morocco: being found in three languages',
+      b2_d: 'French, Arabic, English: how to structure a site for a trilingual audience without diluting its ranking.',
+      b3_meta: 'Advice — Coming soon', b3_t: 'Showcase site or custom platform: how to choose',
+      b3_d: "The right questions to ask before investing — and the signs you've outgrown off-the-shelf.",
+      cta_title: "A question the blog doesn't cover?", cta_btn: 'Ask it directly',
+      footer_about: 'Digital agency based in Marrakech. Development, design and communication for Morocco, Europe and beyond.',
+      footer_addr: 'Itrane Business Center, Marrakech', footer_tag: 'Built with care, in Marrakech.', footer_legal: 'Legal notice'
+    };
+    const AR = {
+      toggle: 'FR', nav_home: 'الرئيسية', nav_home2: 'الرئيسية', nav_about: 'من نحن', nav_about2: 'من نحن', nav_cta: 'ابدأ مشروعك',
+      nav_services: 'الخدمات', nav_portfolio: 'الأعمال', nav_contact: 'اتصل بنا', nav_blog: 'المدونة', ft_nav: 'روابط', ft_contact: 'التواصل',
+      kicker_page: 'المدونة',
+      hero_title: 'ما نتعلمه ونحن نبني.',
+      hero_sub: 'خلاصات تجارب ونصائح عملية: التطوير وتحسين محركات البحث والاستراتيجية الرقمية — للمغرب وأوروبا.',
+      b1_meta: 'هندسة — يوليوز 2026', b1_t: 'MVP: أطلق بسرعة دون تراكم الديون التقنية',
+      b1_d: 'لماذا تُعاد كتابة معظم المنتجات الأولية في السنة الثانية — وكيف تتجنب ذلك من أول سبرينت.', b1_link: 'اقرأ المقال ←',
+      b2_meta: 'SEO — قريباً', b2_t: 'SEO في المغرب: أن يجدك الناس بثلاث لغات',
+      b2_d: 'الفرنسية والعربية والإنجليزية: كيف تبني موقعاً لجمهور ثلاثي اللغات دون إضعاف ترتيبه.',
+      b3_meta: 'نصائح — قريباً', b3_t: 'موقع تعريفي أم منصة مخصصة: كيف تختار',
+      b3_d: 'الأسئلة الصحيحة قبل الاستثمار — والعلامات التي تدل أنك تجاوزت الحلول الجاهزة.',
+      cta_title: 'سؤال لا تغطيه المدونة؟', cta_btn: 'اطرحه مباشرة',
+      footer_about: 'وكالة رقمية مقرها مراكش. تطوير وتصميم وتواصل للمغرب وأوروبا والعالم.',
+      footer_addr: 'مركز أعمال إتران، مراكش', footer_tag: 'بُني بإتقان، في مراكش.', footer_legal: 'إشعار قانوني'
+    };
+    const dict = lang === 'en' ? EN : lang === 'ar' ? AR : this.frCache;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k] != null) el.textContent = dict[k];
+    });
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    this.lang = lang;
+  }
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      toggleLang: () => {
+        const next = ({ fr: 'en', en: 'ar', ar: 'fr' })[this.lang || 'fr'] || 'fr';
+        localStorage.setItem('mk-lang', next);
+        this.applyLang(next);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

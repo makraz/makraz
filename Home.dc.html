@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<title>MAKRAZ — Agence digitale à Marrakech</title>
+<meta name="description" content="Développement web & mobile, design et communication digitale. Des produits digitaux construits pour durer.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MAKRAZ — Agence digitale à Marrakech">
+<meta property="og:description" content="Développement web & mobile, design et communication digitale. Des produits digitaux construits pour durer.">
+<meta property="og:image" content="assets/og-image.png">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #fdfdfd; color: #0a0a0a; font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #0a0a0a; text-decoration: none; }
+  a:hover { color: #555555; }
+  ::selection { background: #0a0a0a; color: #ffffff; }
+  html[lang="ar"] body, html[lang="ar"] input, html[lang="ar"] textarea, html[lang="ar"] button { font-family: 'IBM Plex Sans Arabic', 'Instrument Sans', sans-serif; }
+  html[lang="ar"] * { letter-spacing: 0 !important; }
+  @media (max-width: 900px) {
+    .mk-nav { display: none !important; }
+    .mk-ctahead { display: none !important; }
+    .mk-burger { display: inline-flex !important; }
+    .mk-grid3, .mk-grid2, .mk-split, .mk-row { grid-template-columns: 1fr !important; }
+    .mk-grid5 { grid-template-columns: 1fr 1fr !important; }
+    .mk-sticky { position: static !important; }
+    .mk-cell { padding: 28px 0 !important; border-left: none !important; }
+    .mk-card { padding: 28px 22px !important; }
+  }
+  @media (max-width: 560px) { .mk-grid5 { grid-template-columns: 1fr !important; } }
+</style>
+</helmet>
+<header style="position:sticky;top:0;z-index:50;background:rgba(253,253,253,.92);backdrop-filter:blur(12px);border-bottom:1px solid #ececec">
+  <div style="max-width:1240px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="Home.dc.html" style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo-black.png" alt="MAKRAZ" style="width:34px;height:34px;object-fit:contain">
+      <span style="font-weight:700;font-size:16px;letter-spacing:.18em">MAKRAZ</span>
+    </a>
+    <nav class="mk-nav" style="display:flex;align-items:center;gap:36px;font-size:15px;font-weight:500">
+      <a href="Home.dc.html" style="border-bottom:2px solid #0a0a0a;padding:4px 0;white-space:nowrap" data-i18n="nav_home">Accueil</a>
+      <a href="Services.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_services">Services</a>
+      <a href="Portfolio.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_portfolio">Portfolio</a>
+      <a href="Blog.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_blog">Blog</a>
+      <a href="About.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_about">À propos</a>
+      <a href="Contact.dc.html" style="color:#6b6b6b;padding:4px 0;white-space:nowrap" style-hover="color:#0a0a0a" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:18px">
+      <button onClick="{{ toggleLang }}" data-i18n="toggle" style="background:none;border:1px solid #d8d8d8;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:.06em;cursor:pointer;color:#0a0a0a" style-hover="border-color:#0a0a0a">EN</button>
+      <button class="mk-burger" onClick="{{ toggleMenu }}" aria-label="Menu" style="display:none;background:none;border:1px solid #d8d8d8;border-radius:999px;padding:7px 14px;font-family:inherit;font-size:15px;cursor:pointer;color:#0a0a0a;line-height:1">☰</button>
+      <a class="mk-ctahead" href="Contact.dc.html" data-i18n="nav_cta" style="background:#0a0a0a;color:#ffffff;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600" style-hover="background:#2e2e2e;color:#ffffff">Démarrer un projet</a>
+    </div>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav style="display:flex;flex-direction:column;padding:8px 32px 16px 32px;border-top:1px solid #ececec;font-size:16px;font-weight:600">
+      <a href="Home.dc.html" style="padding:12px 0" data-i18n="nav_home">Accueil</a>
+      <a href="Services.dc.html" style="padding:12px 0" data-i18n="nav_services">Services</a>
+      <a href="Portfolio.dc.html" style="padding:12px 0" data-i18n="nav_portfolio">Portfolio</a>
+      <a href="Blog.dc.html" style="padding:12px 0" data-i18n="nav_blog">Blog</a>
+      <a href="About.dc.html" style="padding:12px 0" data-i18n="nav_about">À propos</a>
+      <a href="Contact.dc.html" style="padding:12px 0" data-i18n="nav_contact">Contact</a>
+    </nav>
+  </sc-if>
+</header>
+<section style="max-width:1240px;margin:0 auto;padding:110px 32px 90px 32px">
+  <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:28px" data-i18n="hero_kicker">Agence digitale — Marrakech</div>
+  <h1 style="font-size:clamp(48px,6.5vw,88px);line-height:1.02;letter-spacing:-0.035em;font-weight:700;margin:0;max-width:14ch;text-wrap:balance" data-i18n="hero_title">Des produits digitaux construits pour durer.</h1>
+  <p style="font-size:20px;line-height:1.6;color:#555555;max-width:56ch;margin:32px 0 44px 0;text-wrap:pretty" data-i18n="hero_sub">MAKRAZ accompagne les entreprises, entrepreneurs et professionnels dans leur transformation digitale — du développement d'applications web et mobiles à la communication qui les fait connaître.</p>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+    <a href="Contact.dc.html" data-i18n="hero_cta1" style="display:inline-flex;align-items:center;background:#0a0a0a;color:#ffffff;padding:17px 32px;border-radius:999px;font-size:16px;font-weight:600" style-hover="background:#2e2e2e;color:#ffffff">Réserver un appel découverte</a>
+    <a href="Portfolio.dc.html" data-i18n="hero_cta2" style="display:inline-flex;align-items:center;border:1px solid #d8d8d8;color:#0a0a0a;padding:16px 32px;border-radius:999px;font-size:16px;font-weight:600" style-hover="border-color:#0a0a0a">Voir nos réalisations</a>
+  </div>
+  <div class="mk-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:96px;border-top:1px solid #ececec;padding-top:44px">
+    <div>
+      <div style="font-size:40px;font-weight:700;letter-spacing:-0.02em">10+</div>
+      <div style="font-size:15px;color:#6b6b6b;margin-top:6px;line-height:1.5" data-i18n="stat1">ans d'ingénierie logicielle — Suisse · Italie · Dubaï</div>
+    </div>
+    <div>
+      <div style="font-size:40px;font-weight:700;letter-spacing:-0.02em">4</div>
+      <div style="font-size:15px;color:#6b6b6b;margin-top:6px;line-height:1.5" data-i18n="stat2">marchés servis — Maroc · MENA · Europe · USA</div>
+    </div>
+    <div>
+      <div style="font-size:40px;font-weight:700;letter-spacing:-0.02em">FR·EN·AR</div>
+      <div style="font-size:15px;color:#6b6b6b;margin-top:6px;line-height:1.5" data-i18n="stat3">un contenu trilingue, adapté à chaque audience</div>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec;background:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px">
+    <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:20px" data-i18n="pillars_kicker">Ce que nous faisons</div>
+    <h2 style="font-size:clamp(34px,3.6vw,50px);letter-spacing:-0.03em;font-weight:700;margin:0 0 56px 0" data-i18n="pillars_title">Trois métiers. Un seul partenaire.</h2>
+    <div class="mk-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+      <div style="border:1px solid #ececec;border-radius:20px;padding:40px 36px;display:flex;flex-direction:column;gap:20px;background:#fdfdfd" style-hover="border-color:#0a0a0a">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600">01</div>
+        <h3 style="font-size:26px;font-weight:700;letter-spacing:-0.02em;margin:0" data-i18n="p1_title">Développement</h3>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="p1_desc">Applications web et SaaS, applications mobiles iOS et Android, sites internet, e-commerce, API et intégrations — avec une rigueur d'ingénierie européenne.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#0a0a0a;margin-top:auto">
+          <span data-i18n="p1_i1">— Applications web &amp; SaaS</span>
+          <span data-i18n="p1_i2">— Applications mobiles</span>
+          <span data-i18n="p1_i3">— E-commerce &amp; API</span>
+        </div>
+      </div>
+      <div style="border:1px solid #ececec;border-radius:20px;padding:40px 36px;display:flex;flex-direction:column;gap:20px;background:#fdfdfd" style-hover="border-color:#0a0a0a">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600">02</div>
+        <h3 style="font-size:26px;font-weight:700;letter-spacing:-0.02em;margin:0" data-i18n="p2_title">Design</h3>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="p2_desc">Des interfaces pensées pour l'utilisateur et des identités qui durent. De la recherche UX au design visuel final, en passant par le motion.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#0a0a0a;margin-top:auto">
+          <span data-i18n="p2_i1">— UX / UI design</span>
+          <span data-i18n="p2_i2">— Branding &amp; identité</span>
+          <span data-i18n="p2_i3">— Motion &amp; contenu visuel</span>
+        </div>
+      </div>
+      <div style="border:1px solid #ececec;border-radius:20px;padding:40px 36px;display:flex;flex-direction:column;gap:20px;background:#fdfdfd" style-hover="border-color:#0a0a0a">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600">03</div>
+        <h3 style="font-size:26px;font-weight:700;letter-spacing:-0.02em;margin:0" data-i18n="p3_title">Communication</h3>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="p3_desc">Être bien construit ne suffit pas — il faut être visible. SEO, publicité en ligne, réseaux sociaux et stratégie de communication digitale.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#0a0a0a;margin-top:auto">
+          <span data-i18n="p3_i1">— SEO &amp; Google Ads</span>
+          <span data-i18n="p3_i2">— Réseaux sociaux</span>
+          <span data-i18n="p3_i3">— Stratégie digitale</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:40px">
+      <a href="Services.dc.html" data-i18n="pillars_link" style="font-size:16px;font-weight:600;border-bottom:2px solid #0a0a0a;padding-bottom:3px">Découvrir tous nos services →</a>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec">
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:56px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:20px" data-i18n="work_kicker">Réalisations</div>
+        <h2 style="font-size:clamp(34px,3.6vw,50px);letter-spacing:-0.03em;font-weight:700;margin:0" data-i18n="work_title">Des projets en production, pas des maquettes.</h2>
+      </div>
+      <a href="Portfolio.dc.html" data-i18n="work_link" style="font-size:16px;font-weight:600;border-bottom:2px solid #0a0a0a;padding-bottom:3px;white-space:nowrap">Tout le portfolio →</a>
+    </div>
+    <div class="mk-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+      <a href="Portfolio.dc.html" style="display:flex;flex-direction:column;gap:18px">
+        <div style="width:100%;aspect-ratio:4/3">
+          <image-slot id="home-farblieferant" shape="rounded" radius="20" placeholder="Capture d'écran — farblieferant.de"></image-slot>
+        </div>
+        <div>
+          <div style="font-size:19px;font-weight:700;letter-spacing:-0.01em">Farblieferant</div>
+          <div style="font-size:14px;color:#8a8a8a;margin-top:4px" data-i18n="w1_tag">E-commerce · Allemagne · farblieferant.de</div>
+        </div>
+      </a>
+      <a href="Portfolio.dc.html" style="display:flex;flex-direction:column;gap:18px">
+        <div style="width:100%;aspect-ratio:4/3">
+          <image-slot id="home-phpmorocco" shape="rounded" radius="20" placeholder="Capture d'écran — phpmorocco.ma"></image-slot>
+        </div>
+        <div>
+          <div style="font-size:19px;font-weight:700;letter-spacing:-0.01em">PHP Morocco</div>
+          <div style="font-size:14px;color:#8a8a8a;margin-top:4px" data-i18n="w2_tag">Plateforme communautaire · phpmorocco.ma</div>
+        </div>
+      </a>
+      <a href="Portfolio.dc.html" style="display:flex;flex-direction:column;gap:18px">
+        <div style="width:100%;aspect-ratio:4/3">
+          <image-slot id="home-marrakechphp" shape="rounded" radius="20" placeholder="Capture d'écran — marrakechphp.ma"></image-slot>
+        </div>
+        <div>
+          <div style="font-size:19px;font-weight:700;letter-spacing:-0.01em">Marrakech PHP</div>
+          <div style="font-size:14px;color:#8a8a8a;margin-top:4px" data-i18n="w3_tag">Communauté tech · marrakechphp.ma</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec;background:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px">
+    <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:20px" data-i18n="process_kicker">Notre méthode</div>
+    <h2 style="font-size:clamp(34px,3.6vw,50px);letter-spacing:-0.03em;font-weight:700;margin:0 0 56px 0;max-width:22ch" data-i18n="process_title">De la découverte à l'adoption — nous ne disparaissons pas après le lancement.</h2>
+    <div class="mk-grid5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:24px">
+      <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:12px">01</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:10px" data-i18n="s1_t">Écouter</div>
+        <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="s1_d">Audit de vos produits, processus et objectifs. Une feuille de route claire — pas de devinettes.</p>
+      </div>
+      <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:12px">02</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:10px" data-i18n="s2_t">Concevoir</div>
+        <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="s2_d">Recherche UX, wireframes et design visuel ancrés dans votre logique métier.</p>
+      </div>
+      <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:12px">03</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:10px" data-i18n="s3_t">Construire</div>
+        <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="s3_d">Code propre, frameworks modernes, livraison continue. Des progrès visibles chaque semaine.</p>
+      </div>
+      <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:12px">04</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:10px" data-i18n="s4_t">Lancer</div>
+        <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="s4_d">Mise en production, SEO, campagnes et communication pour faire connaître votre produit.</p>
+      </div>
+      <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+        <div style="font-size:13px;color:#8a8a8a;font-weight:600;margin-bottom:12px">05</div>
+        <div style="font-size:19px;font-weight:700;margin-bottom:10px" data-i18n="s5_t">Accompagner</div>
+        <p style="font-size:14px;line-height:1.6;color:#555555;margin:0" data-i18n="s5_d">Maintenance, évolutions, optimisation et suivi de l'adoption — sur la durée.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec">
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px">
+    <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:20px" data-i18n="who_kicker">Pour qui</div>
+    <h2 style="font-size:clamp(34px,3.6vw,50px);letter-spacing:-0.03em;font-weight:700;margin:0 0 56px 0" data-i18n="who_title">Nos clients ont un point commun : ils ont dépassé le prêt-à-porter.</h2>
+    <div class="mk-grid2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid #ececec">
+      <div class="mk-cell" style="padding:36px 40px 36px 0;border-bottom:1px solid #ececec">
+        <div style="font-size:20px;font-weight:700;margin-bottom:10px" data-i18n="a1_t">PME marocaines &amp; fondateurs</div>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="a1_d">Des entreprises en croissance qui passent au digital ou modernisent leurs systèmes existants — avec un partenaire qui comprend le métier, pas seulement le code.</p>
+      </div>
+      <div class="mk-cell" style="padding:36px 0 36px 40px;border-bottom:1px solid #ececec;border-left:1px solid #ececec">
+        <div style="font-size:20px;font-weight:700;margin-bottom:10px" data-i18n="a2_t">Clients européens</div>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="a2_d">France, Allemagne, Suisse : des standards d'ingénierie européens, une réactivité et une structure de coûts marocaines.</p>
+      </div>
+      <div class="mk-cell" style="padding:36px 40px 36px 0;border-bottom:1px solid #ececec">
+        <div style="font-size:20px;font-weight:700;margin-bottom:10px" data-i18n="a3_t">Startups &amp; MVP</div>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="a3_d">De l'idée au lancement, vite — mais proprement. Un MVP qui peut évoluer, pas un prototype qui meurt au troisième mois.</p>
+      </div>
+      <div class="mk-cell" style="padding:36px 0 36px 40px;border-bottom:1px solid #ececec;border-left:1px solid #ececec">
+        <div style="font-size:20px;font-weight:700;margin-bottom:10px" data-i18n="a4_t">Hospitality &amp; retail</div>
+        <p style="font-size:15px;line-height:1.6;color:#555555;margin:0" data-i18n="a4_d">Riads, hôtels, restaurants, commerces : une présence en ligne à la hauteur de leurs espaces, du site à la réservation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section style="border-top:1px solid #ececec;background:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px">
+    <div style="font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#8a8a8a;font-weight:600;margin-bottom:20px" data-i18n="tm_kicker">Ils nous font confiance</div>
+    <h2 style="font-size:clamp(34px,3.6vw,50px);letter-spacing:-0.03em;font-weight:700;margin:0 0 56px 0" data-i18n="tm_title">Des partenaires, pas des prestataires.</h2>
+    <div class="mk-grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+      <figure style="border:1px solid #ececec;border-radius:20px;padding:36px;margin:0;display:flex;flex-direction:column;gap:24px;background:#fdfdfd">
+        <blockquote style="margin:0;font-size:17px;line-height:1.65" data-i18n="tm1_q">« L'équipe a repris notre plateforme e-commerce et l'a rendue plus rapide et plus fiable. La collaboration est directe, sans jargon. »</blockquote>
+        <figcaption style="font-size:14px;color:#8a8a8a;margin-top:auto;font-weight:600" data-i18n="tm1_a">Client e-commerce — Allemagne</figcaption>
+      </figure>
+      <figure style="border:1px solid #ececec;border-radius:20px;padding:36px;margin:0;display:flex;flex-direction:column;gap:24px;background:#fdfdfd">
+        <blockquote style="margin:0;font-size:17px;line-height:1.65" data-i18n="tm2_q">« Du cadrage au lancement, tout était structuré. Nous savions chaque semaine où en était le projet. »</blockquote>
+        <figcaption style="font-size:14px;color:#8a8a8a;margin-top:auto;font-weight:600" data-i18n="tm2_a">Fondateur SaaS — Maroc</figcaption>
+      </figure>
+      <figure style="border:1px solid #ececec;border-radius:20px;padding:36px;margin:0;display:flex;flex-direction:column;gap:24px;background:#fdfdfd">
+        <blockquote style="margin:0;font-size:17px;line-height:1.65" data-i18n="tm3_q">« Un niveau d'exigence qu'on trouve rarement : ils disent non quand il faut, et livrent ce qu'ils promettent. »</blockquote>
+        <figcaption style="font-size:14px;color:#8a8a8a;margin-top:auto;font-weight:600" data-i18n="tm3_a">Direction PME — Suisse</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<section style="background:#0a0a0a;color:#ffffff">
+  <div style="max-width:1240px;margin:0 auto;padding:110px 32px;text-align:center">
+    <img src="assets/logo-white.png" alt="" style="width:44px;height:44px;object-fit:contain;margin:0 auto 32px auto;display:block">
+    <h2 style="font-size:clamp(36px,4.5vw,60px);letter-spacing:-0.03em;font-weight:700;margin:0 auto;max-width:20ch;text-wrap:balance" data-i18n="cta_title">Un projet qui mérite d'être bien construit ?</h2>
+    <p style="font-size:18px;line-height:1.6;color:#a3a3a3;max-width:52ch;margin:24px auto 44px auto" data-i18n="cta_sub">Commencez par un appel découverte gratuit. Nous auditons votre présence actuelle, discutons de vos objectifs, et vous montrons exactement ce que nous ferions.</p>
+    <a href="Contact.dc.html" data-i18n="cta_btn" style="display:inline-flex;align-items:center;background:#ffffff;color:#0a0a0a;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:600" style-hover="background:#e2e2e2;color:#0a0a0a">Réserver un appel découverte</a>
+  </div>
+</section>
+<footer style="background:#0a0a0a;color:#ffffff;border-top:1px solid #262626">
+  <div style="max-width:1240px;margin:0 auto;padding:64px 32px 48px 32px;display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:320px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/logo-white.png" alt="MAKRAZ" style="width:30px;height:30px;object-fit:contain">
+        <span style="font-weight:700;font-size:15px;letter-spacing:.18em">MAKRAZ</span>
+      </div>
+      <p style="font-size:14px;line-height:1.6;color:#a3a3a3;margin:0" data-i18n="footer_about">Agence digitale basée à Marrakech. Développement, design et communication pour le Maroc, l'Europe et au-delà.</p>
+    </div>
+    <div style="display:flex;gap:80px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#737373;font-weight:600;margin-bottom:6px" data-i18n="ft_nav">Navigation</div>
+        <a href="Home.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_home2">Accueil</a>
+        <a href="Services.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_services">Services</a>
+        <a href="Portfolio.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_portfolio">Portfolio</a>
+        <a href="Blog.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_blog">Blog</a>
+        <a href="About.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_about">À propos</a>
+        <a href="Contact.dc.html" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="nav_contact">Contact</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#737373;font-weight:600;margin-bottom:6px" data-i18n="ft_contact">Contact</div>
+        <a href="mailto:contact@makraz.com" style="color:#d4d4d4" style-hover="color:#ffffff">contact@makraz.com</a>
+        <a href="https://makraz.com" style="color:#d4d4d4" style-hover="color:#ffffff">makraz.com</a>
+        <a href="tel:+212661764392" style="color:#d4d4d4" style-hover="color:#ffffff">+212 6 61 76 43 92</a>
+        <a href="https://share.google/WllPHd9fKnFBdVmS0" target="_blank" rel="noopener" style="color:#d4d4d4" style-hover="color:#ffffff" data-i18n="footer_addr">Centre d'affaires Itrane, Marrakech</a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1240px;margin:0 auto;padding:0 32px 40px 32px;border-top:1px solid #262626">
+    <div style="padding-top:24px;font-size:13px;color:#737373;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <span>© 2026 MAKRAZ SARLAU · <a href="Legal.dc.html" style="color:#737373" style-hover="color:#a3a3a3" data-i18n="footer_legal">Mentions légales</a></span>
+      <span data-i18n="footer_tag">Construit avec rigueur, à Marrakech.</span>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;fr&quot;, &quot;en&quot;], &quot;default&quot;: &quot;fr&quot;, &quot;tsType&quot;: &quot;'fr' | 'en'&quot;, &quot;section&quot;: &quot;Langue&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  componentDidMount() {
+    this.lang = 'fr';
+    this.frCache = null;
+    const saved = localStorage.getItem('mk-lang');
+    const l0 = saved || (this.props.defaultLang ?? 'fr');
+    if (l0 !== 'fr') this.applyLang(l0);
+  }
+  componentDidUpdate() { if (this.lang && this.lang !== 'fr') this.applyLang(this.lang); }
+  cacheFr() {
+    if (this.frCache) return;
+    this.frCache = {};
+    document.querySelectorAll('[data-i18n]').forEach(el => { this.frCache[el.getAttribute('data-i18n')] = el.textContent; });
+  }
+  applyLang(lang) {
+    this.cacheFr();
+    const EN = {
+      toggle: 'AR', nav_home: 'Home', nav_home2: 'Home', nav_cta: 'Start a project', nav_services: 'Services', nav_portfolio: 'Portfolio', nav_contact: 'Contact', ft_nav: 'Navigation', ft_contact: 'Contact', nav_blog: 'Blog', p2_title: 'Design', p3_title: 'Communication', nav_about: 'About',
+      hero_kicker: 'Digital agency — Marrakech',
+      hero_title: 'Digital products built to last.',
+      hero_sub: "MAKRAZ helps companies, entrepreneurs and professionals through their digital transformation — from web and mobile development to the communication that makes them known.",
+      hero_cta1: 'Book a free discovery call', hero_cta2: 'See our work',
+      stat1: 'years of software engineering — Switzerland · Italy · Dubai',
+      stat2: 'markets served — Morocco · MENA · Europe · USA',
+      stat3: 'trilingual content, tuned to each audience',
+      pillars_kicker: 'What we do', pillars_title: 'Three crafts. One partner.',
+      p1_title: 'Development',
+      p1_desc: 'Web apps and SaaS, iOS and Android mobile apps, websites, e-commerce, APIs and integrations — with European engineering discipline.',
+      p1_i1: '— Web apps & SaaS', p1_i2: '— Mobile apps', p1_i3: '— E-commerce & APIs',
+      p2_desc: 'Interfaces designed for users and identities that last. From UX research to final visual design, including motion.',
+      p2_i1: '— UX / UI design', p2_i2: '— Branding & identity', p2_i3: '— Motion & visual content',
+      p3_desc: "Being well built isn't enough — you need to be seen. SEO, online advertising, social media and digital communication strategy.",
+      p3_i1: '— SEO & Google Ads', p3_i2: '— Social media', p3_i3: '— Digital strategy',
+      pillars_link: 'Explore all our services →',
+      work_kicker: 'Selected work', work_title: 'Projects in production, not mockups.',
+      work_link: 'Full portfolio →',
+      w1_tag: 'E-commerce · Germany · farblieferant.de',
+      w2_tag: 'Community platform · phpmorocco.ma',
+      w3_tag: 'Tech community · marrakechphp.ma',
+      process_kicker: 'How we work',
+      process_title: "From discovery to adoption — we don't disappear after launch.",
+      s1_t: 'Listen', s1_d: 'Audit of your products, workflows and goals. A clear roadmap — no guesswork.',
+      s2_t: 'Design', s2_d: 'UX research, wireframes and visual design grounded in your business logic.',
+      s3_t: 'Build', s3_d: 'Clean code, modern frameworks, continuous delivery. Progress you see weekly.',
+      s4_t: 'Launch', s4_d: 'Deployment, SEO, campaigns and communication to get your product known.',
+      s5_t: 'Support', s5_d: 'Maintenance, evolutions, optimization and adoption follow-up — for the long run.',
+      who_kicker: 'Who we work with',
+      who_title: "Our clients share one thing: they've outgrown off-the-shelf.",
+      a1_t: 'Moroccan SMEs & founders',
+      a1_d: 'Growing businesses going digital or upgrading legacy systems — with a partner who understands business, not just code.',
+      a2_t: 'European clients',
+      a2_d: 'France, Germany, Switzerland: European engineering standards, Moroccan responsiveness and cost structure.',
+      a3_t: 'Startups & MVPs',
+      a3_d: "From idea to launch, fast — but clean. An MVP that can evolve, not a prototype that dies in month three.",
+      a4_t: 'Hospitality & retail',
+      a4_d: 'Riads, hotels, restaurants, shops: an online presence that matches their spaces, from website to booking.',
+      cta_title: 'A project that deserves to be built right?',
+      cta_sub: "Start with a free discovery call. We audit your current presence, discuss your goals, and show you exactly what we'd do.",
+      cta_btn: 'Book a free discovery call',
+      footer_about: 'Digital agency based in Marrakech. Development, design and communication for Morocco, Europe and beyond.',
+      footer_addr: 'Itrane Business Center, Marrakech',
+      footer_tag: 'Built with care, in Marrakech.', footer_legal: 'Legal notice', tm_kicker: 'They trust us', tm_title: 'Partners, not vendors.', tm1_q: '« The team took over our e-commerce platform and made it faster and more reliable. Collaboration is direct, no jargon. »', tm1_a: 'E-commerce client — Germany', tm2_q: '« From scoping to launch, everything was structured. Every week we knew exactly where the project stood. »', tm2_a: 'SaaS founder — Morocco', tm3_q: '« A level of rigor you rarely find: they say no when needed, and deliver what they promise. »', tm3_a: 'SME management — Switzerland'
+    };
+    const AR = {
+      toggle: 'FR', nav_home: 'الرئيسية', nav_home2: 'الرئيسية', nav_about: 'من نحن', nav_about2: 'من نحن', nav_cta: 'ابدأ مشروعك', nav_services: 'الخدمات', nav_portfolio: 'الأعمال', nav_contact: 'اتصل بنا', ft_nav: 'روابط', ft_contact: 'التواصل', nav_blog: 'المدونة', p2_title: 'التصميم', p3_title: 'التواصل',
+      footer_about: 'وكالة رقمية مقرها مراكش. تطوير وتصميم وتواصل للمغرب وأوروبا والعالم.',
+      footer_addr: 'مركز أعمال إتران، مراكش',
+      footer_tag: 'بُني بإتقان، في مراكش.',
+      footer_legal: 'إشعار قانوني',
+      hero_kicker: 'وكالة رقمية — مراكش',
+      hero_title: 'منتجات رقمية صُنعت لتدوم.',
+      hero_sub: 'تُرافق MAKRAZ الشركات وروّاد الأعمال والمهنيين في تحوّلهم الرقمي — من تطوير تطبيقات الويب والهاتف إلى التواصل الذي يُعرّف بهم.',
+      hero_cta1: 'احجز مكالمة تعارف مجانية', hero_cta2: 'شاهد أعمالنا',
+      stat1: 'سنوات من هندسة البرمجيات — سويسرا · إيطاليا · دبي',
+      stat2: 'أسواق نخدمها — المغرب · الشرق الأوسط · أوروبا · أمريكا',
+      stat3: 'محتوى بثلاث لغات، مُكيَّف مع كل جمهور',
+      pillars_kicker: 'ماذا نفعل', pillars_title: 'ثلاث مهن. شريك واحد.',
+      p1_title: 'التطوير',
+      p1_desc: 'تطبيقات ويب و SaaS، تطبيقات iOS و Android، مواقع إنترنت، تجارة إلكترونية، واجهات برمجية وتكاملات — بانضباط هندسي أوروبي.',
+      p1_i1: '— تطبيقات ويب و SaaS', p1_i2: '— تطبيقات الهاتف', p1_i3: '— تجارة إلكترونية وواجهات برمجية',
+      p2_desc: 'واجهات مصمَّمة للمستخدم وهويات تدوم. من بحث تجربة المستخدم إلى التصميم النهائي، مروراً بالموشن.',
+      p2_i1: '— تصميم UX / UI', p2_i2: '— هوية بصرية وعلامة', p2_i3: '— موشن ومحتوى مرئي',
+      p3_desc: 'أن تُبنى جيداً لا يكفي — يجب أن تُرى. تحسين محركات البحث، إعلانات رقمية، شبكات اجتماعية واستراتيجية تواصل رقمي.',
+      p3_i1: '— SEO وإعلانات جوجل', p3_i2: '— الشبكات الاجتماعية', p3_i3: '— استراتيجية رقمية',
+      pillars_link: 'اكتشف جميع خدماتنا ←',
+      work_kicker: 'أعمال مختارة', work_title: 'مشاريع قيد التشغيل، لا نماذج.',
+      work_link: 'كل الأعمال ←',
+      w1_tag: 'تجارة إلكترونية · ألمانيا · farblieferant.de',
+      w2_tag: 'منصة مجتمعية · phpmorocco.ma',
+      w3_tag: 'مجتمع تقني · marrakechphp.ma',
+      process_kicker: 'طريقة عملنا',
+      process_title: 'من الاكتشاف إلى التبنّي — لا نختفي بعد الإطلاق.',
+      s1_t: 'نستمع', s1_d: 'تدقيق لمنتجاتكم ومساراتكم وأهدافكم. خارطة طريق واضحة — بلا تخمين.',
+      s2_t: 'نصمّم', s2_d: 'بحث UX ونماذج أولية وتصميم مرئي مبني على منطق عملكم.',
+      s3_t: 'نبني', s3_d: 'كود نظيف وأطر حديثة وتسليم مستمر. تقدّم ترونه كل أسبوع.',
+      s4_t: 'نطلق', s4_d: 'نشر وتحسين محركات البحث وحملات وتواصل ليعرف الجميع منتجكم.',
+      s5_t: 'نرافق', s5_d: 'صيانة وتطوير وتحسين ومتابعة التبنّي — على المدى الطويل.',
+      who_kicker: 'مع من نعمل', who_title: 'عملاؤنا يجمعهم شيء واحد: تجاوزوا الحلول الجاهزة.',
+      a1_t: 'شركات وروّاد أعمال مغاربة', a1_d: 'أعمال في نموّ تتحوّل رقمياً أو تحدّث أنظمتها — مع شريك يفهم التجارة، لا الكود فقط.',
+      a2_t: 'عملاء أوروبيون', a2_d: 'فرنسا وألمانيا وسويسرا: معايير هندسية أوروبية، وسرعة وتكلفة مغربية.',
+      a3_t: 'شركات ناشئة و MVP', a3_d: 'من الفكرة إلى الإطلاق بسرعة — وبإتقان. منتج أولي قابل للتطوّر، لا نموذج يموت بعد ثلاثة أشهر.',
+      a4_t: 'فندقة وتجزئة', a4_d: 'رياض ضيافة وفنادق ومطاعم ومتاجر: حضور رقمي بمستوى فضاءاتهم، من الموقع إلى الحجز.',
+      tm_kicker: 'يثقون بنا', tm_title: 'شركاء، لا مجرّد مزوّدين.',
+      tm1_q: '« تولّى الفريق منصتنا للتجارة الإلكترونية فجعلها أسرع وأكثر موثوقية. التعاون مباشر وبلا تعقيد. »',
+      tm1_a: 'عميل تجارة إلكترونية — ألمانيا',
+      tm2_q: '« من التحديد إلى الإطلاق، كان كل شيء منظّماً. كنا نعرف كل أسبوع أين وصل المشروع بالضبط. »',
+      tm2_a: 'مؤسس SaaS — المغرب',
+      tm3_q: '« مستوى من الصرامة نادراً ما تجده: يقولون لا عند الحاجة، ويسلّمون ما وعدوا به. »',
+      tm3_a: 'إدارة شركة — سويسرا',
+      cta_title: 'مشروع يستحق أن يُبنى كما يجب؟',
+      cta_sub: 'ابدأوا بمكالمة تعارف مجانية: ندقق حضوركم الحالي، نناقش أهدافكم، ونريكم بالضبط ما سنفعله.',
+      cta_btn: 'احجز مكالمة تعارف مجانية'
+    };
+    const dict = lang === 'en' ? EN : lang === 'ar' ? AR : this.frCache;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (dict[k] != null) el.textContent = dict[k];
+    });
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    this.lang = lang;
+  }
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      toggleLang: () => {
+        const next = ({ fr: 'en', en: 'ar', ar: 'fr' })[this.lang || 'fr'] || 'fr';
+        localStorage.setItem('mk-lang', next);
+        this.applyLang(next);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
