@@ -6,6 +6,13 @@ describe('i18n', () => {
   it('translates a known key in each language', () => {
     for (const lang of locales) expect(t(lang, 'common.nav_contact')).toBeTruthy();
   });
+  it('preserves hand-maintained contact status keys across all locales', () => {
+    for (const lang of locales) {
+      expect(t(lang, 'contact.status_sending')).toBeTruthy();
+      expect(t(lang, 'contact.status_sent')).toBeTruthy();
+      expect(t(lang, 'contact.status_error')).toBeTruthy();
+    }
+  });
   it('falls back to FR for a key missing in EN, throws on unknown', () => {
     expect(() => t('en', 'nope.nope')).toThrow(/Missing i18n key/);
   });
