@@ -9,6 +9,17 @@ describe('i18n', () => {
   it('falls back to FR for a key missing in EN, throws on unknown', () => {
     expect(() => t('en', 'nope.nope')).toThrow(/Missing i18n key/);
   });
+  it('falls back to FR when a key is missing in the target language', async () => {
+    const en = (await import('../src/i18n/en.json')).default as Record<string, string>;
+    const key = 'common.nav_contact';
+    const saved = en[key];
+    delete en[key];
+    try {
+      expect(t('en', key)).toBe(t('fr', key));
+    } finally {
+      en[key] = saved;
+    }
+  });
   it('dir is rtl only for ar', () => {
     expect(dir('ar')).toBe('rtl');
     expect(dir('fr')).toBe('ltr');
