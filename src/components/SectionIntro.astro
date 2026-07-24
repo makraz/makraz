@@ -1,0 +1,9 @@
+---
+interface Props { number?: string; title: string; class?: string }
+const { number, title, class: className = '' } = Astro.props;
+---
+<div class:list={['mk-sticky w-[340px] shrink-0 self-start sticky top-[104px] max-[900px]:static max-[900px]:w-auto', className]}>
+  {number && <div class="text-kicker mb-4">{number}</div>}
+  <h2 class="text-h2 m-0">{title}</h2>
+  <slot />
+</div>

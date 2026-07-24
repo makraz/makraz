@@ -1,0 +1,12 @@
+---
+interface Props { ratio?: string; label?: string; radius?: 'card' | 'media'; class?: string }
+const { ratio = '4/3', label = 'Image à venir', radius = 'card', class: className = '' } = Astro.props;
+---
+<div
+  class:list={[
+    'flex items-center justify-center bg-[#f3f3f3] text-[13px] text-txt-4',
+    radius === 'media' ? 'rounded-media' : 'rounded-card',
+    className,
+  ]}
+  style={`aspect-ratio: ${ratio};`}
+>{label}</div>
