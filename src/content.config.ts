@@ -13,7 +13,11 @@ const caseStudies = defineCollection({
 });
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/blog',
+    generateId: ({ entry }) => entry.replace(/\.md$/, ''),
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

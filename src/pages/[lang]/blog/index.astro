@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Kicker from '../../../components/Kicker.astro';
+import ImagePlaceholder from '../../../components/ImagePlaceholder.astro';
+import { locales, t, localePath, type Locale } from '../../../i18n';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const posts = await getCollection('blog', (e) => e.data.lang === lang);
+const post = posts[0];
+
+const title = t(lang, 'blog.hero_title') + ' — MAKRAZ';
+const description = t(lang, 'blog.hero_sub');
+---
+<Base lang={lang} path="/blog" title={title} description={description} active="blog" ctaPage="blog">
+  <!-- Hero -->
+  <section class="mk-container pb-[72px] pt-[100px]">
+    <Kicker class="mb-7">{t(lang, 'blog.kicker_page')}</Kicker>
+    <h1 class="text-h1 m-0 max-w-[16ch]">{t(lang, 'blog.hero_title')}</h1>
+    <p class="mt-[30px] max-w-[56ch] text-[19px] leading-[1.6] text-txt-2">{t(lang, 'blog.hero_sub')}</p>
+  </section>
+
+  <!-- Posts -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
+      {post && (
+        <a href={localePath(lang, `/blog/${post.data.slug}`)} class="flex flex-col gap-[18px] rounded-card border border-line bg-paper p-6 hover:border-ink">
+          <ImagePlaceholder ratio="16/10" label="Visuel article — MVP" radius="media" />
+          <div class="flex flex-col gap-2.5">
+            <div class="text-[12px] font-semibold uppercase tracking-[.18em] text-txt-4">{t(lang, 'blog.b1_meta')}</div>
+            <div class="text-[21px] font-bold leading-[1.25] tracking-[-0.01em]">{post.data.title}</div>
+            <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{post.data.description}</p>
+            <span class="mt-1.5 text-[14px] font-semibold">{t(lang, 'blog.b1_link')}</span>
+          </div>
+        </a>
+      )}
+      <div class="flex flex-col gap-[18px] rounded-card border border-line bg-paper p-6">
+        <ImagePlaceholder ratio="16/10" label="Visuel article — SEO" radius="media" />
+        <div class="flex flex-col gap-2.5">
+          <div class="text-[12px] font-semibold uppercase tracking-[.18em] text-txt-4">{t(lang, 'blog.b2_meta')}</div>
+          <div class="text-[21px] font-bold leading-[1.25] tracking-[-0.01em]">{t(lang, 'blog.b2_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'blog.b2_d')}</p>
+        </div>
+      </div>
+      <div class="flex flex-col gap-[18px] rounded-card border border-line bg-paper p-6">
+        <ImagePlaceholder ratio="16/10" label="Visuel article — Conseil" radius="media" />
+        <div class="flex flex-col gap-2.5">
+          <div class="text-[12px] font-semibold uppercase tracking-[.18em] text-txt-4">{t(lang, 'blog.b3_meta')}</div>
+          <div class="text-[21px] font-bold leading-[1.25] tracking-[-0.01em]">{t(lang, 'blog.b3_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'blog.b3_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
