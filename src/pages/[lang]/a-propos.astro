@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import Kicker from '../../components/Kicker.astro';
+import SectionIntro from '../../components/SectionIntro.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import { locales, t, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const title = 'À propos — MAKRAZ';
+const description = "Dix ans d'ingénierie entre la Suisse, l'Italie et Dubaï — installée à Marrakech.";
+---
+<Base lang={lang} path="/a-propos" title={title} description={description} active="about" ctaPage="about">
+  <!-- Hero -->
+  <section class="mk-container pb-[72px] pt-[100px]">
+    <Kicker class="mb-7">{t(lang, 'about.hero_kicker')}</Kicker>
+    <h1 class="text-h1 m-0 max-w-[16ch]">{t(lang, 'about.hero_title')}</h1>
+    <p class="mt-8 max-w-[58ch] text-[19px] leading-[1.6] text-txt-2">{t(lang, 'about.hero_sub')}</p>
+  </section>
+
+  <!-- Le parcours -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
+      <SectionIntro title={t(lang, 'about.j_title')}>
+        <Kicker class="mb-[18px]">{t(lang, 'about.j_kicker')}</Kicker>
+        <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.j_desc')}</p>
+      </SectionIntro>
+      <div class="min-w-0 flex-1 border-t border-line">
+        <div class="grid grid-cols-[200px_1fr] gap-6 border-b border-line py-[30px] max-[900px]:grid-cols-1">
+          <div>
+            <div class="text-[20px] font-bold">{t(lang, 'about.j1_t')}</div>
+            <div class="mt-1 text-[13px] text-txt-4">{t(lang, 'about.j1_k')}</div>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.j1_d')}</p>
+        </div>
+        <div class="grid grid-cols-[200px_1fr] gap-6 border-b border-line py-[30px] max-[900px]:grid-cols-1">
+          <div>
+            <div class="text-[20px] font-bold">{t(lang, 'about.j2_t')}</div>
+            <div class="mt-1 text-[13px] text-txt-4">{t(lang, 'about.j2_k')}</div>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.j2_d')}</p>
+        </div>
+        <div class="grid grid-cols-[200px_1fr] gap-6 border-b border-line py-[30px] max-[900px]:grid-cols-1">
+          <div>
+            <div class="text-[20px] font-bold">{t(lang, 'about.j3_t')}</div>
+            <div class="mt-1 text-[13px] text-txt-4">{t(lang, 'about.j3_k')}</div>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.j3_d')}</p>
+        </div>
+        <div class="grid grid-cols-[200px_1fr] gap-6 py-[30px] max-[900px]:grid-cols-1">
+          <div>
+            <div class="text-[20px] font-bold">{t(lang, 'about.j4_t')}</div>
+            <div class="mt-1 text-[13px] text-txt-4">MAKRAZ SARLAU</div>
+          </div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.j4_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nos valeurs -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-5">{t(lang, 'about.v_kicker')}</Kicker>
+      <h2 class="text-h2 m-0 mb-14">{t(lang, 'about.v_title')}</h2>
+      <div class="grid grid-cols-2 gap-7 max-[900px]:grid-cols-1">
+        <div class="rounded-card border border-line bg-card p-9">
+          <div class="mb-[14px] text-[13px] font-semibold text-txt-4">01</div>
+          <div class="mb-[10px] text-[21px] font-bold">{t(lang, 'about.v1_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.v1_d')}</p>
+        </div>
+        <div class="rounded-card border border-line bg-card p-9">
+          <div class="mb-[14px] text-[13px] font-semibold text-txt-4">02</div>
+          <div class="mb-[10px] text-[21px] font-bold">{t(lang, 'about.v2_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.v2_d')}</p>
+        </div>
+        <div class="rounded-card border border-line bg-card p-9">
+          <div class="mb-[14px] text-[13px] font-semibold text-txt-4">03</div>
+          <div class="mb-[10px] text-[21px] font-bold">{t(lang, 'about.v3_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.v3_d')}</p>
+        </div>
+        <div class="rounded-card border border-line bg-card p-9">
+          <div class="mb-[14px] text-[13px] font-semibold text-txt-4">04</div>
+          <div class="mb-[10px] text-[21px] font-bold">{t(lang, 'about.v4_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.v4_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'équipe -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
+      <SectionIntro title={t(lang, 'about.t_title')}>
+        <Kicker class="mb-[18px]">{t(lang, 'about.t_kicker')}</Kicker>
+        <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.t_desc')}</p>
+      </SectionIntro>
+      <div class="grid min-w-0 flex-1 grid-cols-[280px_1fr] items-center gap-10 max-[900px]:grid-cols-1">
+        <ImagePlaceholder ratio="1/1" class="max-w-[280px]" radius="media" />
+        <div>
+          <div class="text-[24px] font-bold tracking-[-0.01em]">Hamza Makraz</div>
+          <div class="my-[6px] mb-[18px] text-[14px] text-txt-4">{t(lang, 'about.t_role')}</div>
+          <p class="m-0 text-[15px] leading-[1.65] text-txt-2">{t(lang, 'about.t_bio')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
