@@ -1,0 +1,65 @@
+---
+import { t, type Locale } from '../i18n';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+---
+<form id="mk-contact" method="POST" action="/api/contact" class="grid gap-5">
+  <input type="hidden" name="lang" value={lang} />
+  <p class="hidden" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></p>
+  <div class="grid grid-cols-2 gap-5 max-[900px]:grid-cols-1">
+    <label class="grid gap-2 text-[13px] font-semibold text-txt-2">
+      {t(lang, 'contact.lbl_name')}
+      <input name="name" required class="rounded-input border border-line-mid bg-paper px-4 py-3.5 text-[15px] focus:border-ink focus:outline-none" />
+    </label>
+    <label class="grid gap-2 text-[13px] font-semibold text-txt-2">
+      {t(lang, 'contact.lbl_email2')}
+      <input name="email" type="email" required class="rounded-input border border-line-mid bg-paper px-4 py-3.5 text-[15px] focus:border-ink focus:outline-none" />
+    </label>
+  </div>
+  <label class="grid gap-2 text-[13px] font-semibold text-txt-2">
+    {t(lang, 'contact.lbl_company')}
+    <input name="company" class="rounded-input border border-line-mid bg-paper px-4 py-3.5 text-[15px] focus:border-ink focus:outline-none" />
+  </label>
+  <label class="grid gap-2 text-[13px] font-semibold text-txt-2">
+    {t(lang, 'contact.lbl_msg')}
+    <textarea name="message" required rows="6" class="rounded-input border border-line-mid bg-paper px-4 py-3.5 text-[15px] focus:border-ink focus:outline-none"></textarea>
+  </label>
+  {siteKey && <div class="cf-turnstile" data-sitekey={siteKey}></div>}
+  <button type="submit" class="btn btn-primary w-full">{t(lang, 'contact.form_btn')}</button>
+  <p id="form-sending" hidden class="m-0 text-center text-[14px] font-semibold text-txt-3">{t(lang, 'contact.status_sending')}</p>
+  <p id="form-sent" class="mk-status m-0 text-center text-[14px] font-semibold">{t(lang, 'contact.status_sent')}</p>
+  <p id="form-error" class="mk-status m-0 text-center text-[14px] font-semibold">{t(lang, 'contact.status_error')}</p>
+  <p class="m-0 text-center text-[13px] text-txt-3">{t(lang, 'contact.form_note')}</p>
+</form>
+{siteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+<style>
+  .mk-status { display: none; }
+  .mk-status:target { display: block; }
+  .mk-status.show { display: block; }
+</style>
+<script>
+  const form = document.getElementById('mk-contact') as HTMLFormElement;
+  const show = (id: string) => {
+    for (const el of form.querySelectorAll('.mk-status, #form-sending')) el.classList.remove('show');
+    document.getElementById(id)?.classList.add('show');
+  };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('form-sending')?.removeAttribute('hidden');
+    try {
+      const r = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const data = await r.json();
+      document.getElementById('form-sending')?.setAttribute('hidden', '');
+      show(data.ok ? 'form-sent' : 'form-error');
+      if (data.ok) form.reset();
+    } catch {
+      document.getElementById('form-sending')?.setAttribute('hidden', '');
+      show('form-error');
+    }
+  });
+</script>
