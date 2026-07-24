@@ -1,0 +1,59 @@
+---
+import { localePath, t, type Locale } from '../i18n';
+import logoWhite from '../assets/logo-white.png';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const links = [
+  ['/', 'common.nav_home'],
+  ['/services', 'common.nav_services'],
+  ['/portfolio', 'common.nav_portfolio'],
+  ['/blog', 'common.nav_blog'],
+  ['/a-propos', 'common.nav_about'],
+  ['/contact', 'common.nav_contact'],
+] as const;
+---
+<footer class="border-t border-[#262626] bg-ink text-white">
+  <div class="mk-container flex flex-wrap justify-between gap-12 py-[64px] pb-[48px]">
+    <div class="flex max-w-[320px] flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <img src={logoWhite.src} alt="MAKRAZ" class="h-[30px] w-[30px] object-contain" />
+        <span class="text-[15px] font-bold tracking-[.18em]">MAKRAZ</span>
+      </div>
+      <p class="m-0 text-[14px] leading-[1.6] text-[#a3a3a3]">{t(lang, 'common.footer_about')}</p>
+    </div>
+    <div class="flex flex-wrap gap-20">
+      <div class="flex flex-col gap-3 text-[14px]">
+        <div class="mb-[6px] text-[12px] font-semibold tracking-[.2em] text-[#737373] uppercase">
+          {t(lang, 'home.ft_nav')}
+        </div>
+        {links.map(([href, label]) => (
+          <a href={localePath(lang, href)} class="text-[#d4d4d4] hover:text-white">{t(lang, label)}</a>
+        ))}
+      </div>
+      <div class="flex flex-col gap-3 text-[14px]">
+        <div class="mb-[6px] text-[12px] font-semibold tracking-[.2em] text-[#737373] uppercase">
+          {t(lang, 'home.ft_contact')}
+        </div>
+        <a href="mailto:contact@makraz.com" class="text-[#d4d4d4] hover:text-white">contact@makraz.com</a>
+        <a href="https://makraz.com" class="text-[#d4d4d4] hover:text-white">makraz.com</a>
+        <a href="tel:+212661764392" class="text-[#d4d4d4] hover:text-white">+212 6 61 76 43 92</a>
+        <a
+          href="https://share.google/WllPHd9fKnFBdVmS0"
+          target="_blank"
+          rel="noopener"
+          class="text-[#d4d4d4] hover:text-white"
+        >{t(lang, 'common.footer_addr')}</a>
+      </div>
+    </div>
+  </div>
+  <div class="mk-container border-t border-[#262626] pb-10">
+    <div class="flex flex-wrap justify-between gap-4 pt-6 text-[13px] text-ondark-3">
+      <span>
+        © 2026 MAKRAZ SARLAU ·
+        <a href={localePath(lang, '/mentions-legales')} class="text-ondark-3 hover:text-ondark-2">{t(lang, 'common.footer_legal')}</a>
+      </span>
+      <span>{t(lang, 'common.footer_tag')}</span>
+    </div>
+  </div>
+</footer>

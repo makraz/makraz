@@ -1,0 +1,64 @@
+---
+import { localePath, nextLocale, t, type Locale } from '../i18n';
+import logoBlack from '../assets/logo-black.png';
+
+interface Props { lang: Locale; path: string; active: string | null }
+const { lang, path, active } = Astro.props;
+const links = [
+  ['home', '/', 'common.nav_home'],
+  ['services', '/services', 'common.nav_services'],
+  ['portfolio', '/portfolio', 'common.nav_portfolio'],
+  ['blog', '/blog', 'common.nav_blog'],
+  ['about', '/a-propos', 'common.nav_about'],
+  ['contact', '/contact', 'common.nav_contact'],
+] as const;
+---
+<header class="sticky top-0 z-50 border-b border-line bg-[rgba(253,253,253,.92)] backdrop-blur-[12px]">
+  <div class="mk-container flex h-[72px] items-center justify-between gap-6">
+    <a href={localePath(lang, '/')} class="flex items-center gap-3">
+      <img src={logoBlack.src} alt="MAKRAZ" class="h-[34px] w-[34px] object-contain" />
+      <span class="text-[16px] font-bold tracking-[.18em]">MAKRAZ</span>
+    </a>
+    <nav class="mk-nav flex items-center gap-9 text-[15px] font-medium max-[900px]:hidden">
+      {links.map(([key, href, label]) => (
+        <a
+          href={localePath(lang, href)}
+          class:list={[
+            'whitespace-nowrap py-1',
+            active === key ? 'border-b-2 border-ink' : 'text-txt-3 hover:text-ink',
+          ]}
+        >{t(lang, label)}</a>
+      ))}
+    </nav>
+    <div class="flex items-center gap-[18px]">
+      <a
+        href={localePath(nextLocale(lang), path)}
+        class="rounded-pill border border-line-mid px-[14px] py-[7px] text-[13px] font-semibold tracking-[.06em] hover:border-ink"
+      >{t(lang, 'common.toggle')}</a>
+      <button
+        id="mk-burger"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="mk-mobile-menu"
+        class="hidden rounded-pill border border-line-mid px-[14px] py-[7px] text-[15px] leading-none max-[900px]:inline-flex"
+      >☰</button>
+      <a
+        href={localePath(lang, '/contact')}
+        class="btn bg-ink px-[22px] py-[11px] text-[14px] text-white hover:bg-ink-soft max-[900px]:hidden"
+      >{t(lang, 'common.nav_cta')}</a>
+    </div>
+  </div>
+  <nav id="mk-mobile-menu" hidden class="flex flex-col border-t border-line px-8 pb-4 pt-2 text-[16px] font-semibold">
+    {links.map(([, href, label]) => (
+      <a href={localePath(lang, href)} class="py-3">{t(lang, label)}</a>
+    ))}
+  </nav>
+</header>
+<script>
+  const burger = document.getElementById('mk-burger');
+  const menu = document.getElementById('mk-mobile-menu');
+  burger?.addEventListener('click', () => {
+    const open = menu!.toggleAttribute('hidden');
+    burger.setAttribute('aria-expanded', String(!open));
+  });
+</script>

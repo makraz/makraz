@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import { dir, locales, localePath, type Locale } from '../i18n';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+interface Props {
+  lang: Locale;
+  path: string; // locale-less, e.g. '/services'
+  title: string;
+  description: string;
+  active: 'home' | 'services' | 'portfolio' | 'blog' | 'about' | 'contact' | null;
+  ctaPage?: string; // namespace for CtaBand keys, default 'home'
+  hideCta?: boolean;
+}
+const { lang, path, title, description, active, ctaPage = 'home', hideCta = false } = Astro.props;
+const canonical = new URL(localePath(lang, path), Astro.site);
+---
+<!doctype html>
+<html lang={lang} dir={dir(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => (
+      <link rel="alternate" hreflang={l} href={new URL(localePath(l, path), Astro.site)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(localePath('fr', path), Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/og-image.png', Astro.site)} />
+    <meta property="og:url" content={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    {lang === 'ar' && (
+      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    )}
+    <slot name="head" />
+  </head>
+  <body>
+    <Header lang={lang} path={path} active={active} />
+    <slot />
+    {!hideCta && <CtaBand lang={lang} page={ctaPage} />}
+    <Footer lang={lang} />
+  </body>
+</html>

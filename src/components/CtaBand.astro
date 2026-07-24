@@ -1,0 +1,17 @@
+---
+import { localePath, t, type Locale } from '../i18n';
+import logoWhite from '../assets/logo-white.png';
+
+interface Props { lang: Locale; page: string }
+const { lang, page } = Astro.props;
+---
+<section class="bg-ink text-white">
+  <div class="mk-container py-[110px] text-center">
+    <img src={logoWhite.src} alt="" class="mx-auto mb-8 h-11 w-11 object-contain" />
+    <h2 class="text-h2 mx-auto max-w-[20ch] text-balance">{t(lang, `${page}.cta_title`)}</h2>
+    <p class="mx-auto mt-6 mb-11 max-w-[52ch] text-[18px] leading-[1.6] text-ondark-2">{t(lang, `${page}.cta_sub`)}</p>
+    <a href={localePath(lang, '/contact')} class="btn btn-ondark px-[34px] py-[17px] text-[16px]">
+      {t(lang, `${page}.cta_btn`)}
+    </a>
+  </div>
+</section>
