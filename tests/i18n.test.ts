@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { dir, isLocale, locales, localePath, nextLocale, t } from '../src/i18n';
+import { dir, has, isLocale, locales, localePath, nextLocale, t } from '../src/i18n';
 
 describe('i18n', () => {
   it('exposes the three locales', () => expect(locales).toEqual(['fr', 'en', 'ar']));
@@ -36,5 +36,9 @@ describe('i18n', () => {
   it('isLocale guards', () => {
     expect(isLocale('ar')).toBe(true);
     expect(isLocale('de')).toBe(false);
+  });
+  it('has reports key existence in the FR dictionary', () => {
+    expect(has('services.cta_title')).toBe(true);
+    expect(has('services.cta_sub')).toBe(false);
   });
 });

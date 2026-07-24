@@ -12,7 +12,7 @@ const lang = Astro.params.lang as Locale;
 const title = 'Services — MAKRAZ';
 const description = "Développement, design et communication : tout ce qu'il faut pour exister en ligne, sous un même toit.";
 ---
-<Base lang={lang} path="/services" title={title} description={description} active="services">
+<Base lang={lang} path="/services" title={title} description={description} active="services" ctaPage="services">
   <!-- Hero -->
   <section class="mk-container pb-[72px] pt-[100px]">
     <Kicker class="mb-7">{t(lang, 'services.kicker_page')}</Kicker>

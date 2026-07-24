@@ -17,6 +17,10 @@ export function t(lang: Locale, key: string): string {
   return v;
 }
 
+export function has(key: string): boolean {
+  return (fr as Record<string, string>)[key] != null;
+}
+
 export function dir(lang: Locale): 'ltr' | 'rtl' {
   return lang === 'ar' ? 'rtl' : 'ltr';
 }
