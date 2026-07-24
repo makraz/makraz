@@ -11,7 +11,7 @@ stack:
 results:
   - value: "[—%]"
     label: "نمو الطلبات الإلكترونية"
-  - value: "[— ث]"
+  - value: "[— s]"
     label: "متوسط زمن التحميل"
   - value: "[—]"
     label: "ترتيب SEO على الكلمات الرئيسية"
