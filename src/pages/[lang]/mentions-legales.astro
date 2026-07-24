@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import Kicker from '../../components/Kicker.astro';
+import { locales, t, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const title = 'Mentions légales — MAKRAZ';
+const description = "Mentions légales et politique de confidentialité de MAKRAZ SARLAU.";
+---
+<Base lang={lang} path="/mentions-legales" title={title} description={description} active={null} hideCta>
+  <!-- Hero -->
+  <section class="mk-container pb-10 pt-[90px] max-w-[840px]">
+    <Kicker class="mb-6">{t(lang, 'legal.lg_kicker')}</Kicker>
+    <h1 class="text-h1 m-0">{t(lang, 'legal.lg_title')}</h1>
+    <p class="mt-5 text-[15px] text-txt-4">{t(lang, 'legal.lg_note')}</p>
+  </section>
+
+  <!-- Mentions légales -->
+  <section class="mk-container max-w-[840px] pb-10 pt-6">
+    <h2 class="mb-6 border-t border-line pt-10 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'legal.ml_h')}</h2>
+    <div class="flex flex-col gap-[22px] text-[15px] leading-[1.7] text-txt-2">
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.ed_h')}</div>
+        <p class="m-0">{t(lang, 'legal.ed_p')}</p>
+        <p class="m-0 mt-[6px]">
+          {t(lang, 'legal.ed_email')} : <a href="mailto:contact@makraz.com" class="border-b border-line">contact@makraz.com</a> —
+          {t(lang, 'legal.ed_tel')} : <a href="tel:+212661764392" class="border-b border-line">+212 6 61 76 43 92</a>
+        </p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.dp_h')}</div>
+        <p class="m-0">{t(lang, 'legal.dp_p')}</p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.hb_h')}</div>
+        <p class="m-0">{t(lang, 'legal.hb_p')}</p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.ip_h')}</div>
+        <p class="m-0">{t(lang, 'legal.ip_p')}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Politique de confidentialité -->
+  <section class="mk-container max-w-[840px] pb-[100px] pt-6">
+    <h2 class="mb-6 border-t border-line pt-10 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'legal.pc_h')}</h2>
+    <div class="flex flex-col gap-[22px] text-[15px] leading-[1.7] text-txt-2">
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.dc_h')}</div>
+        <p class="m-0">{t(lang, 'legal.dc_p')}</p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.fin_h')}</div>
+        <p class="m-0">{t(lang, 'legal.fin_p')}</p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.dur_h')}</div>
+        <p class="m-0">{t(lang, 'legal.dur_p')}</p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.dr_h')}</div>
+        <p class="m-0">{t(lang, 'legal.dr_p')}</p>
+      </div>
+      <div>
+        <div class="mb-[6px] font-bold">{t(lang, 'legal.ck_h')}</div>
+        <p class="m-0">{t(lang, 'legal.ck_p')}</p>
+      </div>
+    </div>
+  </section>
+</Base>
