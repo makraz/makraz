@@ -1,0 +1,123 @@
+---
+import Base from '../../layouts/Base.astro';
+import Kicker from '../../components/Kicker.astro';
+import SectionIntro from '../../components/SectionIntro.astro';
+import { locales, t, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const title = 'Services — MAKRAZ';
+const description = "Développement, design et communication : tout ce qu'il faut pour exister en ligne, sous un même toit.";
+---
+<Base lang={lang} path="/services" title={title} description={description} active="services">
+  <!-- Hero -->
+  <section class="mk-container pb-[72px] pt-[100px]">
+    <Kicker class="mb-7">{t(lang, 'services.kicker_page')}</Kicker>
+    <h1 class="text-h1 m-0 max-w-[16ch]">{t(lang, 'services.hero_title')}</h1>
+    <p class="mt-8 max-w-[58ch] text-[19px] leading-[1.6] text-txt-2">{t(lang, 'services.hero_sub')}</p>
+  </section>
+
+  <!-- Développement -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
+      <SectionIntro number="01" title={t(lang, 'services.dev_title')}>
+        <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.dev_desc')}</p>
+      </SectionIntro>
+      <div class="min-w-0 flex-1 border-t border-line">
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d1_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d1_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d2_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d2_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d3_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d3_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d4_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d4_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d5_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d5_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d6_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d6_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d7_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d7_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.d8_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d8_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
+      <SectionIntro number="02" title={t(lang, 'services.des_title')}>
+        <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.des_desc')}</p>
+      </SectionIntro>
+      <div class="min-w-0 flex-1 border-t border-line">
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.g1_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.g1_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.g2_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.g2_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.g3_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.g3_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Communication -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
+      <SectionIntro number="03" title={t(lang, 'services.com_title')}>
+        <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.com_desc')}</p>
+      </SectionIntro>
+      <div class="min-w-0 flex-1 border-t border-line">
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.c1_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c1_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.c2_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c2_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.c3_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c3_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.c4_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c4_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.c5_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c5_d')}</p>
+        </div>
+        <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.c6_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c6_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
