@@ -5,3 +5,5 @@ dist/
 .astro/
 .wrangler/
 .dev.vars
+test-results/
+playwright-report/

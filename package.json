@@ -13,7 +13,8 @@
     "check": "astro check",
     "generate-types": "wrangler types",
     "extract:i18n": "node scripts/extract-i18n.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.4",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@playwright/test": "^1.61.1",
     "cheerio": "^1.2.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
