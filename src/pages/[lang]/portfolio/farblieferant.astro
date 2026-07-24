@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Kicker from '../../../components/Kicker.astro';
+import ImagePlaceholder from '../../../components/ImagePlaceholder.astro';
+import { locales, t, localePath, type Locale } from '../../../i18n';
+
+export async function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const entries = await getCollection('caseStudies', (e) => e.data.lang === lang && e.id.startsWith('farblieferant'));
+const entry = entries[0];
+const { Content } = await render(entry);
+
+const title = 'Étude de cas : Farblieferant — MAKRAZ';
+const description = "Comment nous avons construit la plateforme e-commerce de Farblieferant pour le marché allemand.";
+---
+<Base lang={lang} path="/portfolio/farblieferant" title={title} description={description} active="portfolio" ctaPage="case_farblieferant">
+  <!-- Hero -->
+  <section class="mk-container pb-14 pt-[90px]">
+    <a href={localePath(lang, '/portfolio')} class="text-[14px] font-semibold text-txt-4 hover:text-ink">{t(lang, 'case_farblieferant.back')}</a>
+    <Kicker class="mb-5 mt-9">{entry.data.kicker}</Kicker>
+    <h1 class="text-h1 m-0">{entry.data.project}</h1>
+    <p class="mt-[26px] max-w-[58ch] text-[19px] leading-[1.6] text-txt-2">{t(lang, 'case_farblieferant.sub')}</p>
+    <div class="mt-12 grid grid-cols-4 gap-7 border-t border-line pt-7 max-[900px]:grid-cols-1">
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_farblieferant.m_client')}</div>
+        <div class="text-[16px] font-semibold">{entry.data.project}</div>
+      </div>
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_farblieferant.m_sector')}</div>
+        <div class="text-[16px] font-semibold">{t(lang, 'case_farblieferant.m_sector_v')}</div>
+      </div>
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_farblieferant.m_services')}</div>
+        <div class="text-[16px] font-semibold">{t(lang, 'case_farblieferant.m_services_v')}</div>
+      </div>
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_farblieferant.m_link')}</div>
+        <a href="https://farblieferant.de" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[2px] text-[16px] font-semibold">farblieferant.de ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="mk-container">
+    <ImagePlaceholder ratio="21/9" label="Capture d'écran principale — farblieferant.de" radius="media" />
+  </div>
+
+  <!-- Body -->
+  <section class="mk-container mx-auto max-w-[840px] pb-10 pt-20">
+    <div class="prose max-w-none [&_h2]:text-h2-sub [&_h2]:m-0 [&_h2]:mb-5 [&_h2]:mt-16 [&_h2:first-child]:mt-0 [&_p]:m-0 [&_p]:mt-0 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a]">
+      <Content />
+    </div>
+
+    <div class="mt-7 flex flex-wrap gap-2.5">
+      {entry.data.stack.map((item) => (
+        <span class="rounded-full border border-line px-[18px] py-2 text-[14px] font-semibold">{item}</span>
+      ))}
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="mk-container mx-auto max-w-[840px] pb-24 pt-10">
+    <h2 class="text-h2-sub m-0 mb-5">{t(lang, 'case_farblieferant.c3_h')}</h2>
+    <p class="m-0 mb-8 text-[17px] leading-[1.75] text-[#3a3a3a]">{t(lang, 'case_farblieferant.c3_p')}</p>
+    <div class="grid grid-cols-3 gap-7 border-t border-line pt-8 max-[900px]:grid-cols-1">
+      {entry.data.results.map((r) => (
+        <div>
+          <div class="text-[36px] font-bold leading-none tracking-[-0.02em] text-txt-4">{r.value}</div>
+          <div class="mt-1.5 text-[14px] text-txt-3">{r.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
