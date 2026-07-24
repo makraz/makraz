@@ -5,7 +5,7 @@ Production site for [makraz.com](https://makraz.com), built with Astro on Cloudf
 ## Stack
 
 - **Astro 7.1.3** with `@astrojs/cloudflare` 14.1.4, `output: 'static'`.
-- Build produces a static client bundle at `dist/client/` and a server bundle (contact API route) at `dist/server/`; the root `wrangler.jsonc` wires both together for `wrangler dev`/`wrangler deploy`.
+- Build produces a static client bundle at `dist/client/` and a server bundle (contact API route) at `dist/server/`. The root `wrangler.jsonc` is the pre-build source config (adapter placeholder `main`, `assets.directory: ./dist`); the build resolves it into the config that's actually consumed, `dist/server/wrangler.json` (`main: entry.mjs`, `assets.directory: ../client`), which is what `wrangler dev`/`wrangler deploy` run against.
 - Tailwind CSS 4 via `@tailwindcss/vite`.
 - `@astrojs/sitemap` for the sitemap, locale-aware (`fr`/`en`/`ar`).
 - Content collections: `src/content/blog/` (one article, `fr`/`en`/`ar`, shared slug via `generateId` in `content.config.ts`) and `src/content/case-studies/` (Farblieferant case study, same 3-locale pattern).
@@ -44,16 +44,28 @@ Contains `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, and `PUBLIC_TURNSTILE_SITE_KE
 
 ## One-time manual setup (production)
 
-### Cloudflare Pages
+### Cloudflare Workers
 
-1. Create a Cloudflare Pages project connected to this repository.
+`@astrojs/cloudflare` 14 targets **Cloudflare Workers with static assets**, not classic Pages — there is no "output directory" setting to configure in a Pages project. Two ways to deploy:
+
+**Option A — Git integration (Workers Builds), preferred:**
+
+1. Create a Cloudflare Workers project connected to this repository (Workers & Pages → Create → connect to Git; this is the "Workers Builds" flow, not the legacy Pages flow).
 2. Production branch: `main`.
-3. Build command: `npm run build`. Output directory: `dist`.
-4. Add environment variables:
-   - `RESEND_API_KEY` (secret, production)
-   - `TURNSTILE_SECRET_KEY` (secret, production)
-   - `PUBLIC_TURNSTILE_SITE_KEY` (public, build-time)
-5. Attach the custom domain `makraz.com` and configure a `www` redirect to the apex.
+3. Build command: `npm run build`.
+4. Deploy command: `npx wrangler deploy` (run from the repo root — it reads `wrangler.jsonc`, which Astro/Wrangler resolve against the just-built `dist/server/wrangler.json` for the actual `main`/`assets` paths). Validated locally with `npx wrangler deploy --dry-run`.
+5. Add environment variables/secrets under the Worker's Settings:
+   - `RESEND_API_KEY` (secret)
+   - `TURNSTILE_SECRET_KEY` (secret)
+   - `PUBLIC_TURNSTILE_SITE_KEY` (build-time/public var — must be set wherever `npm run build` runs, since it's inlined at build time)
+6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes) and configure a `www` redirect to the apex.
+
+**Option B — Manual deploy from a local/CI shell:**
+
+1. `npm run build`
+2. `npx wrangler deploy` (add `--dry-run` first to verify without publishing)
+3. Set secrets once via `wrangler secret put RESEND_API_KEY` and `wrangler secret put TURNSTILE_SECRET_KEY`; set `PUBLIC_TURNSTILE_SITE_KEY` as a build-time env var wherever the build runs.
+4. Attach the custom domain as in step 6 above.
 
 ### Resend
 
