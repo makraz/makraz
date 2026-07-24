@@ -3,6 +3,10 @@
 	"compatibility_date": "2026-07-23",
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "makraz-com",
+	"routes": [
+		{ "pattern": "makraz.com", "custom_domain": true },
+		{ "pattern": "www.makraz.com", "custom_domain": true }
+	],
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
 		"directory": "./dist",
