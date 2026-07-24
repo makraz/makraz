@@ -13,7 +13,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const back = (frag: 'form-sent' | 'form-error') => redirect(`/${s.lang}/contact#${frag}`, 303);
 
   const errors = validate(s);
+  if (errors.honeypot) return wantsJson ? json({ ok: true }, 200) : back('form-sent');
   if (Object.keys(errors).length) return wantsJson ? json({ ok: false, errors }, 400) : back('form-error');
+
+  if (!env.TURNSTILE_SECRET_KEY) {
+    console.error('TURNSTILE_SECRET_KEY is missing/empty — refusing to contact the verify API');
+    return wantsJson ? json({ ok: false, error: 'config' }, 500) : back('form-error');
+  }
 
   const ip = request.headers.get('cf-connecting-ip');
   if (!(await verifyTurnstile(s.turnstileToken, env.TURNSTILE_SECRET_KEY, ip)))

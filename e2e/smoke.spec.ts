@@ -61,3 +61,14 @@ test('contact form error path (mocked endpoint)', async ({ page }) => {
   await page.click('#mk-contact button[type="submit"]');
   await expect(page.locator('#form-error')).toBeVisible();
 });
+
+test('contact API validates without mocks', async ({ request }) => {
+  const res = await request.post('/api/contact', {
+    headers: { Accept: 'application/json', Origin: 'http://localhost:4331' },
+    form: { name: 'Test', email: 'not-an-email', message: 'Bonjour', lang: 'fr' },
+  });
+  expect(res.status()).toBe(400);
+  const body = await res.json();
+  expect(body.ok).toBe(false);
+  expect(body.errors).toHaveProperty('email');
+});

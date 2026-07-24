@@ -3,6 +3,9 @@ import { t, type Locale } from '../i18n';
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+if (import.meta.env.PROD && !siteKey && process.env.ALLOW_MISSING_TURNSTILE !== '1') {
+  throw new Error('PUBLIC_TURNSTILE_SITE_KEY is not set — contact form would silently fail');
+}
 ---
 <form id="mk-contact" method="POST" action="/api/contact" class="grid gap-5">
   <input type="hidden" name="lang" value={lang} />
@@ -60,6 +63,8 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     } catch {
       document.getElementById('form-sending')?.setAttribute('hidden', '');
       show('form-error');
+    } finally {
+      (window as any).turnstile?.reset?.();
     }
   });
 </script>
