@@ -16,7 +16,9 @@ Every page exists in three locales — `/fr`, `/en`, `/ar` — with French slugs
 
 ## Contact form / API
 
-`src/pages/api/contact.ts` sends form submissions via Resend and verifies Cloudflare Turnstile. Secrets are read at runtime via `import { env } from 'cloudflare:workers'` (not `import.meta.env`), matching how Cloudflare Pages/Workers inject bindings and secrets in production.
+`src/pages/api/contact.ts` sends form submissions via Resend and verifies Cloudflare Turnstile. Secrets are read at runtime via `import { env } from 'cloudflare:workers'` (not `import.meta.env`), matching how Cloudflare Pages/Workers inject bindings and secrets in production. If `TURNSTILE_SECRET_KEY` is missing or empty at request time, the route logs a distinct error and returns `500 {ok:false,error:'config'}` instead of calling the verify API with an undefined secret. A filled honeypot field returns a fake success (`200 {ok:true}` / redirect to `#form-sent`) without sending mail, so bots can't tell they were caught.
+
+**Production builds require `PUBLIC_TURNSTILE_SITE_KEY` to be set.** `astro build` runs with `PROD=true`, and `ContactForm.astro` throws during prerender if that var is empty in a production build — this is intentional, so a misconfigured deploy fails loudly instead of shipping a contact form with no widget. Local dev (`npm run dev`) is unaffected since it isn't a production build. For local/CI builds without real keys (e.g. Playwright's `test:e2e`, which runs `npm run build` under the hood), set `ALLOW_MISSING_TURNSTILE=1` as an escape hatch — already wired into `playwright.config.ts`'s `webServer.command`. Do not set it in the deploy/CI build used for production.
 
 ## Commands
 
@@ -34,13 +36,14 @@ npm run extract:i18n # regenerate src/i18n/*.json from design_handoff_makraz_web
 
 ## Local development secrets
 
-Copy `.dev.vars.example` to `.dev.vars` and fill in real values:
+Secret keys (read via `cloudflare:workers` at runtime) and public build-time vars (read via `import.meta.env`, embedded by Vite) live in two different files — Vite only ever reads `PUBLIC_*` vars from `.env`, not from `.dev.vars`, so keep them separate:
 
 ```bash
-cp .dev.vars.example .dev.vars
+cp .dev.vars.example .dev.vars   # RESEND_API_KEY, TURNSTILE_SECRET_KEY (secrets, git-ignored)
+cp .env.example .env             # PUBLIC_TURNSTILE_SITE_KEY (public, git-ignored)
 ```
 
-Contains `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, and `PUBLIC_TURNSTILE_SITE_KEY`. `.dev.vars` is git-ignored and must never be committed.
+Fill in real values in both. Both files are git-ignored and must never be committed.
 
 ## One-time manual setup (production)
 
@@ -59,6 +62,7 @@ Contains `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, and `PUBLIC_TURNSTILE_SITE_KE
    - `TURNSTILE_SECRET_KEY` (secret)
    - `PUBLIC_TURNSTILE_SITE_KEY` (build-time/public var — must be set wherever `npm run build` runs, since it's inlined at build time)
 6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes) and configure a `www` redirect to the apex.
+7. The first deploy may prompt to provision a `SESSION` KV namespace that the `@astrojs/cloudflare` adapter declares even though this site doesn't use sessions — accept the prompt (or disable sessions in the adapter config) to proceed; current config leaves this as-is.
 
 **Option B — Manual deploy from a local/CI shell:**
 
