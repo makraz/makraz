@@ -15,5 +15,10 @@ export default defineConfig({
     }),
   ],
   redirects: { '/': '/fr' },
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    define: {
+      'process.env.ALLOW_MISSING_TURNSTILE': JSON.stringify(process.env.ALLOW_MISSING_TURNSTILE ?? ''),
+    },
+  },
 });
