@@ -1,0 +1,213 @@
+---
+import Base from '../../layouts/Base.astro';
+import Kicker from '../../components/Kicker.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import { locales, t, localePath, type Locale } from '../../i18n';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const title = 'MAKRAZ — Agence digitale à Marrakech';
+const description = "Développement web & mobile, design et communication digitale. Des produits digitaux construits pour durer.";
+---
+<Base lang={lang} path="/" title={title} description={description} active="home">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'MAKRAZ SARLAU',
+    url: 'https://makraz.com',
+    logo: 'https://makraz.com/og-image.png',
+    email: 'contact@makraz.com',
+    telephone: '+212661764392',
+    address: { '@type': 'PostalAddress', addressLocality: 'Marrakech', addressCountry: 'MA', streetAddress: "Centre d'affaires Itrane" },
+  })} />
+
+  <!-- Hero -->
+  <section class="mk-container pb-[90px] pt-[110px]">
+    <Kicker class="mb-7">{t(lang, 'home.hero_kicker')}</Kicker>
+    <h1 class="text-h1 m-0 max-w-[14ch]">{t(lang, 'home.hero_title')}</h1>
+    <p class="mb-11 mt-8 max-w-[56ch] text-[20px] leading-[1.6] text-txt-2">{t(lang, 'home.hero_sub')}</p>
+    <div class="flex flex-wrap items-center gap-4">
+      <a href={localePath(lang, '/contact')} class="btn btn-primary">{t(lang, 'home.hero_cta1')}</a>
+      <a href={localePath(lang, '/portfolio')} class="btn btn-ghost">{t(lang, 'home.hero_cta2')}</a>
+    </div>
+    <div class="mt-24 grid grid-cols-3 gap-8 border-t border-line pt-11 max-[900px]:grid-cols-1">
+      <div>
+        <div class="text-[40px] font-bold leading-none tracking-[-0.02em]">10+</div>
+        <div class="mt-1.5 text-[15px] leading-[1.5] text-txt-3">{t(lang, 'home.stat1')}</div>
+      </div>
+      <div>
+        <div class="text-[40px] font-bold leading-none tracking-[-0.02em]">4</div>
+        <div class="mt-1.5 text-[15px] leading-[1.5] text-txt-3">{t(lang, 'home.stat2')}</div>
+      </div>
+      <div>
+        <div class="text-[40px] font-bold leading-none tracking-[-0.02em]">FR·EN·AR</div>
+        <div class="mt-1.5 text-[15px] leading-[1.5] text-txt-3">{t(lang, 'home.stat3')}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-5">{t(lang, 'home.pillars_kicker')}</Kicker>
+      <h2 class="text-h2 m-0 mb-14">{t(lang, 'home.pillars_title')}</h2>
+      <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
+        <div class="flex flex-col gap-5 rounded-card border border-line bg-paper p-[40px_36px] hover:border-ink max-[900px]:p-[28px_22px]">
+          <div class="text-[13px] font-semibold text-txt-4">01</div>
+          <h3 class="m-0 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'home.p1_title')}</h3>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.p1_desc')}</p>
+          <div class="mt-auto flex flex-col gap-2.5 text-[14px] text-ink">
+            <span>{t(lang, 'home.p1_i1')}</span>
+            <span>{t(lang, 'home.p1_i2')}</span>
+            <span>{t(lang, 'home.p1_i3')}</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-5 rounded-card border border-line bg-paper p-[40px_36px] hover:border-ink max-[900px]:p-[28px_22px]">
+          <div class="text-[13px] font-semibold text-txt-4">02</div>
+          <h3 class="m-0 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'home.p2_title')}</h3>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.p2_desc')}</p>
+          <div class="mt-auto flex flex-col gap-2.5 text-[14px] text-ink">
+            <span>{t(lang, 'home.p2_i1')}</span>
+            <span>{t(lang, 'home.p2_i2')}</span>
+            <span>{t(lang, 'home.p2_i3')}</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-5 rounded-card border border-line bg-paper p-[40px_36px] hover:border-ink max-[900px]:p-[28px_22px]">
+          <div class="text-[13px] font-semibold text-txt-4">03</div>
+          <h3 class="m-0 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'home.p3_title')}</h3>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.p3_desc')}</p>
+          <div class="mt-auto flex flex-col gap-2.5 text-[14px] text-ink">
+            <span>{t(lang, 'home.p3_i1')}</span>
+            <span>{t(lang, 'home.p3_i2')}</span>
+            <span>{t(lang, 'home.p3_i3')}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10">
+        <a href={localePath(lang, '/services')} class="border-b-2 border-ink pb-[3px] text-[16px] font-semibold">{t(lang, 'home.pillars_link')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected work -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section">
+      <div class="mb-14 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <Kicker class="mb-5">{t(lang, 'home.work_kicker')}</Kicker>
+          <h2 class="text-h2 m-0">{t(lang, 'home.work_title')}</h2>
+        </div>
+        <a href={localePath(lang, '/portfolio')} class="whitespace-nowrap border-b-2 border-ink pb-[3px] text-[16px] font-semibold">{t(lang, 'home.work_link')}</a>
+      </div>
+      <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
+        <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
+          <ImagePlaceholder ratio="4/3" label="Capture d'écran — farblieferant.de" radius="card" />
+          <div>
+            <div class="text-[19px] font-bold tracking-[-0.01em]">Farblieferant</div>
+            <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w1_tag')}</div>
+          </div>
+        </a>
+        <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
+          <ImagePlaceholder ratio="4/3" label="Capture d'écran — phpmorocco.ma" radius="card" />
+          <div>
+            <div class="text-[19px] font-bold tracking-[-0.01em]">PHP Morocco</div>
+            <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w2_tag')}</div>
+          </div>
+        </a>
+        <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
+          <ImagePlaceholder ratio="4/3" label="Capture d'écran — marrakechphp.ma" radius="card" />
+          <div>
+            <div class="text-[19px] font-bold tracking-[-0.01em]">Marrakech PHP</div>
+            <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w3_tag')}</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-5">{t(lang, 'home.process_kicker')}</Kicker>
+      <h2 class="text-h2 m-0 mb-14 max-w-[22ch]">{t(lang, 'home.process_title')}</h2>
+      <div class="grid grid-cols-5 gap-6 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1">
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">01</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s1_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s1_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">02</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s2_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s2_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">03</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s3_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s3_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">04</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s4_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s4_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">05</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s5_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s5_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audience -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-5">{t(lang, 'home.who_kicker')}</Kicker>
+      <h2 class="text-h2 m-0 mb-14">{t(lang, 'home.who_title')}</h2>
+      <div class="mk-cell-grid grid grid-cols-2 gap-0 border-t border-line max-[900px]:grid-cols-1">
+        <div class="mk-cell border-b border-line pb-9 pt-9 pe-10 max-[900px]:border-s-0 max-[900px]:px-0 max-[900px]:py-7">
+          <div class="mb-2.5 text-[20px] font-bold">{t(lang, 'home.a1_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.a1_d')}</p>
+        </div>
+        <div class="mk-cell border-b border-s border-line pb-9 pt-9 ps-10 max-[900px]:border-s-0 max-[900px]:px-0 max-[900px]:py-7">
+          <div class="mb-2.5 text-[20px] font-bold">{t(lang, 'home.a2_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.a2_d')}</p>
+        </div>
+        <div class="mk-cell border-b border-line pb-9 pt-9 pe-10 max-[900px]:border-s-0 max-[900px]:px-0 max-[900px]:py-7">
+          <div class="mb-2.5 text-[20px] font-bold">{t(lang, 'home.a3_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.a3_d')}</p>
+        </div>
+        <div class="mk-cell border-b border-s border-line pb-9 pt-9 ps-10 max-[900px]:border-s-0 max-[900px]:px-0 max-[900px]:py-7">
+          <div class="mb-2.5 text-[20px] font-bold">{t(lang, 'home.a4_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.a4_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-5">{t(lang, 'home.tm_kicker')}</Kicker>
+      <h2 class="text-h2 m-0 mb-14">{t(lang, 'home.tm_title')}</h2>
+      <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
+        <figure class="m-0 flex flex-col gap-6 rounded-card border border-line bg-paper p-9">
+          <blockquote class="m-0 text-[17px] leading-[1.65]">{t(lang, 'home.tm1_q')}</blockquote>
+          <figcaption class="mt-auto text-[14px] font-semibold text-txt-4">{t(lang, 'home.tm1_a')}</figcaption>
+        </figure>
+        <figure class="m-0 flex flex-col gap-6 rounded-card border border-line bg-paper p-9">
+          <blockquote class="m-0 text-[17px] leading-[1.65]">{t(lang, 'home.tm2_q')}</blockquote>
+          <figcaption class="mt-auto text-[14px] font-semibold text-txt-4">{t(lang, 'home.tm2_a')}</figcaption>
+        </figure>
+        <figure class="m-0 flex flex-col gap-6 rounded-card border border-line bg-paper p-9">
+          <blockquote class="m-0 text-[17px] leading-[1.65]">{t(lang, 'home.tm3_q')}</blockquote>
+          <figcaption class="mt-auto text-[14px] font-semibold text-txt-4">{t(lang, 'home.tm3_a')}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+</Base>
