@@ -50,7 +50,7 @@ const description = "Comment nous avons construit la plateforme e-commerce de Fa
 
   <!-- Body -->
   <section class="mk-container mx-auto max-w-[840px] pb-10 pt-20">
-    <div class="prose max-w-none [&_h2]:text-h2-sub [&_h2]:m-0 [&_h2]:mb-5 [&_h2]:mt-16 [&_h2:first-child]:mt-0 [&_p]:m-0 [&_p]:mt-0 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a]">
+    <div class="prose max-w-none [&_h2]:text-[length:clamp(30px,3vw,42px)] [&_h2]:font-bold [&_h2]:leading-[1.1] [&_h2]:tracking-[-0.03em] [&_h2]:m-0 [&_h2]:mb-5 [&_h2]:mt-16 [&_h2:first-child]:mt-0 [&_p]:m-0 [&_p]:mt-0 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a]">
       <Content />
     </div>
 
@@ -58,6 +58,14 @@ const description = "Comment nous avons construit la plateforme e-commerce de Fa
       {entry.data.stack.map((item) => (
         <span class={`rounded-full border border-line px-[18px] py-2 text-[14px] font-semibold${item.includes('[') ? ' border-dashed text-txt-4' : ''}`}>{item}</span>
       ))}
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="mk-container">
+    <div class="grid grid-cols-2 gap-7 max-[900px]:grid-cols-1">
+      <ImagePlaceholder ratio="4/3" label="Capture — catalogue produits" radius="media" />
+      <ImagePlaceholder ratio="4/3" label="Capture — tunnel de commande" radius="media" />
     </div>
   </section>
 
