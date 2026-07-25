@@ -7,8 +7,6 @@ const caseStudies = defineCollection({
     project: z.string(),
     lang: z.enum(['fr', 'en', 'ar']),
     kicker: z.string(),
-    stack: z.array(z.string()),
-    results: z.array(z.object({ value: z.string(), label: z.string() })),
   }),
 });
 

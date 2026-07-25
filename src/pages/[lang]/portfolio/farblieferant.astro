@@ -53,36 +53,16 @@ const description = t(lang, 'seo.case_farblieferant_desc');
 
   <!-- Body -->
   <section class="mk-container mx-auto max-w-[840px] pb-10 pt-20">
-    <div class="prose max-w-none [&_h2]:text-[length:clamp(30px,3vw,42px)] [&_h2]:font-bold [&_h2]:leading-[1.1] [&_h2]:tracking-[-0.03em] [&_h2]:m-0 [&_h2]:mb-5 [&_h2]:mt-16 [&_h2:first-child]:mt-0 [&_p]:m-0 [&_p]:mt-0 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a]">
+    <div class="prose max-w-none [&_h2]:text-[length:clamp(30px,3vw,42px)] [&_h2]:font-bold [&_h2]:leading-[1.1] [&_h2]:tracking-[-0.03em] [&_h2]:m-0 [&_h2]:mb-5 [&_h2]:mt-16 [&_h2:first-child]:mt-0 [&_p]:m-0 [&_p]:mt-0 [&_p+p]:mt-6 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a]">
       <Content />
-    </div>
-
-    <div class="mt-7 flex flex-wrap gap-2.5">
-      {entry.data.stack.map((item) => (
-        <span class={`rounded-full border border-line px-[18px] py-2 text-[14px] font-semibold${item.includes('[') ? ' border-dashed text-txt-4' : ''}`}>{item}</span>
-      ))}
     </div>
   </section>
 
   <!-- Gallery -->
-  <section class="mk-container">
+  <section class="mk-container pb-24">
     <div class="grid grid-cols-2 gap-7 max-[900px]:grid-cols-1">
       <Screenshot src={fbCatalogue} alt={t(lang, 'img.fb_catalogue')} ratio="4/3" radius="media" sizes="(max-width: 900px) 100vw, 574px" />
       <Screenshot src={fbProduct} alt={t(lang, 'img.fb_product')} ratio="4/3" radius="media" sizes="(max-width: 900px) 100vw, 574px" />
-    </div>
-  </section>
-
-  <!-- Results -->
-  <section class="mk-container mx-auto max-w-[840px] pb-24 pt-10">
-    <h2 class="text-h2-sub m-0 mb-5">{t(lang, 'case_farblieferant.c3_h')}</h2>
-    <p class="m-0 mb-8 text-[17px] leading-[1.75] text-[#3a3a3a]">{t(lang, 'case_farblieferant.c3_p')}</p>
-    <div class="grid grid-cols-3 gap-7 border-t border-line pt-8 max-[900px]:grid-cols-1">
-      {entry.data.results.map((r) => (
-        <div>
-          <div class="text-[36px] font-bold leading-none tracking-[-0.02em] text-txt-4">{r.value}</div>
-          <div class="mt-1.5 text-[14px] text-txt-3">{r.label}</div>
-        </div>
-      ))}
     </div>
   </section>
 </Base>

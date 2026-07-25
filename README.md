@@ -112,7 +112,7 @@ The site builds and deploys cleanly, but the following content is still placehol
 - **Blog article visuals** — still `ImagePlaceholder` slots on the blog index (3×, 16/10) and the article page (16/8). These need original artwork or licensed images, not screenshots.
 - **Portfolio screenshots** — done. Captured from the live sites into `src/assets/` and rendered through `Screenshot.astro` (build-time WebP, responsive `srcset`, localized alt text via the `img.*` keys): `farblieferant-{hero,card,catalogue,product}.png`, `phpmorocco-card.png`, `marrakechphp-card.png`. Used on the home page work grid, the portfolio page and the Farblieferant case study. Re-shoot at the same viewports if a client site is redesigned — 1512×648 for the 21/9 case-study hero, 1440×990 for 16/11 cards, 1200×900 for the 4/3 gallery.
 - **Real testimonials** — `home.tm*` translation keys currently hold placeholder quotes.
-- **Case study metrics** — the Farblieferant case study has `[à compléter]` markers where real performance numbers are needed.
+- ~~Case study metrics~~ — dropped by decision on 2026-07-25. The Farblieferant case study no longer shows a metrics block or a tech-stack list; the stack is treated as client-confidential and must not be published. The `caseStudies` collection schema has no `stack`/`results` fields any more, so re-adding either means a schema change, not just frontmatter.
 - **Legal information** — RC/ICE/IF registration numbers and the hosting provider name are placeholders in the legal notice page.
 - **Blog article review** — the existing article needs a content/editorial pass from the client before publishing.
 - **EN/AR page titles and meta descriptions** — currently the French copy verbatim for all three locales; need proper translations.
