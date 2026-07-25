@@ -2,7 +2,9 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
-import { parseSubmission, sendViaResend, validate, verifyTurnstile } from '../../lib/contact';
+import {
+  parseSubmission, sendConfirmation, sendViaResend, validate, verifyTurnstile,
+} from '../../lib/contact';
 
 const json = (data: unknown, status: number) =>
   new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
@@ -27,6 +29,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   if (!(await sendViaResend(s, env.RESEND_API_KEY)))
     return wantsJson ? json({ ok: false, error: 'send' }, 500) : back('form-error');
+
+  // Best-effort auto-reply: the submission already succeeded, so never fail the request on this.
+  if (!(await sendConfirmation(s, env.RESEND_API_KEY)))
+    console.error(`confirmation email to the sender failed (lang=${s.lang})`);
 
   return wantsJson ? json({ ok: true }, 200) : back('form-sent');
 };

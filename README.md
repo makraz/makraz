@@ -74,8 +74,29 @@ Fill in real values in both. Both files are git-ignored and must never be commit
 ### Resend
 
 1. Create an API key in the Resend dashboard, use it as `RESEND_API_KEY`.
-2. Verify the `makraz.com` domain (add the SPF/DKIM DNS records shown in the Resend dashboard).
-3. Sender address used by the contact form: `site@makraz.com`.
+2. Verify the `makraz.com` domain (add the SPF/DKIM DNS records shown in the Resend dashboard). Done — verified, region `eu-west-1`.
+3. Sender address used by the contact form: `contact@makraz.com` — the real Zoho mailbox, so replies land in the inbox even if a mail client ignores `Reply-To`. No separate `site@`/`noreply@` mailbox is needed.
+
+#### Email templates
+
+The contact form sends **published Resend templates**, referenced by stable alias — the copy and design live in the Resend dashboard, not in this repo:
+
+| Alias | Purpose | Variables |
+|---|---|---|
+| `makraz-contact-notification` | Internal notification to `contact@makraz.com` | `SENDER_NAME`, `SENDER_EMAIL`, `COMPANY`, `LANG`, `MESSAGE` |
+| `makraz-contact-confirmation-fr` | Auto-reply to the sender (French) | `SENDER_NAME`, `MESSAGE` |
+| `makraz-contact-confirmation-en` | Auto-reply to the sender (English) | `SENDER_NAME`, `MESSAGE` |
+| `makraz-contact-confirmation-ar` | Auto-reply to the sender (Arabic, RTL) | `SENDER_NAME`, `MESSAGE` |
+
+Notes:
+- Editing copy in the dashboard requires **re-publishing** the template; unpublished drafts are not sendable.
+- Adding, removing or renaming a variable requires a matching change in `src/lib/contact.ts`.
+- The notification send is fatal (a failure returns `form-error`); the confirmation is best-effort and only logged on failure, so a broken auto-reply never loses a lead.
+- Confirmation subjects are also set in `src/lib/contact.ts` (`CONFIRMATION_SUBJECTS`) so the payload is self-contained — keep them in sync with the templates' own subjects.
+
+#### Inbound mail
+
+Inbound mail for `@makraz.com` is handled by **Zoho** — Resend is used for *sending only* (`receiving: disabled`). Do not enable Resend receiving: it requires an apex `MX` record pointing at `inbound-smtp.<region>.amazonaws.com`, which would take over all mail for the domain and break Zoho delivery to `contact@makraz.com`.
 
 ### Turnstile
 

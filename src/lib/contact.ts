@@ -49,23 +49,66 @@ export async function verifyTurnstile(
   }
 }
 
-export async function sendViaResend(
-  s: Submission, apiKey: string, fetchImpl: typeof fetch = fetch,
+/** Published Resend templates (managed in the Resend dashboard, referenced by alias). */
+export const NOTIFICATION_TEMPLATE = 'makraz-contact-notification';
+export const confirmationTemplate = (lang: Lang) => `makraz-contact-confirmation-${lang}`;
+
+/** Mirrors each confirmation template's own subject; sent explicitly so the payload is self-contained. */
+const CONFIRMATION_SUBJECTS: Record<Lang, string> = {
+  fr: 'Merci, votre message est bien arrivé — MAKRAZ',
+  en: 'Thanks — your message reached me — MAKRAZ',
+  ar: 'شكراً، وصلت رسالتك — MAKRAZ',
+};
+
+async function postEmail(
+  apiKey: string, payload: Record<string, unknown>, fetchImpl: typeof fetch,
 ): Promise<boolean> {
   try {
     const r = await fetchImpl('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: 'MAKRAZ Site <site@makraz.com>',
-        to: ['contact@makraz.com'],
-        reply_to: s.email,
-        subject: `Contact makraz.com — ${s.name}`,
-        text: `Nom: ${s.name}\nEmail: ${s.email}\nSociété: ${s.company || '—'}\nLangue: ${s.lang}\n\n${s.message}`,
-      }),
+      body: JSON.stringify(payload),
     });
     return r.ok;
   } catch {
     return false;
   }
+}
+
+/** Internal notification to contact@makraz.com. Failure means the submission is lost — treat as fatal. */
+export async function sendViaResend(
+  s: Submission, apiKey: string, fetchImpl: typeof fetch = fetch,
+): Promise<boolean> {
+  return postEmail(apiKey, {
+    from: 'MAKRAZ Site <contact@makraz.com>',
+    to: ['contact@makraz.com'],
+    reply_to: s.email,
+    subject: `Contact makraz.com — ${s.name}`,
+    template: {
+      id: NOTIFICATION_TEMPLATE,
+      variables: {
+        SENDER_NAME: s.name,
+        SENDER_EMAIL: s.email,
+        COMPANY: s.company || '—',
+        LANG: s.lang,
+        MESSAGE: s.message,
+      },
+    },
+  }, fetchImpl);
+}
+
+/** Localized auto-reply to the person who filled the form. Best-effort: never blocks a successful submission. */
+export async function sendConfirmation(
+  s: Submission, apiKey: string, fetchImpl: typeof fetch = fetch,
+): Promise<boolean> {
+  // From is the real Zoho mailbox, so a reply reaches the inbox even if a client ignores Reply-To.
+  return postEmail(apiKey, {
+    from: 'MAKRAZ <contact@makraz.com>',
+    to: [s.email],
+    subject: CONFIRMATION_SUBJECTS[s.lang],
+    template: {
+      id: confirmationTemplate(s.lang),
+      variables: { SENDER_NAME: s.name, MESSAGE: s.message },
+    },
+  }, fetchImpl);
 }
