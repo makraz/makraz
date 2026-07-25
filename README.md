@@ -40,7 +40,7 @@ Secret keys (read via `cloudflare:workers` at runtime) and public build-time var
 
 ```bash
 cp .dev.vars.example .dev.vars   # RESEND_API_KEY, TURNSTILE_SECRET_KEY (secrets, git-ignored)
-cp .env.example .env             # PUBLIC_TURNSTILE_SITE_KEY (public, git-ignored)
+cp .env.example .env             # PUBLIC_TURNSTILE_SITE_KEY (public; git-ignored, only needed to override the committed value)
 ```
 
 Fill in real values in both. Both files are git-ignored and must never be committed.
@@ -60,7 +60,7 @@ Fill in real values in both. Both files are git-ignored and must never be commit
 5. Add environment variables/secrets under the Worker's Settings:
    - `RESEND_API_KEY` (secret)
    - `TURNSTILE_SECRET_KEY` (secret)
-   - `PUBLIC_TURNSTILE_SITE_KEY` (build-time/public var — must be set wherever `npm run build` runs, since it's inlined at build time)
+   - `PUBLIC_TURNSTILE_SITE_KEY` — **no longer needs setting**: the site key is committed in `.env.production` (public by design, inlined at build time). Only set it here to override with a different widget.
 6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes) and configure a `www` redirect to the apex.
 7. The first deploy may prompt to provision a `SESSION` KV namespace that the `@astrojs/cloudflare` adapter declares even though this site doesn't use sessions — accept the prompt (or disable sessions in the adapter config) to proceed; current config leaves this as-is.
 
@@ -68,7 +68,7 @@ Fill in real values in both. Both files are git-ignored and must never be commit
 
 1. `npm run build`
 2. `npx wrangler deploy` (add `--dry-run` first to verify without publishing)
-3. Set secrets once via `wrangler secret put RESEND_API_KEY` and `wrangler secret put TURNSTILE_SECRET_KEY`; set `PUBLIC_TURNSTILE_SITE_KEY` as a build-time env var wherever the build runs.
+3. Set secrets once via `wrangler secret put RESEND_API_KEY` and `wrangler secret put TURNSTILE_SECRET_KEY`. `PUBLIC_TURNSTILE_SITE_KEY` comes from the committed `.env.production`.
 4. Attach the custom domain as in step 6 above.
 
 ### Resend
@@ -101,7 +101,7 @@ Inbound mail for `@makraz.com` is handled by **Zoho** — Resend is used for *se
 ### Turnstile
 
 1. Create a Turnstile widget for `makraz.com` in the Cloudflare dashboard.
-2. Copy the site key into `PUBLIC_TURNSTILE_SITE_KEY` (public) and the secret key into `TURNSTILE_SECRET_KEY` (secret).
+2. The site key is committed in `.env.production` (`PUBLIC_TURNSTILE_SITE_KEY`) — public by design, since it is served inside the contact page HTML. The secret key is a Worker secret (`TURNSTILE_SECRET_KEY`) and must never be committed. To swap widgets, edit `.env.production` and re-run `wrangler secret put TURNSTILE_SECRET_KEY`.
 
 ## Content gaps awaiting client input
 
