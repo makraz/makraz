@@ -322,5 +322,7 @@
   "img.fb_card": "Page d'accueil de la boutique en ligne Farblieferant",
   "img.fb_hero": "Farblieferant — page d'accueil et catégories de produits",
   "img.fb_catalogue": "Catalogue produits Farblieferant avec filtres par pièce et par type de peinture",
-  "img.fb_product": "Fiche produit Farblieferant : choix du format, du coloris et calculateur de surface"
+  "img.fb_product": "Fiche produit Farblieferant : choix du format, du coloris et calculateur de surface",
+  "img.php_card": "Page d'accueil de la plateforme communautaire PHP Morocco",
+  "img.mphp_card": "Page d'accueil du site des meetups MarrakechPHP"
 }

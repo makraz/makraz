@@ -67,7 +67,9 @@ const MANUAL_KEYS = {
     'img.fb_card': "Page d'accueil de la boutique en ligne Farblieferant",
     'img.fb_hero': "Farblieferant — page d'accueil et catégories de produits",
     'img.fb_catalogue': "Catalogue produits Farblieferant avec filtres par pièce et par type de peinture",
-    'img.fb_product': "Fiche produit Farblieferant : choix du format, du coloris et calculateur de surface"
+    'img.fb_product': "Fiche produit Farblieferant : choix du format, du coloris et calculateur de surface",
+    'img.php_card': "Page d'accueil de la plateforme communautaire PHP Morocco",
+    'img.mphp_card': "Page d'accueil du site des meetups MarrakechPHP"
   },
   en: {
     'contact.status_sending': 'Sending…',
@@ -90,7 +92,9 @@ const MANUAL_KEYS = {
     'img.fb_card': "Home page of the Farblieferant online shop",
     'img.fb_hero': "Farblieferant — home page and product categories",
     'img.fb_catalogue': "Farblieferant product catalogue with filters by room and paint type",
-    'img.fb_product': "Farblieferant product page: size and colour selection with a coverage calculator"
+    'img.fb_product': "Farblieferant product page: size and colour selection with a coverage calculator",
+    'img.php_card': "Home page of the PHP Morocco community platform",
+    'img.mphp_card': "Home page of the MarrakechPHP meetup site"
   },
   ar: {
     'contact.status_sending': 'جارٍ الإرسال…',
@@ -113,7 +117,9 @@ const MANUAL_KEYS = {
     'img.fb_card': "الصفحة الرئيسية لمتجر Farblieferant الإلكتروني",
     'img.fb_hero': "Farblieferant — الصفحة الرئيسية وفئات المنتجات",
     'img.fb_catalogue': "كتالوج منتجات Farblieferant مع فلاتر حسب الغرفة ونوع الطلاء",
-    'img.fb_product': "صفحة المنتج في Farblieferant: اختيار الحجم واللون مع حاسبة المساحة"
+    'img.fb_product': "صفحة المنتج في Farblieferant: اختيار الحجم واللون مع حاسبة المساحة",
+    'img.php_card': "الصفحة الرئيسية لمنصة مجتمع PHP Morocco",
+    'img.mphp_card': "الصفحة الرئيسية لموقع لقاءات MarrakechPHP"
   }
 };
 
