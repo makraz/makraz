@@ -2,7 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Kicker from '../../../components/Kicker.astro';
-import ImagePlaceholder from '../../../components/ImagePlaceholder.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import fbHero from '../../../assets/farblieferant-hero.png';
+import fbCatalogue from '../../../assets/farblieferant-catalogue.png';
+import fbProduct from '../../../assets/farblieferant-product.png';
 import { locales, t, localePath, type Locale } from '../../../i18n';
 
 export async function getStaticPaths() {
@@ -45,7 +48,7 @@ const description = t(lang, 'seo.case_farblieferant_desc');
   </section>
 
   <div class="mk-container">
-    <ImagePlaceholder ratio="21/9" label="Capture d'écran principale — farblieferant.de" radius="media" />
+    <Screenshot src={fbHero} alt={t(lang, 'img.fb_hero')} ratio="21/9" radius="media" sizes="(max-width: 1240px) 100vw, 1176px" loading="eager" />
   </div>
 
   <!-- Body -->
@@ -64,8 +67,8 @@ const description = t(lang, 'seo.case_farblieferant_desc');
   <!-- Gallery -->
   <section class="mk-container">
     <div class="grid grid-cols-2 gap-7 max-[900px]:grid-cols-1">
-      <ImagePlaceholder ratio="4/3" label="Capture — catalogue produits" radius="media" />
-      <ImagePlaceholder ratio="4/3" label="Capture — tunnel de commande" radius="media" />
+      <Screenshot src={fbCatalogue} alt={t(lang, 'img.fb_catalogue')} ratio="4/3" radius="media" sizes="(max-width: 900px) 100vw, 574px" />
+      <Screenshot src={fbProduct} alt={t(lang, 'img.fb_product')} ratio="4/3" radius="media" sizes="(max-width: 900px) 100vw, 574px" />
     </div>
   </section>
 

@@ -7,7 +7,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://makraz.com',
   output: 'static',
-  adapter: cloudflare(),
+  // imageService: 'compile' optimizes images with sharp at build time. Without it the adapter
+  // emits runtime /_image?… URLs, which the deployed Worker does not serve for a static build.
+  adapter: cloudflare({ imageService: 'compile' }),
   trailingSlash: 'never',
   integrations: [
     sitemap({

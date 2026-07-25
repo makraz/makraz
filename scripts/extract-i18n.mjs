@@ -63,7 +63,11 @@ const MANUAL_KEYS = {
     'seo.contact_title': "Contact — MAKRAZ",
     'seo.contact_desc': "Parlons de votre projet. Un appel découverte gratuit, réponse sous 24 h — par email, WhatsApp ou téléphone.",
     'seo.legal_title': "Mentions légales — MAKRAZ",
-    'seo.legal_desc': "Mentions légales et politique de confidentialité de MAKRAZ SARLAU."
+    'seo.legal_desc': "Mentions légales et politique de confidentialité de MAKRAZ SARLAU.",
+    'img.fb_card': "Page d'accueil de la boutique en ligne Farblieferant",
+    'img.fb_hero': "Farblieferant — page d'accueil et catégories de produits",
+    'img.fb_catalogue': "Catalogue produits Farblieferant avec filtres par pièce et par type de peinture",
+    'img.fb_product': "Fiche produit Farblieferant : choix du format, du coloris et calculateur de surface"
   },
   en: {
     'contact.status_sending': 'Sending…',
@@ -82,7 +86,11 @@ const MANUAL_KEYS = {
     'seo.contact_title': "Contact — MAKRAZ",
     'seo.contact_desc': "Let's talk about your project. A free discovery call, answered within 24 hours — by email, WhatsApp or phone.",
     'seo.legal_title': "Legal notice — MAKRAZ",
-    'seo.legal_desc': "Legal notice and privacy policy of MAKRAZ SARLAU."
+    'seo.legal_desc': "Legal notice and privacy policy of MAKRAZ SARLAU.",
+    'img.fb_card': "Home page of the Farblieferant online shop",
+    'img.fb_hero': "Farblieferant — home page and product categories",
+    'img.fb_catalogue': "Farblieferant product catalogue with filters by room and paint type",
+    'img.fb_product': "Farblieferant product page: size and colour selection with a coverage calculator"
   },
   ar: {
     'contact.status_sending': 'جارٍ الإرسال…',
@@ -101,7 +109,11 @@ const MANUAL_KEYS = {
     'seo.contact_title': "اتصل بنا — MAKRAZ",
     'seo.contact_desc': "لنتحدث عن مشروعك. مكالمة تعريفية مجانية، والرد خلال ٢٤ ساعة — بالبريد الإلكتروني أو واتساب أو الهاتف.",
     'seo.legal_title': "الإشعارات القانونية — MAKRAZ",
-    'seo.legal_desc': "الإشعارات القانونية وسياسة الخصوصية لشركة MAKRAZ SARLAU."
+    'seo.legal_desc': "الإشعارات القانونية وسياسة الخصوصية لشركة MAKRAZ SARLAU.",
+    'img.fb_card': "الصفحة الرئيسية لمتجر Farblieferant الإلكتروني",
+    'img.fb_hero': "Farblieferant — الصفحة الرئيسية وفئات المنتجات",
+    'img.fb_catalogue': "كتالوج منتجات Farblieferant مع فلاتر حسب الغرفة ونوع الطلاء",
+    'img.fb_product': "صفحة المنتج في Farblieferant: اختيار الحجم واللون مع حاسبة المساحة"
   }
 };
 

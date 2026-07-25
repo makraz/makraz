@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import Kicker from '../../components/Kicker.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import Screenshot from '../../components/Screenshot.astro';
+import fbCard from '../../assets/farblieferant-card.png';
 import { locales, t, localePath, type Locale } from '../../i18n';
 
 export function getStaticPaths() {
@@ -23,7 +25,7 @@ const description = t(lang, 'seo.portfolio_desc');
   <!-- Farblieferant -->
   <section class="border-t border-line bg-card">
     <div class="mk-container mk-section grid grid-cols-[1.25fr_1fr] items-center gap-16 max-[900px]:grid-cols-1">
-      <ImagePlaceholder ratio="16/11" label="Capture d'écran — farblieferant.de" radius="media" />
+      <Screenshot src={fbCard} alt={t(lang, 'img.fb_card')} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" />
       <div>
         <Kicker class="mb-[18px]">{t(lang, 'portfolio.f1_kicker')}</Kicker>
         <h2 class="text-h2-sub m-0 mb-[18px]">Farblieferant</h2>

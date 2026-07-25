@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  ratio?: string;
+  radius?: 'card' | 'media';
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+const {
+  src, alt, ratio = '4/3', radius = 'card',
+  sizes = '(max-width: 900px) 100vw, 50vw',
+  loading = 'lazy',
+  class: className = '',
+} = Astro.props;
+---
+<div
+  class:list={[
+    'overflow-hidden bg-[#f3f3f3]',
+    radius === 'media' ? 'rounded-media' : 'rounded-card',
+    className,
+  ]}
+  style={`aspect-ratio: ${ratio};`}
+>
+  <Image
+    src={src}
+    alt={alt}
+    widths={[600, 900, 1400]}
+    sizes={sizes}
+    loading={loading}
+    decoding={loading === 'eager' ? 'auto' : 'async'}
+    class="h-full w-full object-cover object-top"
+  />
+</div>

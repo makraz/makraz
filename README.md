@@ -114,7 +114,8 @@ Inbound mail for `@makraz.com` is handled by **Zoho** — Resend is used for *se
 
 The site builds and deploys cleanly, but the following content is still placeholder pending material from the client:
 
-- **Portfolio screenshots and founder photo** — currently `ImagePlaceholder` slots; swap in real images once supplied.
+- **Founder photo** — still an `ImagePlaceholder` slot on the About page; swap in a real image once supplied.
+- **Screenshots for PHPMorocco and MarrakechPHP** — still `ImagePlaceholder` slots on the portfolio page. Farblieferant is done: four screenshots captured from the live site live in `src/assets/farblieferant-*.png` and render through `Screenshot.astro`.
 - **Real testimonials** — `home.tm*` translation keys currently hold placeholder quotes.
 - **Case study metrics** — the Farblieferant case study has `[à compléter]` markers where real performance numbers are needed.
 - **Legal information** — RC/ICE/IF registration numbers and the hosting provider name are placeholders in the legal notice page.
