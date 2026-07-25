@@ -114,8 +114,9 @@ Inbound mail for `@makraz.com` is handled by **Zoho** — Resend is used for *se
 
 The site builds and deploys cleanly, but the following content is still placeholder pending material from the client:
 
-- **Founder photo** — still an `ImagePlaceholder` slot on the About page; swap in a real image once supplied.
-- **Portfolio screenshots** — done. Captured from the live sites into `src/assets/` and rendered through `Screenshot.astro` (build-time WebP, responsive `srcset`, localized alt text via the `img.*` keys): `farblieferant-{hero,card,catalogue,product}.png`, `phpmorocco-card.png`, `marrakechphp-card.png`. Re-shoot at the same viewports if a client site is redesigned — 1512×648 for the 21/9 case-study hero, 1440×990 for 16/11 cards, 1200×900 for the 4/3 gallery.
+- **Founder photo** — still an `ImagePlaceholder` slot on the About page (`a-propos.astro`, 1/1); swap in a real image once supplied.
+- **Blog article visuals** — still `ImagePlaceholder` slots on the blog index (3×, 16/10) and the article page (16/8). These need original artwork or licensed images, not screenshots.
+- **Portfolio screenshots** — done. Captured from the live sites into `src/assets/` and rendered through `Screenshot.astro` (build-time WebP, responsive `srcset`, localized alt text via the `img.*` keys): `farblieferant-{hero,card,catalogue,product}.png`, `phpmorocco-card.png`, `marrakechphp-card.png`. Used on the home page work grid, the portfolio page and the Farblieferant case study. Re-shoot at the same viewports if a client site is redesigned — 1512×648 for the 21/9 case-study hero, 1440×990 for 16/11 cards, 1200×900 for the 4/3 gallery.
 - **Real testimonials** — `home.tm*` translation keys currently hold placeholder quotes.
 - **Case study metrics** — the Farblieferant case study has `[à compléter]` markers where real performance numbers are needed.
 - **Legal information** — RC/ICE/IF registration numbers and the hosting provider name are placeholders in the legal notice page.

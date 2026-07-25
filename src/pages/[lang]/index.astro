@@ -1,7 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Kicker from '../../components/Kicker.astro';
-import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import Screenshot from '../../components/Screenshot.astro';
+import fbCard from '../../assets/farblieferant-card.png';
+import phpCard from '../../assets/phpmorocco-card.png';
+import mphpCard from '../../assets/marrakechphp-card.png';
 import { locales, t, localePath, type Locale } from '../../i18n';
 
 export function getStaticPaths() {
@@ -104,21 +107,21 @@ const description = t(lang, 'seo.home_desc');
       </div>
       <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
         <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
-          <ImagePlaceholder ratio="4/3" label="Capture d'écran — farblieferant.de" radius="card" />
+          <Screenshot src={fbCard} alt={t(lang, 'img.fb_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
           <div>
             <div class="text-[19px] font-bold tracking-[-0.01em]">Farblieferant</div>
             <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w1_tag')}</div>
           </div>
         </a>
         <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
-          <ImagePlaceholder ratio="4/3" label="Capture d'écran — phpmorocco.ma" radius="card" />
+          <Screenshot src={phpCard} alt={t(lang, 'img.php_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
           <div>
             <div class="text-[19px] font-bold tracking-[-0.01em]">PHP Morocco</div>
             <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w2_tag')}</div>
           </div>
         </a>
         <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
-          <ImagePlaceholder ratio="4/3" label="Capture d'écran — marrakechphp.ma" radius="card" />
+          <Screenshot src={mphpCard} alt={t(lang, 'img.mphp_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
           <div>
             <div class="text-[19px] font-bold tracking-[-0.01em]">Marrakech PHP</div>
             <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w3_tag')}</div>
