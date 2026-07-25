@@ -51,7 +51,8 @@ Fill in real values in both. Both files are git-ignored and must never be commit
 
 `@astrojs/cloudflare` 14 targets **Cloudflare Workers with static assets**, not classic Pages — there is no "output directory" setting to configure in a Pages project. Two ways to deploy:
 
-**Option A — Git integration (Workers Builds), preferred:**
+**Option A — Git integration (Workers Builds).** This is the intended flow, but note it was *not* connected for the first month of the project: every deployment until 2026-07-25 came from a manual `wrangler deploy`, so pushing to `main` did **not** update the live site. If builds are connected, verify with `npx wrangler deployments list` — git-triggered deploys show a build source rather than `Source: Upload`.
+
 
 1. Create a Cloudflare Workers project connected to this repository (Workers & Pages → Create → connect to Git; this is the "Workers Builds" flow, not the legacy Pages flow).
 2. Production branch: `main`.
@@ -61,17 +62,10 @@ Fill in real values in both. Both files are git-ignored and must never be commit
    - `RESEND_API_KEY` (secret)
    - `TURNSTILE_SECRET_KEY` (secret)
    - `PUBLIC_TURNSTILE_SITE_KEY` — **no longer needs setting**: the site key is committed in `.env.production` (public by design, inlined at build time). Only set it here to override with a different widget.
-6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes). Done — both `makraz.com` and `www.makraz.com` are declared in `wrangler.jsonc` as custom domains.
-
-   ⚠️ **`www` currently serves the site instead of redirecting.** Because `www.makraz.com` is a custom domain on the Worker, both hosts return 200. Canonical tags on every page point at the apex, so search engines pick the right host, but a real 301 is cleaner. Fix in the Cloudflare dashboard (Rules → Redirect Rules → Single Redirect), since it can't be expressed in `wrangler.jsonc`:
-
-   - **When:** hostname equals `www.makraz.com`
-   - **Then:** static/dynamic redirect to `concat("https://makraz.com", http.request.uri.path)`, status **301**, preserve query string
-
-   Leave the `www.makraz.com` custom-domain route in place — the redirect rule runs before the Worker.
+6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes). Done — both `makraz.com` and `www.makraz.com` are declared in `wrangler.jsonc` as custom domains, and a Cloudflare redirect rule already 301s `www.makraz.com` to the apex (verified live). Nothing to do here.
 7. The first deploy may prompt to provision a `SESSION` KV namespace that the `@astrojs/cloudflare` adapter declares even though this site doesn't use sessions — accept the prompt (or disable sessions in the adapter config) to proceed; current config leaves this as-is.
 
-**Option B — Manual deploy from a local/CI shell:**
+**Option B — Manual deploy from a local/CI shell** (what has actually been used so far; also the fallback whenever Workers Builds is down or disconnected):
 
 1. `npm run build`
 2. `npx wrangler deploy` (add `--dry-run` first to verify without publishing)
@@ -122,6 +116,16 @@ The site builds and deploys cleanly, but the following content is still placehol
 - **Legal information** — RC/ICE/IF registration numbers and the hosting provider name are placeholders in the legal notice page.
 - **Blog article review** — the existing article needs a content/editorial pass from the client before publishing.
 - **EN/AR page titles and meta descriptions** — currently the French copy verbatim for all three locales; need proper translations.
+
+## Deploying
+
+Until Workers Builds is confirmed connected, **a push to `main` does not deploy**. Ship with:
+
+```bash
+npm run build && npx wrangler deploy
+```
+
+Then sanity-check the live site rather than trusting the upload output — e.g. `curl -s https://makraz.com/en | grep '<title>'` should show the English title, not the French one.
 
 ## Testing
 
