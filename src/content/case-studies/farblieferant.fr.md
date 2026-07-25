@@ -20,6 +20,8 @@ Autour de la vente, un socle éditorial — inspiration, conseils, articles tech
 
 ## La plateforme aujourd'hui
 
-La boutique est en production et traite les commandes au quotidien. Elle couvre plusieurs univers produits, du chantier de façade à la finition intérieure, avec plusieurs dizaines de références par univers, déclinées en contenances et en teintes.
+La boutique est aujourd'hui pleinement opérationnelle et gère quotidiennement les commandes clients. Son catalogue couvre plusieurs univers de produits, allant des solutions pour les façades aux finitions intérieures, avec des dizaines de références par catégorie, disponibles en différents conditionnements et coloris.
 
-Le site tient les engagements commerciaux affichés — expédition annoncée en un à trois jours ouvrés, livraison offerte à partir d'un seuil de commande, conseil accessible avant l'achat — et l'espace éditorial continue d'être alimenté, ce qui installe la marque sur des requêtes qu'une simple fiche produit n'atteint pas. L'architecture a été pensée pour absorber l'élargissement du catalogue sans refonte : ajouter une gamme est une opération de contenu, pas un chantier technique.
+La plateforme répond aux engagements commerciaux de la marque : expédition sous un à trois jours ouvrés, livraison offerte à partir d'un certain montant d'achat et accompagnement client avant la commande. En parallèle, le contenu éditorial est régulièrement enrichi afin de renforcer la visibilité organique du site sur des requêtes qui dépassent le simple référencement des fiches produits.
+
+L'architecture technique a été conçue pour accompagner la croissance de l'activité. L'ajout de nouvelles gammes ou références s'effectue simplement via l'administration du contenu, sans nécessiter de développement spécifique ni de refonte de la plateforme.

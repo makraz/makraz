@@ -20,6 +20,8 @@ Around the shop sits an editorial layer — inspiration, advice, technical artic
 
 ## The platform today
 
-The store is in production and handles orders every day. It covers several product worlds, from façade work to interior finishing, with dozens of references in each, available in a range of sizes and shades.
+The store is now fully operational and handles customer orders every day. Its catalogue covers several product worlds, from façade solutions to interior finishes, with dozens of references per category, available in a range of container sizes and colours.
 
-The site holds the commercial promises it displays — dispatch quoted at one to three working days, free delivery above an order threshold, advice available before purchase — and the editorial section keeps growing, which puts the brand in front of searches a product page alone would never reach. The architecture was built to absorb catalogue growth without a rebuild: adding a range is a content task, not an engineering project.
+The platform delivers on the brand's commercial commitments: dispatch within one to three working days, free delivery above a certain order value, and customer guidance before the order is placed. Alongside this, the editorial content is enriched regularly to strengthen the site's organic visibility on searches that reach well beyond product-page listings.
+
+The technical architecture was designed to support the growth of the business. Adding new ranges or references is done straightforwardly through content administration, with no bespoke development and no rebuild of the platform.
