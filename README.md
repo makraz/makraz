@@ -61,7 +61,14 @@ Fill in real values in both. Both files are git-ignored and must never be commit
    - `RESEND_API_KEY` (secret)
    - `TURNSTILE_SECRET_KEY` (secret)
    - `PUBLIC_TURNSTILE_SITE_KEY` — **no longer needs setting**: the site key is committed in `.env.production` (public by design, inlined at build time). Only set it here to override with a different widget.
-6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes) and configure a `www` redirect to the apex.
+6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes). Done — both `makraz.com` and `www.makraz.com` are declared in `wrangler.jsonc` as custom domains.
+
+   ⚠️ **`www` currently serves the site instead of redirecting.** Because `www.makraz.com` is a custom domain on the Worker, both hosts return 200. Canonical tags on every page point at the apex, so search engines pick the right host, but a real 301 is cleaner. Fix in the Cloudflare dashboard (Rules → Redirect Rules → Single Redirect), since it can't be expressed in `wrangler.jsonc`:
+
+   - **When:** hostname equals `www.makraz.com`
+   - **Then:** static/dynamic redirect to `concat("https://makraz.com", http.request.uri.path)`, status **301**, preserve query string
+
+   Leave the `www.makraz.com` custom-domain route in place — the redirect rule runs before the Worker.
 7. The first deploy may prompt to provision a `SESSION` KV namespace that the `@astrojs/cloudflare` adapter declares even though this site doesn't use sessions — accept the prompt (or disable sessions in the adapter config) to proceed; current config leaves this as-is.
 
 **Option B — Manual deploy from a local/CI shell:**

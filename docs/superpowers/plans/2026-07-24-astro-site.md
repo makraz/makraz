@@ -1,6 +1,10 @@
 # makraz.com Production Astro Site Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Status: complete.** All 15 tasks were implemented and shipped (see git history from 2026-07-24 on).
+> Kept for reference — some details have since changed in follow-up work (e.g. the contact form now
+> sends published Resend templates from `contact@makraz.com`, not an inline text body from `site@makraz.com`).
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Rebuild the makraz.com design handoff (9 prototype pages, trilingual FR/EN/AR) as a production, statically-prerendered Astro site on Cloudflare Pages with a single server route for the contact form.
 
@@ -34,14 +38,14 @@
 **Interfaces:**
 - Produces: a building Astro project; `npm run dev|build|preview|check` scripts; `astro.config.mjs` with `site`, cloudflare adapter, sitemap, tailwind vite plugin.
 
-- [ ] **Step 1: Remove duplicate prototypes from the root**
+- [x] **Step 1: Remove duplicate prototypes from the root**
 
 ```bash
 git rm Home.dc.html Services.dc.html Portfolio.dc.html About.dc.html Contact.dc.html Blog.dc.html Article.dc.html CaseFarblieferant.dc.html Legal.dc.html support.js image-slot.js
 git commit -m "Remove root prototype duplicates, design reference stays in design_handoff_makraz_website"
 ```
 
-- [ ] **Step 2: Scaffold Astro into the existing directory**
+- [x] **Step 2: Scaffold Astro into the existing directory**
 
 `npm create astro` refuses non-empty dirs interactively; scaffold in a temp dir and move the pieces:
 
@@ -53,7 +57,7 @@ rm -rf .astro-tmp
 npm install
 ```
 
-- [ ] **Step 3: Add integrations**
+- [x] **Step 3: Add integrations**
 
 ```bash
 npx astro add cloudflare sitemap --yes
@@ -61,7 +65,7 @@ npm install tailwindcss @tailwindcss/vite
 npm install -D wrangler
 ```
 
-- [ ] **Step 4: Write `astro.config.mjs`**
+- [x] **Step 4: Write `astro.config.mjs`**
 
 ```js
 // @ts-check
@@ -85,13 +89,13 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 5: Write `public/_redirects`** (edge-level redirect on Cloudflare; the config redirect covers dev/preview)
+- [x] **Step 5: Write `public/_redirects`** (edge-level redirect on Cloudflare; the config redirect covers dev/preview)
 
 ```
 / /fr 302
 ```
 
-- [ ] **Step 6: Ensure `.gitignore` covers Astro**
+- [x] **Step 6: Ensure `.gitignore` covers Astro**
 
 ```
 node_modules/
@@ -101,7 +105,7 @@ dist/
 .dev.vars
 ```
 
-- [ ] **Step 7: Replace `src/pages/index.astro` placeholder content**
+- [x] **Step 7: Replace `src/pages/index.astro` placeholder content**
 
 ```astro
 ---
@@ -113,12 +117,12 @@ dist/
 
 Note: with `redirects: { '/': '/fr' }`, Astro generates the root redirect page itself and a root `index.astro` would conflict — if `astro build` reports a route collision, delete `src/pages/index.astro` entirely and rely on the config redirect. Verify which happens and keep the variant that builds.
 
-- [ ] **Step 8: Verify build**
+- [x] **Step 8: Verify build**
 
 Run: `npm run build`
 Expected: `Complete!` with dist/ output, no errors.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -135,7 +139,7 @@ git commit -m "Scaffold Astro 5 with cloudflare adapter, tailwind v4, sitemap"
 **Interfaces:**
 - Produces: Tailwind theme tokens usable as utilities: colors `ink`, `paper`, `card`, `ink-soft` (#2e2e2e), `txt-2` (#555555), `txt-3` (#6b6b6b), `txt-4` (#8a8a8a), `line` (#ececec), `line-mid` (#d8d8d8), `line-dark` (#262626), `ondark-1` (#d4d4d4), `ondark-2` (#a3a3a3), `ondark-3` (#737373); radii `pill`, `card`, `media`, `input`; fonts `sans`, `arabic`. Component classes: `.mk-container`, `.mk-section`, `.text-h1`, `.text-h2`, `.text-h2-sub`, `.text-kicker`, `.btn`, `.btn-primary`, `.btn-ghost`, `.btn-ondark`.
 
-- [ ] **Step 1: Write `src/styles/global.css`**
+- [x] **Step 1: Write `src/styles/global.css`**
 
 ```css
 @import 'tailwindcss';
@@ -202,14 +206,14 @@ git commit -m "Scaffold Astro 5 with cloudflare adapter, tailwind v4, sitemap"
 }
 ```
 
-- [ ] **Step 2: Verify the stylesheet compiles**
+- [x] **Step 2: Verify the stylesheet compiles**
 
 Temporarily import it from `src/pages/index.astro` (or the redirect variant kept in Task 1 — if no root page exists, create `src/pages/_smoke.astro` importing it, check, then delete):
 
 Run: `npm run build`
 Expected: builds clean; generated CSS contains `.text-h1` and `--color-ink`.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/styles/global.css
@@ -227,14 +231,14 @@ git commit -m "Add Tailwind v4 theme with handoff design tokens"
 **Interfaces:**
 - Produces: `locales: readonly ['fr','en','ar']`, `type Locale`, `isLocale(x: string): x is Locale`, `t(lang: Locale, key: string): string` (falls back to FR, throws on unknown key), `dir(lang: Locale): 'ltr' | 'rtl'`, `nextLocale(lang: Locale): Locale` (fr→en→ar→fr), `localePath(lang: Locale, path: string): string` (e.g. `localePath('en','/services')` → `/en/services`). Dictionary keys are `<page>.<protoKey>` (`home.hero_title`) plus hoisted `common.<protoKey>` for nav/toggle/footer keys.
 
-- [ ] **Step 1: Install dev deps and add scripts**
+- [x] **Step 1: Install dev deps and add scripts**
 
 ```bash
 npm install -D cheerio vitest
 npm pkg set scripts.extract:i18n="node scripts/extract-i18n.mjs" scripts.test="vitest run"
 ```
 
-- [ ] **Step 2: Write `scripts/extract-i18n.mjs`**
+- [x] **Step 2: Write `scripts/extract-i18n.mjs`**
 
 FR strings are the text content of `[data-i18n]` elements; EN/AR are the `const EN = {…}` / `const AR = {…}` object literals inside each prototype's `script[data-dc-script]`. Keys listed in `COMMON` are hoisted from Home into `common.*` and must match on every page (script throws otherwise).
 
@@ -288,12 +292,12 @@ for (const lang of ['fr', 'en', 'ar'])
 console.log(`fr:${Object.keys(out.fr).length} en:${Object.keys(out.en).length} ar:${Object.keys(out.ar).length} keys`);
 ```
 
-- [ ] **Step 3: Run the extraction**
+- [x] **Step 3: Run the extraction**
 
 Run: `npm run extract:i18n`
 Expected: three JSON files written; ~450–530 keys per language; investigate every `MISSING`/`Conflict` line by opening the prototype — if a genuinely page-specific key matches `COMMON_RE`, narrow the regex rather than ignoring the conflict. Spot-check: `home.hero_title` in `fr.json` is `Des produits digitaux construits pour durer.`; `common.nav_about` exists in all three files; `ar.json` values are Arabic script.
 
-- [ ] **Step 4: Write `src/i18n/index.ts`**
+- [x] **Step 4: Write `src/i18n/index.ts`**
 
 ```ts
 import fr from './fr.json';
@@ -328,7 +332,7 @@ export function localePath(lang: Locale, path: string): string {
 }
 ```
 
-- [ ] **Step 5: Write the failing test `tests/i18n.test.ts`**
+- [x] **Step 5: Write the failing test `tests/i18n.test.ts`**
 
 ```ts
 import { describe, expect, it } from 'vitest';
@@ -362,12 +366,12 @@ describe('i18n', () => {
 });
 ```
 
-- [ ] **Step 6: Run tests**
+- [x] **Step 6: Run tests**
 
 Run: `npm test`
 Expected: all i18n tests PASS (if Step 4 preceded correctly; if you wrote the test first it fails with module-not-found — either order is fine as long as it ends green).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add scripts/extract-i18n.mjs src/i18n tests/i18n.test.ts package.json package-lock.json
@@ -386,7 +390,7 @@ git commit -m "Extract trilingual dictionaries from prototypes and add i18n help
 - Consumes: `t`, `dir`, `nextLocale`, `localePath`, `locales`, `Locale` from `src/i18n`.
 - Produces: `<Base lang={Locale} path={string} title={string} description={string} active={'home'|'services'|'portfolio'|'blog'|'about'|'contact'|null}>` — renders `<html lang dir>`, fonts, SEO/OG/canonical/hreflang, Header, slot, CtaBand, Footer. `path` is the locale-less path of the current page (`'/services'`, `'/'`) used for hreflang + the language switcher. `<CtaBand lang page>` reads `<page>.cta_title|cta_sub|cta_btn` keys (falls back to `home.*` via explicit prop `page="home"` on pages without their own CTA keys — check each page's extracted keys).
 
-- [ ] **Step 1: Copy assets**
+- [x] **Step 1: Copy assets**
 
 ```bash
 mkdir -p src/assets
@@ -394,7 +398,7 @@ cp design_handoff_makraz_website/assets/favicon.png design_handoff_makraz_websit
 cp design_handoff_makraz_website/assets/logo-black.png design_handoff_makraz_website/assets/logo-white.png src/assets/
 ```
 
-- [ ] **Step 2: Write `src/layouts/Base.astro`**
+- [x] **Step 2: Write `src/layouts/Base.astro`**
 
 ```astro
 ---
@@ -451,7 +455,7 @@ const canonical = new URL(localePath(lang, path), Astro.site);
 </html>
 ```
 
-- [ ] **Step 3: Write `src/components/Header.astro`**
+- [x] **Step 3: Write `src/components/Header.astro`**
 
 Recreate the prototype header exactly (`design_handoff_makraz_website/Home.dc.html:44-74`): sticky 72px, blur, logo 34px + wordmark ls .18em, nav 15px/500 with active 2px black underline, language pill, burger, black pill CTA. The language pill links to `localePath(nextLocale(lang), path)` and shows `t(lang,'common.toggle')`. Mobile menu is a hidden `<nav id="mk-mobile-menu" hidden>` toggled by an inline script:
 
@@ -522,18 +526,18 @@ const links = [
 </script>
 ```
 
-- [ ] **Step 4: Write `src/components/CtaBand.astro` and `src/components/Footer.astro`**
+- [x] **Step 4: Write `src/components/CtaBand.astro` and `src/components/Footer.astro`**
 
 Port from any prototype's black CTA band + footer markup (e.g. `Home.dc.html`, the `#0a0a0a` sections before `</x-dc>`): CtaBand = centered white logo 44px, `text-h2` white headline `t(lang, \`${page}.cta_title\`)`, sub `t(lang, \`${page}.cta_sub\`)` in `ondark-2`, `.btn-ondark` button linking to `localePath(lang,'/contact')`. Footer = 3-column grid (brand block with white logo 30px + wordmark + description `#a3a3a3`; Navigation column reusing the same 6 links; Contact column with `mailto:contact@makraz.com`, `tel:+212661764392`, address link `https://share.google/WllPHd9fKnFBdVmS0`), bottom bar `© 2026 MAKRAZ SARLAU` / `t(lang,'common.foot_built')` 13px `ondark-3`, plus the Legal page link `localePath(lang,'/mentions-legales')`. Use the exact footer i18n keys found in `src/i18n/fr.json` (all `common.foot*` / `common.footer*` keys — check the extracted file, don't guess).
 
-- [ ] **Step 5: Smoke-render the layout**
+- [x] **Step 5: Smoke-render the layout**
 
 Point the Task 1 placeholder page (or a temporary `src/pages/[lang]/index.astro` with `getStaticPaths` over locales rendering `<Base>` with an empty slot) at the layout.
 
 Run: `npm run build`
 Expected: builds; `dist/fr/index.html` contains the header nav, hreflang trio, CTA band, and footer.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/layouts src/components src/assets public/favicon.png public/og-image.png
@@ -550,7 +554,7 @@ git commit -m "Add base layout with SEO/hreflang plus header, footer, CTA band"
 **Interfaces:**
 - Produces: `<Kicker>text</Kicker>` (kicker style + 28px bottom margin variant via `class` passthrough); `<ImagePlaceholder ratio="4/3"|"16/11"|"1/1" label={string} radius="card"|"media" />` (grey `#f3f3f3` slot with centered muted label — stands in for missing portfolio/team photos); `<SectionIntro lang number title …>` sticky 340px intro column used by Services/About (`position: sticky; top: 104px` with `max-[900px]:static`).
 
-- [ ] **Step 1: Write the three components**
+- [x] **Step 1: Write the three components**
 
 `Kicker.astro`:
 
@@ -592,7 +596,7 @@ const { number, title, class: className = '' } = Astro.props;
 </div>
 ```
 
-- [ ] **Step 2: Verify build, commit**
+- [x] **Step 2: Verify build, commit**
 
 Run: `npm run build` — Expected: clean.
 
@@ -625,7 +629,7 @@ const lang = Astro.params.lang as Locale;
 ---
 ```
 
-- [ ] **Step 1: Build the page section by section**
+- [x] **Step 1: Build the page section by section**
 
 Source: `design_handoff_makraz_website/Home.dc.html` (open it in a browser as the visual reference) and the handoff README "Home" spec. Sections in order, all copy via `t(lang, 'home.<key>')` using the keys present in `src/i18n/fr.json`:
 
@@ -652,7 +656,7 @@ Source: `design_handoff_makraz_website/Home.dc.html` (open it in a browser as th
 
 Port each section by reading the prototype's inline styles and mapping them 1:1 to Tailwind utilities/logical properties; keep every `data-i18n` key. Do not restyle, "improve", or reorder anything.
 
-- [ ] **Step 2: Add JSON-LD Organization to the head slot**
+- [x] **Step 2: Add JSON-LD Organization to the head slot**
 
 ```astro
 <script slot="head" type="application/ld+json" set:html={JSON.stringify({
@@ -667,11 +671,11 @@ Port each section by reading the prototype's inline styles and mapping them 1:1 
 })} />
 ```
 
-- [ ] **Step 3: Visual check against the prototype**
+- [x] **Step 3: Visual check against the prototype**
 
 Run: `npm run dev`, open `http://localhost:4321/fr` next to `design_handoff_makraz_website/Home.dc.html` in the browser. Compare hero, cards, spacing, hovers at desktop and ≤900px. Check `/ar` renders RTL with Arabic copy.
 
-- [ ] **Step 4: Build and commit**
+- [x] **Step 4: Build and commit**
 
 Run: `npm run build` — Expected: `dist/fr/index.html`, `dist/en/index.html`, `dist/ar/index.html` all emitted.
 
@@ -690,13 +694,13 @@ git commit -m "Add trilingual home page with JSON-LD and root redirect"
 **Interfaces:**
 - Consumes: `Base`, `Kicker`, `SectionIntro`, i18n. Same `getStaticPaths` pattern as Task 6.
 
-- [ ] **Step 1: Build the page**
+- [x] **Step 1: Build the page**
 
 Source: `design_handoff_makraz_website/Services.dc.html` + README "Services" spec. Hero, then three catalog sections alternating `bg-card`/`bg-paper`, each: flex row (`max-[900px]:flex-col`) of `<SectionIntro number title>` + right-hand list where each row is `grid grid-cols-[260px_1fr] max-[900px]:grid-cols-1` with `py-[26px]` and `border-b border-line` hairlines — Développement (8 rows), Design (3 rows), Communication (6 rows). All copy `t(lang, 'services.<key>')`. Title/description per `Base` props from `services.*` meta keys (check extracted JSON for the page's `<title>`/description equivalents; if the prototypes didn't tag them with data-i18n, take them from each prototype's `<title>`/`<meta name="description">` verbatim and hardcode per-lang in a small object in the frontmatter).
 
-- [ ] **Step 2: Visual check** — dev server vs `Services.dc.html`, desktop + mobile + `/ar`. Sticky intro column must stick at desktop and go static ≤900px.
+- [x] **Step 2: Visual check** — dev server vs `Services.dc.html`, desktop + mobile + `/ar`. Sticky intro column must stick at desktop and go static ≤900px.
 
-- [ ] **Step 3: Build and commit**
+- [x] **Step 3: Build and commit**
 
 ```bash
 git add src/pages
@@ -713,7 +717,7 @@ git commit -m "Add trilingual services page"
 **Interfaces:**
 - Produces: `caseStudies` collection with schema `{ project: string, lang: enum(fr|en|ar), kicker: string, stack: string[], results: { value: string, label: string }[] }` and markdown body = context/solution sections. Entry id convention: `<slug>.<lang>`.
 
-- [ ] **Step 1: Write `src/content.config.ts`**
+- [x] **Step 1: Write `src/content.config.ts`**
 
 ```ts
 import { defineCollection, z } from 'astro:content';
@@ -748,15 +752,15 @@ export const collections = { caseStudies, blog };
 
 (The `blog` collection is consumed in Task 11.)
 
-- [ ] **Step 2: Transcribe the case study**
+- [x] **Step 2: Transcribe the case study**
 
 From `design_handoff_makraz_website/CaseFarblieferant.dc.html` (use `src/i18n/*.json` `case_farblieferant.*` keys as the transcription source — they were extracted in Task 3): create `farblieferant.fr.md`, `.en.md`, `.ar.md` with frontmatter per the schema and the context/solution copy as markdown body under `## <context heading>` / `## <solution heading>` using the exact extracted strings, `[à compléter]` placeholders included. Remove the `case_farblieferant.*` namespace usage from i18n at render time — the page reads the collection, not `t()` (nav/CTA still via `t()`).
 
-- [ ] **Step 3: Build `portfolio.astro`**
+- [x] **Step 3: Build `portfolio.astro`**
 
 Source: `Portfolio.dc.html` + README "Portfolio" spec. Hero + 3 featured case studies, alternating 2-col layouts `grid-cols-[1.25fr_1fr]` (swap order on alternates with `order` utilities), `ImagePlaceholder ratio="16/11" radius="media"`, kicker + `text-h2` name + paragraph + 3 dash services + external link (farblieferant.de, phpmorocco.ma, marrakechphp.ma, `target="_blank" rel="noopener"`), and the "Lire l'étude de cas" link on Farblieferant → `localePath(lang, '/portfolio/farblieferant')`. Copy via `t(lang, 'portfolio.<key>')`.
 
-- [ ] **Step 4: Build `portfolio/farblieferant.astro`**
+- [x] **Step 4: Build `portfolio/farblieferant.astro`**
 
 ```astro
 ---
@@ -777,7 +781,7 @@ const { Content } = await render(entry);
 
 Layout per the prototype: kicker/H2 hero, prose body (`Content`), stack chips (pill borders), results metrics grid. Match `CaseFarblieferant.dc.html` visually.
 
-- [ ] **Step 5: Visual check + build + commit**
+- [x] **Step 5: Visual check + build + commit**
 
 Run: `npm run build` — Expected: `/…/portfolio` and `/…/portfolio/farblieferant` ×3 locales in dist.
 
@@ -793,11 +797,11 @@ git commit -m "Add portfolio page and Farblieferant case study via content colle
 **Files:**
 - Create: `src/pages/[lang]/a-propos.astro`
 
-- [ ] **Step 1: Build the page**
+- [x] **Step 1: Build the page**
 
 Source: `About.dc.html` + README "À propos" spec. Hero; "Le parcours" (SectionIntro + 4 timeline rows: Suisse, Italie, Dubaï, Marrakech/MAKRAZ, hairline dividers); "Nos valeurs" 2×2 cards; "L'équipe" (280px square `ImagePlaceholder ratio="1/1"` + name + "Fondateur — Ingénieur logiciel" + bio). Copy via `t(lang, 'about.<key>')`.
 
-- [ ] **Step 2: Visual check vs prototype (desktop/mobile/ar), build, commit**
+- [x] **Step 2: Visual check vs prototype (desktop/mobile/ar), build, commit**
 
 ```bash
 git add src/pages
@@ -814,11 +818,11 @@ git commit -m "Add trilingual about page"
 **Interfaces:**
 - Produces: `<ContactForm lang siteKey>` — `<form method="POST" action="/api/contact">` with fields `name`, `email`, `company`, `message`, hidden `lang`, Turnstile widget div, honeypot field `website` (visually hidden, must stay empty), submit `.btn-primary w-full`. Status messages rendered as three hidden elements `#form-sent`, `#form-error` (shown via `:target` for the no-JS redirect flow and via the enhancement script for fetch). The API contract this form targets (Task 12 implements it): POST JSON or form-encoded `{name, email, company?, message, lang, 'cf-turnstile-response', website?}` → `200 {ok:true}` | `400 {ok:false, errors: Record<string,string>}` | `500 {ok:false, error:string}`; non-JS form posts get `303` redirects to `/{lang}/contact#form-sent` or `#form-error`.
 
-- [ ] **Step 1: Build the page**
+- [x] **Step 1: Build the page**
 
 Source: `Contact.dc.html` + README "Contact" spec. Two columns `grid-cols-[1fr_1.1fr] gap-20 max-[900px]:grid-cols-1`. Left: H1, response-within-24h paragraph, stacked contact rows (label `txt-4` 14px start, value 17px/600 end, hairline dividers): Email, WhatsApp (`https://wa.me/212661764392`), Téléphone (`tel:+212661764392`), Bureau (link `https://share.google/WllPHd9fKnFBdVmS0`), Langues FR·EN·AR. Right: form card (`bg-card border border-line rounded-media p-12 max-[900px]:p-7`). Below: FAQ section, 6 native `<details>`/`<summary>` items (keys `contact.faq*`).
 
-- [ ] **Step 2: Write `ContactForm.astro`**
+- [x] **Step 2: Write `ContactForm.astro`**
 
 ```astro
 ---
@@ -889,7 +893,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
 Note the exact `contact.f_*` key names must be taken from `src/i18n/fr.json` (the extraction preserves the prototype's key names — adjust the snippet's keys to the real ones, e.g. if the prototype used `form_name` use `contact.form_name`).
 
-- [ ] **Step 3: Visual check, build, commit**
+- [x] **Step 3: Visual check, build, commit**
 
 The form will 404 on submit until Task 12 — expected at this stage.
 
@@ -909,15 +913,15 @@ git commit -m "Add trilingual contact page with form UI and FAQ"
 - Consumes: `blog` collection from Task 8's `content.config.ts` (`title, description, lang, slug, date, author, authorRole`).
 - Produces: `/…/blog` index (post 1 card links to the article; posts 2–3 are "À venir" cards, no links) and `/…/blog/<slug>` article pages.
 
-- [ ] **Step 1: Transcribe the article**
+- [x] **Step 1: Transcribe the article**
 
 From `Article.dc.html` (via the extracted `article.*` keys): frontmatter (title, description, date from prototype, author "Hamza Makraz", authorRole from prototype) + full body per language as markdown (headings/paragraphs in prototype order). This is the sample draft article — transcribe verbatim, it's flagged for later review.
 
-- [ ] **Step 2: Build `blog/index.astro`**
+- [x] **Step 2: Build `blog/index.astro`**
 
 Source: `Blog.dc.html`. Hero + 3 post cards: card 1 from the collection (`getCollection('blog', e => e.data.lang === lang)`, link `localePath(lang, \`/blog/${e.data.slug}\`)`); cards 2–3 static "À venir" from `t(lang, 'blog.<key>')` keys, no anchor.
 
-- [ ] **Step 3: Build `blog/[slug].astro`**
+- [x] **Step 3: Build `blog/[slug].astro`**
 
 ```astro
 ---
@@ -940,7 +944,7 @@ const { Content } = await render(post);
 
 Article layout per `Article.dc.html`: kicker (date), H1, author block, prose body (style the markdown: 17–18px body, 1.7 line-height, `txt-2`… match prototype), back-to-blog link. `path` prop for Base: `` `/blog/${post.data.slug}` ``.
 
-- [ ] **Step 4: Visual check, build, commit**
+- [x] **Step 4: Visual check, build, commit**
 
 Run: `npm run build` — Expected: blog index + 1 article ×3 locales.
 
@@ -964,7 +968,7 @@ git commit -m "Add blog index and article pages via content collection"
   - `verifyTurnstile(token: string, secret: string, ip: string | null, fetchImpl?: typeof fetch): Promise<boolean>` (POSTs to `https://challenges.cloudflare.com/turnstile/v0/siteverify`)
   - `sendViaResend(s: Submission, apiKey: string, fetchImpl?: typeof fetch): Promise<boolean>` (POST `https://api.resend.com/emails`, from `MAKRAZ Site <site@makraz.com>`, to `contact@makraz.com`, `reply_to` visitor email, subject `` `Contact makraz.com — ${s.name}` ``, text body with all fields)
 
-- [ ] **Step 1: Write the failing tests `tests/contact.test.ts`**
+- [x] **Step 1: Write the failing tests `tests/contact.test.ts`**
 
 ```ts
 import { describe, expect, it, vi } from 'vitest';
@@ -1033,12 +1037,12 @@ describe('sendViaResend', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npm test`
 Expected: FAIL — cannot resolve `../src/lib/contact`.
 
-- [ ] **Step 3: Implement `src/lib/contact.ts`**
+- [x] **Step 3: Implement `src/lib/contact.ts`**
 
 ```ts
 export const langs = ['fr', 'en', 'ar'] as const;
@@ -1114,12 +1118,12 @@ export async function sendViaResend(
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npm test`
 Expected: all PASS.
 
-- [ ] **Step 5: Write the API route `src/pages/api/contact.ts`**
+- [x] **Step 5: Write the API route `src/pages/api/contact.ts`**
 
 ```ts
 export const prerender = false;
@@ -1159,19 +1163,19 @@ declare namespace App {
 }
 ```
 
-- [ ] **Step 6: Write `.dev.vars.example`** (local dev secrets template; `.dev.vars` is gitignored)
+- [x] **Step 6: Write `.dev.vars.example`** (local dev secrets template; `.dev.vars` is gitignored)
 
 ```
 RESEND_API_KEY=re_xxx
 TURNSTILE_SECRET_KEY=0x_xxx
 ```
 
-- [ ] **Step 7: Build and verify the route is server-rendered**
+- [x] **Step 7: Build and verify the route is server-rendered**
 
 Run: `npm run build`
 Expected: build output lists `/api/contact` as a server (on-demand) route, `_worker.js` emitted.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add src/lib src/pages/api tests/contact.test.ts src/env.d.ts .dev.vars.example
@@ -1185,11 +1189,11 @@ git commit -m "Add contact API route with validation, Turnstile and Resend"
 **Files:**
 - Create: `src/pages/[lang]/mentions-legales.astro`, `public/robots.txt`
 
-- [ ] **Step 1: Build the page**
+- [x] **Step 1: Build the page**
 
 Source: `Legal.dc.html` (trilingual since handoff v3; French version prevails — the prototype states this). Sections: mentions légales (éditeur, RC/ICE/IF `[à compléter]` placeholders, hosting provider placeholder) + politique de confidentialité (loi 09-08 + RGPD). Copy via `t(lang, 'legal.<key>')`. `hideCta` on Base if the prototype has no CTA band (check the prototype's footer area).
 
-- [ ] **Step 2: Write `public/robots.txt`**
+- [x] **Step 2: Write `public/robots.txt`**
 
 ```
 User-agent: *
@@ -1198,12 +1202,12 @@ Allow: /
 Sitemap: https://makraz.com/sitemap-index.xml
 ```
 
-- [ ] **Step 3: Build, verify sitemap**
+- [x] **Step 3: Build, verify sitemap**
 
 Run: `npm run build && ls dist/sitemap*`
 Expected: `sitemap-index.xml` + sitemap parts exist and contain `/fr/`, `/en/`, `/ar/` URLs with `xhtml:link` alternates.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/pages public/robots.txt
@@ -1218,7 +1222,7 @@ git commit -m "Add trilingual legal page and robots.txt"
 - Create: `playwright.config.ts`, `e2e/smoke.spec.ts`
 - Modify: `package.json` (script `test:e2e`)
 
-- [ ] **Step 1: Install**
+- [x] **Step 1: Install**
 
 ```bash
 npm install -D @playwright/test
@@ -1226,7 +1230,7 @@ npx playwright install chromium
 npm pkg set scripts.test:e2e="playwright test"
 ```
 
-- [ ] **Step 2: Write `playwright.config.ts`**
+- [x] **Step 2: Write `playwright.config.ts`**
 
 ```ts
 import { defineConfig } from '@playwright/test';
@@ -1245,7 +1249,7 @@ export default defineConfig({
 
 (`astro preview` with the cloudflare adapter runs `wrangler pages dev` — wrangler was installed in Task 1. If the preview port differs, read it from the command output and align `url`/`baseURL`.)
 
-- [ ] **Step 3: Write `e2e/smoke.spec.ts`**
+- [x] **Step 3: Write `e2e/smoke.spec.ts`**
 
 ```ts
 import { expect, test } from '@playwright/test';
@@ -1313,12 +1317,12 @@ test('contact form error path (mocked endpoint)', async ({ page }) => {
 });
 ```
 
-- [ ] **Step 4: Run the suite**
+- [x] **Step 4: Run the suite**
 
 Run: `npm run test:e2e`
 Expected: all tests PASS (26 page renders + behavior tests). Fix any failures in the pages, not by loosening tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add playwright.config.ts e2e package.json package-lock.json
@@ -1332,7 +1336,7 @@ git commit -m "Add Playwright smoke tests for all pages, locales, form and RTL"
 **Files:**
 - Create: `README.md` (repo root)
 
-- [ ] **Step 1: Write `README.md`**
+- [x] **Step 1: Write `README.md`**
 
 Cover exactly:
 - Project intro (production site for makraz.com, built from `design_handoff_makraz_website/` designs; spec + plan under `docs/superpowers/`).
@@ -1343,16 +1347,16 @@ Cover exactly:
 - Local dev secrets: copy `.dev.vars.example` → `.dev.vars`.
 - Content gaps awaiting client input: portfolio screenshots + founder photo (replace `ImagePlaceholder` usages), real testimonials (`home.tm*` keys), case-study `[à compléter]` metrics, legal RC/ICE/IF + host, blog article review.
 
-- [ ] **Step 2: Full verification pass**
+- [x] **Step 2: Full verification pass**
 
 Run: `npx astro check && npm test && npm run build && npm run test:e2e`
 Expected: everything green.
 
-- [ ] **Step 3: Final visual sweep**
+- [x] **Step 3: Final visual sweep**
 
 Open every built page next to its prototype (9 pages, spot-check EN + AR variants; mobile width 390px and desktop 1440px). Fix discrepancies found; re-run build.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add README.md
