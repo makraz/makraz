@@ -304,5 +304,19 @@
   "legal.ck_h": "Cookies and trackers",
   "legal.ck_p": "This site uses no advertising cookies or third-party tracking tools. Only your language preference is stored locally in your browser (localStorage) — it never leaves your device.",
   "legal.ft_nav": "Navigation",
-  "legal.ft_contact": "Contact"
+  "legal.ft_contact": "Contact",
+  "seo.home_title": "MAKRAZ — Digital agency in Marrakech",
+  "seo.home_desc": "Web & mobile development, design and digital communication. Digital products built to last.",
+  "seo.services_title": "Services — MAKRAZ",
+  "seo.services_desc": "Development, design and communication: everything you need to exist online, under one roof.",
+  "seo.portfolio_title": "Portfolio — MAKRAZ",
+  "seo.portfolio_desc": "Projects live in production across three markets: e-commerce, platforms and communities.",
+  "seo.case_farblieferant_title": "Case study: Farblieferant — MAKRAZ",
+  "seo.case_farblieferant_desc": "How we built Farblieferant's e-commerce platform for the German market.",
+  "seo.about_title": "About — MAKRAZ",
+  "seo.about_desc": "Ten years of engineering across Switzerland, Italy and Dubai — now based in Marrakech.",
+  "seo.contact_title": "Contact — MAKRAZ",
+  "seo.contact_desc": "Let's talk about your project. A free discovery call, answered within 24 hours — by email, WhatsApp or phone.",
+  "seo.legal_title": "Legal notice — MAKRAZ",
+  "seo.legal_desc": "Legal notice and privacy policy of MAKRAZ SARLAU."
 }

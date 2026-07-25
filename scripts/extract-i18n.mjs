@@ -49,17 +49,59 @@ const MANUAL_KEYS = {
   fr: {
     'contact.status_sending': 'Envoi en cours…',
     'contact.status_sent': 'Message envoyé — nous revenons vers vous sous 24 h.',
-    'contact.status_error': 'L\'envoi a échoué — écrivez-nous à contact@makraz.com.'
+    'contact.status_error': 'L\'envoi a échoué — écrivez-nous à contact@makraz.com.',
+    'seo.home_title': "MAKRAZ — Agence digitale à Marrakech",
+    'seo.home_desc': "Développement web & mobile, design et communication digitale. Des produits digitaux construits pour durer.",
+    'seo.services_title': "Services — MAKRAZ",
+    'seo.services_desc': "Développement, design et communication : tout ce qu'il faut pour exister en ligne, sous un même toit.",
+    'seo.portfolio_title': "Portfolio — MAKRAZ",
+    'seo.portfolio_desc': "Des projets en production sur trois marchés : e-commerce, plateformes et communautés.",
+    'seo.case_farblieferant_title': "Étude de cas : Farblieferant — MAKRAZ",
+    'seo.case_farblieferant_desc': "Comment nous avons construit la plateforme e-commerce de Farblieferant pour le marché allemand.",
+    'seo.about_title': "À propos — MAKRAZ",
+    'seo.about_desc': "Dix ans d'ingénierie entre la Suisse, l'Italie et Dubaï — installée à Marrakech.",
+    'seo.contact_title': "Contact — MAKRAZ",
+    'seo.contact_desc': "Parlons de votre projet. Un appel découverte gratuit, réponse sous 24 h — par email, WhatsApp ou téléphone.",
+    'seo.legal_title': "Mentions légales — MAKRAZ",
+    'seo.legal_desc': "Mentions légales et politique de confidentialité de MAKRAZ SARLAU."
   },
   en: {
     'contact.status_sending': 'Sending…',
     'contact.status_sent': 'Message sent — we\'ll get back to you within 24 hours.',
-    'contact.status_error': 'Sending failed — email us at contact@makraz.com.'
+    'contact.status_error': 'Sending failed — email us at contact@makraz.com.',
+    'seo.home_title': "MAKRAZ — Digital agency in Marrakech",
+    'seo.home_desc': "Web & mobile development, design and digital communication. Digital products built to last.",
+    'seo.services_title': "Services — MAKRAZ",
+    'seo.services_desc': "Development, design and communication: everything you need to exist online, under one roof.",
+    'seo.portfolio_title': "Portfolio — MAKRAZ",
+    'seo.portfolio_desc': "Projects live in production across three markets: e-commerce, platforms and communities.",
+    'seo.case_farblieferant_title': "Case study: Farblieferant — MAKRAZ",
+    'seo.case_farblieferant_desc': "How we built Farblieferant's e-commerce platform for the German market.",
+    'seo.about_title': "About — MAKRAZ",
+    'seo.about_desc': "Ten years of engineering across Switzerland, Italy and Dubai — now based in Marrakech.",
+    'seo.contact_title': "Contact — MAKRAZ",
+    'seo.contact_desc': "Let's talk about your project. A free discovery call, answered within 24 hours — by email, WhatsApp or phone.",
+    'seo.legal_title': "Legal notice — MAKRAZ",
+    'seo.legal_desc': "Legal notice and privacy policy of MAKRAZ SARLAU."
   },
   ar: {
     'contact.status_sending': 'جارٍ الإرسال…',
     'contact.status_sent': 'أُرسلت الرسالة — سنعود إليكم خلال ٢٤ ساعة.',
-    'contact.status_error': 'فشل الإرسال — راسلونا على contact@makraz.com.'
+    'contact.status_error': 'فشل الإرسال — راسلونا على contact@makraz.com.',
+    'seo.home_title': "MAKRAZ — وكالة رقمية في مراكش",
+    'seo.home_desc': "تطوير الويب والتطبيقات، التصميم والتواصل الرقمي. منتجات رقمية صُنعت لتدوم.",
+    'seo.services_title': "الخدمات — MAKRAZ",
+    'seo.services_desc': "التطوير والتصميم والتواصل: كل ما تحتاجه للحضور على الإنترنت، تحت سقف واحد.",
+    'seo.portfolio_title': "أعمالنا — MAKRAZ",
+    'seo.portfolio_desc': "مشاريع قيد الاستخدام الفعلي في ثلاثة أسواق: التجارة الإلكترونية والمنصات والمجتمعات.",
+    'seo.case_farblieferant_title': "دراسة حالة: Farblieferant — MAKRAZ",
+    'seo.case_farblieferant_desc': "كيف بنينا منصة التجارة الإلكترونية لشركة Farblieferant في السوق الألمانية.",
+    'seo.about_title': "من نحن — MAKRAZ",
+    'seo.about_desc': "عشر سنوات من الهندسة بين سويسرا وإيطاليا ودبي — من مقرّنا في مراكش.",
+    'seo.contact_title': "اتصل بنا — MAKRAZ",
+    'seo.contact_desc': "لنتحدث عن مشروعك. مكالمة تعريفية مجانية، والرد خلال ٢٤ ساعة — بالبريد الإلكتروني أو واتساب أو الهاتف.",
+    'seo.legal_title': "الإشعارات القانونية — MAKRAZ",
+    'seo.legal_desc': "الإشعارات القانونية وسياسة الخصوصية لشركة MAKRAZ SARLAU."
   }
 };
 

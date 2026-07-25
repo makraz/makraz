@@ -9,8 +9,8 @@ export function getStaticPaths() {
 }
 const lang = Astro.params.lang as Locale;
 
-const title = 'MAKRAZ — Agence digitale à Marrakech';
-const description = "Développement web & mobile, design et communication digitale. Des produits digitaux construits pour durer.";
+const title = t(lang, 'seo.home_title');
+const description = t(lang, 'seo.home_desc');
 ---
 <Base lang={lang} path="/" title={title} description={description} active="home">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify({

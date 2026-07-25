@@ -8,8 +8,8 @@ export function getStaticPaths() {
 }
 const lang = Astro.params.lang as Locale;
 
-const title = 'Mentions légales — MAKRAZ';
-const description = "Mentions légales et politique de confidentialité de MAKRAZ SARLAU.";
+const title = t(lang, 'seo.legal_title');
+const description = t(lang, 'seo.legal_desc');
 ---
 <Base lang={lang} path="/mentions-legales" title={title} description={description} active={null} hideCta>
   <!-- Hero -->

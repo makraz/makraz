@@ -9,8 +9,8 @@ export function getStaticPaths() {
 }
 const lang = Astro.params.lang as Locale;
 
-const title = 'Portfolio — MAKRAZ';
-const description = 'Des projets en production sur trois marchés : e-commerce, plateformes et communautés.';
+const title = t(lang, 'seo.portfolio_title');
+const description = t(lang, 'seo.portfolio_desc');
 ---
 <Base lang={lang} path="/portfolio" title={title} description={description} active="portfolio" ctaPage="portfolio">
   <!-- Hero -->

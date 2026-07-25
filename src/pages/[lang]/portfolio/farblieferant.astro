@@ -14,8 +14,8 @@ const entries = await getCollection('caseStudies', (e) => e.data.lang === lang &
 const entry = entries[0];
 const { Content } = await render(entry);
 
-const title = 'Étude de cas : Farblieferant — MAKRAZ';
-const description = "Comment nous avons construit la plateforme e-commerce de Farblieferant pour le marché allemand.";
+const title = t(lang, 'seo.case_farblieferant_title');
+const description = t(lang, 'seo.case_farblieferant_desc');
 ---
 <Base lang={lang} path="/portfolio/farblieferant" title={title} description={description} active="portfolio" ctaPage="case_farblieferant">
   <!-- Hero -->
