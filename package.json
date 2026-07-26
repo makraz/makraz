@@ -29,6 +29,7 @@
     "@playwright/test": "^1.61.1",
     "cheerio": "^1.2.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "yaml": "^2.9.0"
   }
 }
