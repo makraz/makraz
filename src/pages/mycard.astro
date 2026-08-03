@@ -1,0 +1,45 @@
+---
+// The QR code on the printed cards points at the short, memorable https://makraz.com/mycard.
+// This page only routes: it picks the visitor's language and forwards to /{lang}/mycard, which
+// is where the actual card lives. Kept as a static file so the hop costs one asset request.
+import { locales, localePath, t, type Locale } from '../i18n';
+
+const title = t('fr', 'seo.mycard_title');
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={new URL('/fr/mycard', Astro.site)} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <noscript><meta http-equiv="refresh" content="0; url=/fr/mycard" /></noscript>
+    <script is:inline>
+      // navigator.languages is ordered by preference; first supported locale wins, else French.
+      var supported = ['fr', 'en', 'ar'];
+      var prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'fr'];
+      var pick = 'fr';
+      outer: for (var i = 0; i < prefs.length; i++) {
+        var base = String(prefs[i]).toLowerCase().split('-')[0];
+        for (var j = 0; j < supported.length; j++) {
+          if (base === supported[j]) { pick = base; break outer; }
+        }
+      }
+      // replace() so the router page never lands in the back-button history.
+      location.replace('/' + pick + '/mycard');
+    </script>
+  </head>
+  <body>
+    <!-- Only ever seen without JS, or if the redirect is blocked. -->
+    <noscript>
+      <ul>
+        {locales.map((l) => (
+          <li><a href={localePath(l as Locale, '/mycard')} hreflang={l}>MAKRAZ SARLAU — {l.toUpperCase()}</a></li>
+        ))}
+      </ul>
+    </noscript>
+  </body>
+</html>

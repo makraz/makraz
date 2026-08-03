@@ -1,0 +1,121 @@
+---
+// Digital business card for MAKRAZ SARLAU — the destination of the QR code printed on the
+// physical cards. Deliberately does NOT use Base.astro: someone who just scanned a card wants
+// contact actions, not site chrome (header, CTA band, footer). Kept noindex, since the three
+// localized versions would otherwise read as thin duplicate contact pages.
+import { dir, locales, localePath, t, type Locale } from '../../i18n';
+import logoBlack from '../../assets/logo-black.png';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const PHONE = '+212661764392';
+const PHONE_DISPLAY = '+212 661 764 392';
+const EMAIL = 'contact@makraz.com';
+const MAPS = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Centre d\'affaires Itrane, Bab Doukkala, Marrakech, Maroc');
+
+const title = t(lang, 'seo.mycard_title');
+const description = t(lang, 'seo.mycard_desc');
+const canonical = new URL(localePath(lang, '/mycard'), Astro.site);
+
+// Filled first (primary), then the rest — call is the single most likely action off a card.
+const actions = [
+  { href: `tel:${PHONE}`, label: t(lang, 'mycard.call'), sub: PHONE_DISPLAY, primary: true },
+  { href: `https://wa.me/${PHONE.replace('+', '')}`, label: t(lang, 'mycard.whatsapp'), sub: PHONE_DISPLAY, primary: false },
+  { href: `mailto:${EMAIL}`, label: t(lang, 'mycard.email'), sub: EMAIL, primary: false },
+];
+---
+
+<!doctype html>
+<html lang={lang} dir={dir(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => (
+      <link rel="alternate" hreflang={l} href={new URL(localePath(l, '/mycard'), Astro.site)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(localePath('fr', '/mycard'), Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/og-image.png', Astro.site)} />
+    <meta property="og:url" content={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    {lang === 'ar' && (
+      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    )}
+  </head>
+  <body class="min-h-[100dvh] bg-paper">
+    <main class="mx-auto flex min-h-[100dvh] w-full max-w-[440px] flex-col justify-center px-6 py-10">
+      <!-- Language switcher: auto-detection on /mycard can guess wrong, so all three are always one tap away. -->
+      <nav aria-label={t(lang, 'mycard.lang_label')} class="mb-8 flex items-center justify-center gap-2">
+        {locales.map((l) => (
+          <a
+            href={localePath(l, '/mycard')}
+            hreflang={l}
+            aria-current={l === lang ? 'page' : undefined}
+            class:list={[
+              'rounded-pill border px-3 py-1 text-[12px] font-semibold uppercase tracking-[.14em] no-underline transition-colors',
+              l === lang ? 'border-ink bg-ink text-white' : 'border-line-mid text-txt-3 hover:border-ink hover:text-ink',
+            ]}
+          >{l}</a>
+        ))}
+      </nav>
+
+      <div class="rounded-card border border-line bg-card px-6 py-9 text-center">
+        <img src={logoBlack.src} alt="MAKRAZ" width="56" height="56" class="mx-auto h-14 w-14 object-contain" />
+        <h1 class="mt-5 mb-0 text-[26px] font-bold leading-tight tracking-[-0.02em]">MAKRAZ SARLAU</h1>
+        <p class="mt-2 mb-0 text-[14px] text-txt-3">{t(lang, 'mycard.tagline')}</p>
+        <p class="mt-1 mb-0 text-[13px] text-txt-4">{t(lang, 'mycard.intro')}</p>
+
+        <div class="mt-8 flex flex-col gap-3">
+          {actions.map((a) => (
+            <a
+              href={a.href}
+              class:list={[
+                'btn w-full flex-col gap-0.5 px-5 py-4 text-[16px] no-underline',
+                a.primary ? 'btn-primary' : 'btn-ghost',
+              ]}
+            >
+              <span>{a.label}</span>
+              <span
+                dir="ltr"
+                class:list={['text-[12px] font-normal', a.primary ? 'text-ondark-1' : 'text-txt-4']}
+              >{a.sub}</span>
+            </a>
+          ))}
+
+          <!-- download: the .vcf is a static asset, so the browser saves it instead of navigating. -->
+          <a href="/makraz.vcf" download="makraz.vcf" class="btn btn-ghost w-full px-5 py-4 text-[16px] no-underline">
+            {t(lang, 'mycard.save')}
+          </a>
+        </div>
+
+        <a
+          href={MAPS}
+          target="_blank"
+          rel="noopener"
+          class="mt-8 block text-[13px] leading-relaxed text-txt-2 no-underline hover:text-ink"
+        >
+          <span class="text-kicker block">{t(lang, 'mycard.address_label')}</span>
+          <span class="mt-2 block">{t(lang, 'mycard.address')}</span>
+        </a>
+      </div>
+
+      <a
+        href={localePath(lang, '/')}
+        class="mt-6 block text-center text-[14px] font-semibold text-txt-2 no-underline hover:text-ink"
+      >{t(lang, 'mycard.website')} {dir(lang) === 'rtl' ? '←' : '→'}</a>
+    </main>
+  </body>
+</html>

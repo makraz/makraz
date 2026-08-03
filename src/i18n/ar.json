@@ -324,5 +324,17 @@
   "img.fb_catalogue": "كتالوج منتجات Farblieferant مع فلاتر حسب الغرفة ونوع الطلاء",
   "img.fb_product": "صفحة المنتج في Farblieferant: اختيار الحجم واللون مع حاسبة المساحة",
   "img.php_card": "الصفحة الرئيسية لمنصة مجتمع PHP Morocco",
-  "img.mphp_card": "الصفحة الرئيسية لموقع لقاءات MarrakechPHP"
+  "img.mphp_card": "الصفحة الرئيسية لموقع لقاءات MarrakechPHP",
+  "seo.mycard_title": "بطاقة عمل MAKRAZ SARLAU — اتصال مباشر",
+  "seo.mycard_desc": "معلومات الاتصال بشركة MAKRAZ SARLAU، وكالة رقمية في مراكش: الهاتف، واتساب، البريد الإلكتروني والعنوان.",
+  "mycard.tagline": "وكالة رقمية — مراكش",
+  "mycard.intro": "احفظ معلومات الاتصال بنا بلمسة واحدة.",
+  "mycard.call": "اتصل",
+  "mycard.whatsapp": "واتساب",
+  "mycard.email": "أرسل بريدًا إلكترونيًا",
+  "mycard.save": "أضف إلى جهات الاتصال",
+  "mycard.website": "زيارة الموقع",
+  "mycard.address_label": "العنوان",
+  "mycard.address": "مركز أعمال إتران، مكتب رقم B52، الطابق الخامس، باب دكالة، مراكش، المغرب",
+  "mycard.lang_label": "اللغة"
 }

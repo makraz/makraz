@@ -14,6 +14,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'fr', locales: { fr: 'fr', en: 'en', ar: 'ar' } },
+      // The business-card pages are a QR destination, not search-engine content, and they carry
+      // noindex — keep them out of the sitemap so the two signals agree.
+      filter: (page) => !/\/mycard\/?$/.test(page),
     }),
   ],
   redirects: { '/': '/fr' },

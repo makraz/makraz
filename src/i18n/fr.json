@@ -324,5 +324,17 @@
   "img.fb_catalogue": "Catalogue produits Farblieferant avec filtres par pièce et par type de peinture",
   "img.fb_product": "Fiche produit Farblieferant : choix du format, du coloris et calculateur de surface",
   "img.php_card": "Page d'accueil de la plateforme communautaire PHP Morocco",
-  "img.mphp_card": "Page d'accueil du site des meetups MarrakechPHP"
+  "img.mphp_card": "Page d'accueil du site des meetups MarrakechPHP",
+  "seo.mycard_title": "Carte de visite MAKRAZ SARLAU — contact direct",
+  "seo.mycard_desc": "Coordonnées de MAKRAZ SARLAU, agence digitale à Marrakech : téléphone, WhatsApp, e-mail et adresse.",
+  "mycard.tagline": "Agence digitale — Marrakech",
+  "mycard.intro": "Enregistrez nos coordonnées en un geste.",
+  "mycard.call": "Appeler",
+  "mycard.whatsapp": "WhatsApp",
+  "mycard.email": "Envoyer un e-mail",
+  "mycard.save": "Ajouter aux contacts",
+  "mycard.website": "Voir le site",
+  "mycard.address_label": "Adresse",
+  "mycard.address": "Centre d'affaires Itrane, Bureau n° B52, 5ᵉ étage, Bab Doukkala, Marrakech, Maroc",
+  "mycard.lang_label": "Langue"
 }

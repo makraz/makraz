@@ -72,3 +72,51 @@ test('contact API validates without mocks', async ({ request }) => {
   expect(body.ok).toBe(false);
   expect(body.errors).toHaveProperty('email');
 });
+
+// --- Business card (/mycard, the printed QR destination) ---
+
+for (const lang of langs) {
+  test(`renders the business card at /${lang}/mycard`, async ({ page }) => {
+    const res = await page.goto(`/${lang}/mycard`);
+    expect(res?.status()).toBe(200);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('MAKRAZ SARLAU');
+    // Deliberately chrome-free: a card scan should not land you in site navigation.
+    await expect(page.locator('header')).toHaveCount(0);
+    await expect(page.locator('footer')).toHaveCount(0);
+    await expect(page.locator('a[href="tel:+212661764392"]')).toBeVisible();
+    await expect(page.locator('a[href="https://wa.me/212661764392"]')).toBeVisible();
+    await expect(page.locator('a[href="mailto:contact@makraz.com"]')).toBeVisible();
+    await expect(page.locator('a[href="/makraz.vcf"][download]')).toBeVisible();
+  });
+}
+
+test('the arabic card is RTL', async ({ page }) => {
+  await page.goto('/ar/mycard');
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
+});
+
+test('card pages are noindex and offer all three languages', async ({ page }) => {
+  await page.goto('/fr/mycard');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  for (const lang of langs) {
+    await expect(page.locator(`nav a[href="/${lang}/mycard"]`)).toBeVisible();
+  }
+});
+
+test('/mycard forwards to a localized card and leaves no history entry', async ({ page }) => {
+  await page.goto('/fr/services');
+  await page.goto('/mycard');
+  await expect(page).toHaveURL(/\/(fr|en|ar)\/mycard$/);
+  // location.replace, so going back skips the router page entirely.
+  await page.goBack();
+  await expect(page).toHaveURL(/\/fr\/services$/);
+});
+
+test('the vCard is served with the right fields', async ({ request }) => {
+  const res = await request.get('/makraz.vcf');
+  expect(res.status()).toBe(200);
+  const body = await res.text();
+  expect(body).toContain('ORG:MAKRAZ SARLAU');
+  expect(body).toContain('TEL;TYPE=WORK,VOICE:+212661764392');
+});
