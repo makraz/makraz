@@ -1,0 +1,70 @@
+---
+// Case study for the PHP Morocco community platform. Mirrors the Farblieferant page structure:
+// hero + meta strip, one wide screenshot, prose from the content collection, two-up gallery.
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Kicker from '../../../components/Kicker.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import phpHero from '../../../assets/phpmorocco-hero.png';
+import phpEvents from '../../../assets/phpmorocco-events.png';
+import phpSponsors from '../../../assets/phpmorocco-sponsors.png';
+import { locales, t, localePath, type Locale } from '../../../i18n';
+
+export async function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+
+const entries = await getCollection('caseStudies', (e) => e.data.lang === lang && e.id.startsWith('phpmorocco'));
+const entry = entries[0];
+const { Content } = await render(entry);
+
+const title = t(lang, 'seo.case_phpmorocco_title');
+const description = t(lang, 'seo.case_phpmorocco_desc');
+---
+<Base lang={lang} path="/portfolio/phpmorocco" title={title} description={description} active="portfolio" ctaPage="case_phpmorocco">
+  <!-- Hero -->
+  <section class="mk-container pb-14 pt-[90px]">
+    <a href={localePath(lang, '/portfolio')} class="text-[14px] font-semibold text-txt-4 hover:text-ink">{t(lang, 'case_phpmorocco.back')}</a>
+    <Kicker class="mb-5 mt-9">{entry.data.kicker}</Kicker>
+    <h1 class="text-h1 m-0">{entry.data.project}</h1>
+    <p class="mt-[26px] max-w-[58ch] text-[19px] leading-[1.6] text-txt-2">{t(lang, 'case_phpmorocco.sub')}</p>
+    <div class="mt-12 grid grid-cols-4 gap-7 border-t border-line pt-7 max-[900px]:grid-cols-1">
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_phpmorocco.m_client')}</div>
+        <div class="text-[16px] font-semibold">{entry.data.project}</div>
+      </div>
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_phpmorocco.m_sector')}</div>
+        <div class="text-[16px] font-semibold">{t(lang, 'case_phpmorocco.m_sector_v')}</div>
+      </div>
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_phpmorocco.m_services')}</div>
+        <div class="text-[16px] font-semibold">{t(lang, 'case_phpmorocco.m_services_v')}</div>
+      </div>
+      <div>
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'case_phpmorocco.m_link')}</div>
+        <a href="https://phpmorocco.ma" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[2px] text-[16px] font-semibold">phpmorocco.ma ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="mk-container">
+    <Screenshot src={phpHero} alt={t(lang, 'img.php_hero')} ratio="21/9" radius="media" sizes="(max-width: 1240px) 100vw, 1176px" loading="eager" />
+  </div>
+
+  <!-- Body -->
+  <section class="mk-container mx-auto max-w-[840px] pb-10 pt-20">
+    <div class="prose max-w-none [&_h2]:text-[length:clamp(30px,3vw,42px)] [&_h2]:font-bold [&_h2]:leading-[1.1] [&_h2]:tracking-[-0.03em] [&_h2]:m-0 [&_h2]:mb-5 [&_h2]:mt-16 [&_h2:first-child]:mt-0 [&_p]:m-0 [&_p]:mt-0 [&_p+p]:mt-6 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a] [&_code]:text-[15px] [&_code]:font-semibold">
+      <Content />
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="mk-container pb-24">
+    <div class="grid grid-cols-2 gap-7 max-[900px]:grid-cols-1">
+      <Screenshot src={phpEvents} alt={t(lang, 'img.php_events')} ratio="4/3" radius="media" sizes="(max-width: 900px) 100vw, 574px" />
+      <Screenshot src={phpSponsors} alt={t(lang, 'img.php_sponsors')} ratio="4/3" radius="media" sizes="(max-width: 900px) 100vw, 574px" />
+    </div>
+  </section>
+</Base>

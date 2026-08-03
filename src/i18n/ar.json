@@ -342,5 +342,21 @@
   "portfolio.soon_kicker": "قريبًا",
   "portfolio.soon_title": "مشروع جديد",
   "portfolio.soon_desc": "منصة لعميل قيد التطوير، سيتم الكشف عنها عند الإطلاق.",
-  "portfolio.soon_visual": "الصورة قادمة"
+  "portfolio.soon_visual": "الصورة قادمة",
+  "seo.case_phpmorocco_title": "دراسة حالة: PHP Morocco — MAKRAZ",
+  "seo.case_phpmorocco_desc": "كيف صمّمنا وبنينا المنصة الثلاثية اللغة لمجتمع PHP المغربي.",
+  "case_phpmorocco.back": "→ العودة إلى الأعمال",
+  "case_phpmorocco.sub": "منصة مجتمع PHP المغربي — بثلاث لغات، ثابتة بالكامل، ومصمّمة ليتولّى صيانتها متطوّعون.",
+  "case_phpmorocco.m_client": "العميل",
+  "case_phpmorocco.m_sector": "القطاع",
+  "case_phpmorocco.m_sector_v": "مجتمع تقني — جمعوي",
+  "case_phpmorocco.m_services": "الخدمات",
+  "case_phpmorocco.m_services_v": "منصة · تعدّد اللغات · تحسين محرّكات البحث",
+  "case_phpmorocco.m_link": "الموقع",
+  "case_phpmorocco.cta_title": "هل لديكم منصة تريدون بناءها لمجتمعكم؟",
+  "case_phpmorocco.cta_btn": "لنتحدّث عن مشروعكم",
+  "portfolio.f2_case": "اقرأ دراسة الحالة →",
+  "img.php_hero": "PHP Morocco — الصفحة الرئيسية للمنصة المجتمعية",
+  "img.php_events": "قائمة أحداث PHP Morocco: لقاءات وورشات حسب المدينة والتاريخ",
+  "img.php_sponsors": "صيغ رعاية PHP Morocco ومقابلها"
 }

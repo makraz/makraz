@@ -342,5 +342,21 @@
   "portfolio.soon_kicker": "Bientôt",
   "portfolio.soon_title": "Nouveau projet",
   "portfolio.soon_desc": "Une plateforme client en cours de développement, dévoilée au lancement.",
-  "portfolio.soon_visual": "Visuel à venir"
+  "portfolio.soon_visual": "Visuel à venir",
+  "seo.case_phpmorocco_title": "Étude de cas : PHP Morocco — MAKRAZ",
+  "seo.case_phpmorocco_desc": "Comment nous avons conçu et construit la plateforme trilingue de la communauté PHP marocaine.",
+  "case_phpmorocco.back": "← Retour au portfolio",
+  "case_phpmorocco.sub": "La plateforme de la communauté PHP marocaine — trilingue, entièrement statique, pensée pour être maintenue par des bénévoles.",
+  "case_phpmorocco.m_client": "Client",
+  "case_phpmorocco.m_sector": "Secteur",
+  "case_phpmorocco.m_sector_v": "Communauté tech — associatif",
+  "case_phpmorocco.m_services": "Services",
+  "case_phpmorocco.m_services_v": "Plateforme · i18n · SEO",
+  "case_phpmorocco.m_link": "Site",
+  "case_phpmorocco.cta_title": "Une plateforme à construire pour votre communauté ?",
+  "case_phpmorocco.cta_btn": "Parler de votre projet",
+  "portfolio.f2_case": "Lire l'étude de cas →",
+  "img.php_hero": "PHP Morocco — page d'accueil de la plateforme communautaire",
+  "img.php_events": "Liste des événements PHP Morocco : meetups et ateliers par ville et par date",
+  "img.php_sponsors": "Formules de sponsoring PHP Morocco avec leurs contreparties"
 }

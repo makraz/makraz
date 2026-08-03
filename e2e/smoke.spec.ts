@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const langs = ['fr', 'en', 'ar'] as const;
-const paths = ['', '/services', '/portfolio', '/portfolio/farblieferant', '/a-propos', '/contact', '/blog', '/mentions-legales'];
+const paths = ['', '/services', '/portfolio', '/portfolio/farblieferant', '/portfolio/phpmorocco', '/a-propos', '/contact', '/blog', '/mentions-legales'];
 
 for (const lang of langs) {
   for (const path of paths) {
@@ -167,3 +167,28 @@ for (const vp of CARD_VIEWPORTS) {
     });
   }
 }
+
+// --- PHP Morocco case study ---
+
+test('the PHP Morocco case study renders its content and meta strip', async ({ page }) => {
+  await page.goto('/fr/portfolio/phpmorocco');
+  await expect(page.getByRole('heading', { level: 1, name: 'PHP Morocco' })).toBeVisible();
+  // Three body sections come from the content collection, not from i18n keys.
+  await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4); // 3 sections + CTA band
+  await expect(page.locator('a[href="https://phpmorocco.ma"]')).toBeVisible();
+  await expect(page.getByText('Plateforme · i18n · SEO')).toBeVisible();
+});
+
+test('the portfolio links through to the PHP Morocco case study', async ({ page }) => {
+  await page.goto('/fr/portfolio');
+  await page.locator('a[href="/fr/portfolio/phpmorocco"]').click();
+  await expect(page).toHaveURL(/\/fr\/portfolio\/phpmorocco$/);
+});
+
+test('the arabic case study is RTL and points its back link the right way', async ({ page }) => {
+  await page.goto('/ar/portfolio/phpmorocco');
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  // In RTL, "back" reads rightwards — the same arrow the Farblieferant case study uses.
+  // Matched by text: a bare href selector also hits the header nav's portfolio link.
+  await expect(page.getByRole('link', { name: /العودة إلى الأعمال/ })).toContainText('→');
+});

@@ -57,7 +57,10 @@ const description = t(lang, 'seo.portfolio_desc');
           <span>{t(lang, 'portfolio.f2_s2')}</span>
           <span>{t(lang, 'portfolio.f2_s3')}</span>
         </div>
-        <a href="https://phpmorocco.ma" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">phpmorocco.ma ↗</a>
+        <div class="flex flex-wrap gap-7">
+          <a href={localePath(lang, '/portfolio/phpmorocco')} class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">{t(lang, 'portfolio.f2_case')}</a>
+          <a href="https://phpmorocco.ma" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">phpmorocco.ma ↗</a>
+        </div>
       </div>
       <Screenshot src={phpCard} alt={t(lang, 'img.php_card')} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" class="max-[900px]:order-1" />
     </div>
