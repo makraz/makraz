@@ -16,6 +16,10 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Secrets cannot be referenced directly in a step-level `if`, so surface presence as a plain
+    # boolean here. This exposes only whether the token exists, never its value.
+    env:
+      HAS_CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -37,9 +41,19 @@ jobs:
 
       # Reads wrangler.jsonc from the repo root, which the build has resolved into
       # dist/server/wrangler.json (the real main/assets paths).
+      #
+      # Gated on the token existing. Without the gate, wrangler fails with an unhelpful
+      # "exit code 1" on every single push, which trains everyone to ignore red builds. A skip
+      # with a warning is honest signal: tests and build still ran and still gate the branch.
       - name: Deploy to Cloudflare Workers
+        if: env.HAS_CF_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
+
+      - name: Explain a skipped deploy
+        if: env.HAS_CF_TOKEN != 'true'
+        run: |
+          echo "::warning title=Deploy skipped::CLOUDFLARE_API_TOKEN is not set, so nothing was published. Create a token (Cloudflare → My Profile → API Tokens → 'Edit Cloudflare Workers'), run 'gh secret set CLOUDFLARE_API_TOKEN', then re-run this workflow. Until then, deploy manually with 'npm run deploy'."

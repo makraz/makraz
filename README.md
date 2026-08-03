@@ -54,7 +54,9 @@ Fill in real values in both. Both files are git-ignored and must never be commit
 **Option A — GitHub Actions on push to `main` (the active flow).** `.github/workflows/deploy.yml` runs `npm ci` → `npm test` → `npm run build` → `wrangler deploy` on every push to `main`, so a failing unit test blocks the deploy. Requires two repository secrets:
 
 - `CLOUDFLARE_ACCOUNT_ID` — set (`80116bd7a68613c096aa2189fa9e7067`).
-- `CLOUDFLARE_API_TOKEN` — a Cloudflare API token with the **Edit Cloudflare Workers** template scoped to this account. Create it at My Profile → API Tokens, then `gh secret set CLOUDFLARE_API_TOKEN`.
+- `CLOUDFLARE_API_TOKEN` — **not set yet**, so the deploy step currently *skips* with a warning while tests and build still run. A `wrangler login` OAuth session cannot mint this (it only carries `user (read)`); it has to be created in the dashboard: My Profile → API Tokens → Create Token → **Edit Cloudflare Workers** template → Account Resources `makraz`. Then `gh secret set CLOUDFLARE_API_TOKEN` and re-run the workflow.
+
+Until that token exists, publish with **`npm run deploy`** (`astro build && wrangler deploy`), which uses your local `wrangler` login.
 
 Worker secrets (`RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`) are **not** part of this workflow — they live on the Worker itself and persist across deploys; set them once with `wrangler secret put`. `PUBLIC_TURNSTILE_SITE_KEY` comes from the committed `.env.production`; the workflow deliberately does not set `ALLOW_MISSING_TURNSTILE`, so a missing site key fails the build instead of shipping a dead widget.
 
