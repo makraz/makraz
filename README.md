@@ -49,28 +49,28 @@ Fill in real values in both. Both files are git-ignored and must never be commit
 
 ### Cloudflare Workers
 
-`@astrojs/cloudflare` 14 targets **Cloudflare Workers with static assets**, not classic Pages — there is no "output directory" setting to configure in a Pages project. Two ways to deploy:
+`@astrojs/cloudflare` 14 targets **Cloudflare Workers with static assets**, not classic Pages — there is no "output directory" setting to configure in a Pages project.
 
-**Option A — Git integration (Workers Builds).** This is the intended flow, but note it was *not* connected for the first month of the project: every deployment until 2026-07-25 came from a manual `wrangler deploy`, so pushing to `main` did **not** update the live site. If builds are connected, verify with `npx wrangler deployments list` — git-triggered deploys show a build source rather than `Source: Upload`.
+**Option A — GitHub Actions on push to `main` (the active flow).** `.github/workflows/deploy.yml` runs `npm ci` → `npm test` → `npm run build` → `wrangler deploy` on every push to `main`, so a failing unit test blocks the deploy. Requires two repository secrets:
 
+- `CLOUDFLARE_ACCOUNT_ID` — set (`80116bd7a68613c096aa2189fa9e7067`).
+- `CLOUDFLARE_API_TOKEN` — a Cloudflare API token with the **Edit Cloudflare Workers** template scoped to this account. Create it at My Profile → API Tokens, then `gh secret set CLOUDFLARE_API_TOKEN`.
 
-1. Create a Cloudflare Workers project connected to this repository (Workers & Pages → Create → connect to Git; this is the "Workers Builds" flow, not the legacy Pages flow).
-2. Production branch: `main`.
-3. Build command: `npm run build`.
-4. Deploy command: `npx wrangler deploy` (run from the repo root — it reads `wrangler.jsonc`, which Astro/Wrangler resolve against the just-built `dist/server/wrangler.json` for the actual `main`/`assets` paths). Validated locally with `npx wrangler deploy --dry-run`.
-5. Add environment variables/secrets under the Worker's Settings:
-   - `RESEND_API_KEY` (secret)
-   - `TURNSTILE_SECRET_KEY` (secret)
-   - `PUBLIC_TURNSTILE_SITE_KEY` — **no longer needs setting**: the site key is committed in `.env.production` (public by design, inlined at build time). Only set it here to override with a different widget.
-6. Attach the custom domain `makraz.com` to the Worker (Settings → Domains & Routes). Done — both `makraz.com` and `www.makraz.com` are declared in `wrangler.jsonc` as custom domains, and a Cloudflare redirect rule already 301s `www.makraz.com` to the apex (verified live). Nothing to do here.
-7. The first deploy may prompt to provision a `SESSION` KV namespace that the `@astrojs/cloudflare` adapter declares even though this site doesn't use sessions — accept the prompt (or disable sessions in the adapter config) to proceed; current config leaves this as-is.
+Worker secrets (`RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`) are **not** part of this workflow — they live on the Worker itself and persist across deploys; set them once with `wrangler secret put`. `PUBLIC_TURNSTILE_SITE_KEY` comes from the committed `.env.production`; the workflow deliberately does not set `ALLOW_MISSING_TURNSTILE`, so a missing site key fails the build instead of shipping a dead widget.
 
-**Option B — Manual deploy from a local/CI shell** (what has actually been used so far; also the fallback whenever Workers Builds is down or disconnected):
+Playwright e2e (`npm run test:e2e`) is not in the workflow — it needs browser downloads and a `ALLOW_MISSING_TURNSTILE=1` build, which contradicts the production build gate. Run it locally before pushing anything that touches page structure.
+
+History: no automation existed before 2026-08-03. Every deployment up to that date was a manual `wrangler deploy`, so pushing to `main` did **not** update the live site — that's why commits from 2026-07-26 sat undeployed. Verify what's actually live with `npx wrangler deployments list`.
+
+**Option B — Cloudflare Workers Builds (not used).** The dashboard-native alternative to Option A: Workers & Pages → Create → connect to Git, production branch `main`, build command `npm run build`, deploy command `npx wrangler deploy`. Redundant with the GitHub Actions workflow — do not enable both, or every push deploys twice.
+
+**Option C — Manual deploy from a local shell** (the fallback whenever Actions is down):
 
 1. `npm run build`
 2. `npx wrangler deploy` (add `--dry-run` first to verify without publishing)
 3. Set secrets once via `wrangler secret put RESEND_API_KEY` and `wrangler secret put TURNSTILE_SECRET_KEY`. `PUBLIC_TURNSTILE_SITE_KEY` comes from the committed `.env.production`.
-4. Attach the custom domain as in step 6 above.
+
+**Domains and KV, already done (any option).** Both `makraz.com` and `www.makraz.com` are declared as custom domains in `wrangler.jsonc` and attached to the Worker, and a Cloudflare redirect rule 301s `www` to the apex (verified live). A first deploy on a fresh account may prompt to provision the `SESSION` KV namespace that the `@astrojs/cloudflare` adapter declares even though this site doesn't use sessions — accept it; the current config leaves this as-is.
 
 ### Resend
 
