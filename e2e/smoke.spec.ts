@@ -120,3 +120,25 @@ test('the vCard is served with the right fields', async ({ request }) => {
   expect(body).toContain('ORG:MAKRAZ SARLAU');
   expect(body).toContain('TEL;TYPE=WORK,VOICE:+212661764392');
 });
+
+// --- Portfolio hierarchy ---
+
+test('portfolio leads with the two flagship projects and demotes Marrakech PHP', async ({ page }) => {
+  await page.goto('/fr/portfolio');
+  // Farblieferant and PHP Morocco keep h2 sections; Marrakech PHP is now an h3 card, so a
+  // regression that promotes it back to a full section fails here.
+  await expect(page.getByRole('heading', { level: 2, name: 'Farblieferant' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'PHP Morocco' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Marrakech PHP' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 3, name: 'Marrakech PHP' })).toBeVisible();
+  await expect(page.locator('a[href="https://marrakechphp.ma"]')).toBeVisible();
+});
+
+test('portfolio shows the unnamed upcoming project without a link', async ({ page }) => {
+  await page.goto('/fr/portfolio');
+  const card = page.locator('article', { hasText: 'Nouveau projet' });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Bientôt');
+  // The teaser is deliberately anonymous: no client name, nothing to click through to.
+  await expect(card.locator('a')).toHaveCount(0);
+});

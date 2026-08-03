@@ -336,5 +336,11 @@
   "mycard.website": "زيارة الموقع",
   "mycard.address_label": "العنوان",
   "mycard.address": "مركز أعمال إتران، مكتب رقم B52، الطابق الخامس، باب دكالة، مراكش، المغرب",
-  "mycard.lang_label": "اللغة"
+  "mycard.lang_label": "اللغة",
+  "portfolio.also_kicker": "أيضًا في الورشة",
+  "portfolio.f3_short": "موقع لقاءات PHP بمراكش: البرنامج، المتحدثون والتسجيل.",
+  "portfolio.soon_kicker": "قريبًا",
+  "portfolio.soon_title": "مشروع جديد",
+  "portfolio.soon_desc": "منصة لعميل قيد التطوير، سيتم الكشف عنها عند الإطلاق.",
+  "portfolio.soon_visual": "الصورة قادمة"
 }

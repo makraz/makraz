@@ -336,5 +336,11 @@
   "mycard.website": "Voir le site",
   "mycard.address_label": "Adresse",
   "mycard.address": "Centre d'affaires Itrane, Bureau n° B52, 5ᵉ étage, Bab Doukkala, Marrakech, Maroc",
-  "mycard.lang_label": "Langue"
+  "mycard.lang_label": "Langue",
+  "portfolio.also_kicker": "Aussi dans l'atelier",
+  "portfolio.f3_short": "Le site des meetups PHP de Marrakech : programme, intervenants et inscriptions.",
+  "portfolio.soon_kicker": "Bientôt",
+  "portfolio.soon_title": "Nouveau projet",
+  "portfolio.soon_desc": "Une plateforme client en cours de développement, dévoilée au lancement.",
+  "portfolio.soon_visual": "Visuel à venir"
 }

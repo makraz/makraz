@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Kicker from '../../components/Kicker.astro';
 import Screenshot from '../../components/Screenshot.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import fbCard from '../../assets/farblieferant-card.png';
 import phpCard from '../../assets/phpmorocco-card.png';
 import mphpCard from '../../assets/marrakechphp-card.png';
@@ -62,20 +63,43 @@ const description = t(lang, 'seo.portfolio_desc');
     </div>
   </section>
 
-  <!-- Marrakech PHP -->
+  <!--
+    Secondary row. Marrakech PHP sits here rather than in its own full-bleed section: it is the
+    same community-platform story as PHP Morocco, so giving both equal weight made the page
+    repeat itself. Pairing it with the upcoming project reads as a deliberate group.
+  -->
   <section class="border-t border-line bg-card">
-    <div class="mk-container mk-section grid grid-cols-[1.25fr_1fr] items-center gap-16 max-[900px]:grid-cols-1">
-      <Screenshot src={mphpCard} alt={t(lang, 'img.mphp_card')} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" />
-      <div>
-        <Kicker class="mb-[18px]">{t(lang, 'portfolio.f3_kicker')}</Kicker>
-        <h2 class="text-h2-sub m-0 mb-[18px]">Marrakech PHP</h2>
-        <p class="m-0 mb-7 text-[16px] leading-[1.65] text-txt-2">{t(lang, 'portfolio.f3_desc')}</p>
-        <div class="mb-7 flex flex-col gap-2.5 text-[14px] text-ink">
-          <span>{t(lang, 'portfolio.f3_s1')}</span>
-          <span>{t(lang, 'portfolio.f3_s2')}</span>
-          <span>{t(lang, 'portfolio.f3_s3')}</span>
-        </div>
-        <a href="https://marrakechphp.ma" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">marrakechphp.ma ↗</a>
+    <div class="mk-container mk-section">
+      <Kicker class="mb-9">{t(lang, 'portfolio.also_kicker')}</Kicker>
+      <div class="grid grid-cols-2 gap-8 max-[760px]:grid-cols-1">
+        <!-- Marrakech PHP -->
+        <article class="flex flex-col rounded-card border border-line bg-paper p-7">
+          <Screenshot
+            src={mphpCard}
+            alt={t(lang, 'img.mphp_card')}
+            ratio="16/10"
+            sizes="(max-width: 760px) 100vw, 420px"
+            class="mb-6"
+          />
+          <Kicker class="mb-3">{t(lang, 'portfolio.f3_kicker')}</Kicker>
+          <h3 class="m-0 mb-3 text-[24px] font-bold leading-[1.15] tracking-[-0.02em]">Marrakech PHP</h3>
+          <p class="m-0 mb-6 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'portfolio.f3_short')}</p>
+          <!-- mt-auto keeps the two cards' links aligned when the copy lengths differ. -->
+          <a
+            href="https://marrakechphp.ma"
+            target="_blank"
+            rel="noopener"
+            class="mt-auto self-start border-b-2 border-ink pb-[3px] text-[15px] font-semibold"
+          >marrakechphp.ma ↗</a>
+        </article>
+
+        <!-- Upcoming project: intentionally unnamed until the client launch. -->
+        <article class="flex flex-col rounded-card border border-dashed border-line-mid bg-paper p-7">
+          <ImagePlaceholder ratio="16/10" label={t(lang, 'portfolio.soon_visual')} class="mb-6" />
+          <Kicker class="mb-3">{t(lang, 'portfolio.soon_kicker')}</Kicker>
+          <h3 class="m-0 mb-3 text-[24px] font-bold leading-[1.15] tracking-[-0.02em] text-txt-2">{t(lang, 'portfolio.soon_title')}</h3>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-3">{t(lang, 'portfolio.soon_desc')}</p>
+        </article>
       </div>
     </div>
   </section>

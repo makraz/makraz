@@ -336,5 +336,11 @@
   "mycard.website": "Visit the website",
   "mycard.address_label": "Address",
   "mycard.address": "Itrane Business Center, Office B52, 5th floor, Bab Doukkala, Marrakech, Morocco",
-  "mycard.lang_label": "Language"
+  "mycard.lang_label": "Language",
+  "portfolio.also_kicker": "Also in the workshop",
+  "portfolio.f3_short": "The site for the Marrakech PHP meetups: schedule, speakers and sign-ups.",
+  "portfolio.soon_kicker": "Coming soon",
+  "portfolio.soon_title": "New project",
+  "portfolio.soon_desc": "A client platform currently in development, revealed at launch.",
+  "portfolio.soon_visual": "Visual to come"
 }
