@@ -142,3 +142,28 @@ test('portfolio shows the unnamed upcoming project without a link', async ({ pag
   // The teaser is deliberately anonymous: no client name, nothing to click through to.
   await expect(card.locator('a')).toHaveCount(0);
 });
+
+// The card must not scroll: everything has to be reachable the moment the QR resolves.
+const CARD_VIEWPORTS = [
+  { name: 'iPhone SE 1st', width: 320, height: 568 },
+  { name: 'iPhone SE 2nd', width: 375, height: 667 },
+  { name: 'Galaxy S8', width: 360, height: 740 },
+  { name: 'landscape', width: 740, height: 360 },
+];
+
+for (const vp of CARD_VIEWPORTS) {
+  for (const lang of langs) {
+    test(`/${lang}/mycard fits ${vp.name} without scrolling`, async ({ page }) => {
+      await page.setViewportSize({ width: vp.width, height: vp.height });
+      await page.goto(`/${lang}/mycard`);
+      await page.waitForLoadState('load');
+      const { scrollH, clientH } = await page.evaluate(() => ({
+        scrollH: document.documentElement.scrollHeight,
+        clientH: document.documentElement.clientHeight,
+      }));
+      expect(scrollH, `${vp.name} ${lang} overflows by ${scrollH - clientH}px`).toBeLessThanOrEqual(clientH);
+      // Fitting is only meaningful if the last action is genuinely on screen.
+      await expect(page.locator('a[href="/makraz.vcf"]')).toBeInViewport();
+    });
+  }
+}

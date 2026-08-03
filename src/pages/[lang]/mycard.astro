@@ -55,48 +55,69 @@ const actions = [
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
     )}
   </head>
-  <body class="min-h-[100dvh] bg-paper">
-    <main class="mx-auto flex min-h-[100dvh] w-full max-w-[440px] flex-col justify-center px-6 py-10">
+  <!--
+    Every vertical measurement below is clamp(floor, Ndvh, ceiling) rather than a fixed value.
+    A business card that scrolls is a broken card — the whole point is that everything is reachable
+    the instant the QR resolves. Short screens (a 320x568 iPhone SE is the worst case) compress
+    toward the floors; tall screens get the comfortable ceilings. Nothing is hidden at any size.
+  -->
+  <body class="bg-paper">
+    <main class="mx-auto flex min-h-[100dvh] w-full max-w-[440px] flex-col justify-center px-[clamp(14px,4vw,24px)] py-[clamp(10px,1.6dvh,40px)]">
       <!-- Language switcher: auto-detection on /mycard can guess wrong, so all three are always one tap away. -->
-      <nav aria-label={t(lang, 'mycard.lang_label')} class="mb-8 flex items-center justify-center gap-2">
+      <nav aria-label={t(lang, 'mycard.lang_label')} class="mb-[clamp(10px,3dvh,32px)] flex items-center justify-center gap-2">
         {locales.map((l) => (
           <a
             href={localePath(l, '/mycard')}
             hreflang={l}
             aria-current={l === lang ? 'page' : undefined}
             class:list={[
-              'rounded-pill border px-3 py-1 text-[12px] font-semibold uppercase tracking-[.14em] no-underline transition-colors',
+              'rounded-pill border px-3 py-[clamp(3px,0.7dvh,6px)] text-[clamp(11px,1.5dvh,12px)] font-semibold uppercase tracking-[.14em] no-underline transition-colors',
               l === lang ? 'border-ink bg-ink text-white' : 'border-line-mid text-txt-3 hover:border-ink hover:text-ink',
             ]}
           >{l}</a>
         ))}
       </nav>
 
-      <div class="rounded-card border border-line bg-card px-6 py-9 text-center">
-        <img src={logoBlack.src} alt="MAKRAZ" width="56" height="56" class="mx-auto h-14 w-14 object-contain" />
-        <h1 class="mt-5 mb-0 text-[26px] font-bold leading-tight tracking-[-0.02em]">MAKRAZ SARLAU</h1>
-        <p class="mt-2 mb-0 text-[14px] text-txt-3">{t(lang, 'mycard.tagline')}</p>
-        <p class="mt-1 mb-0 text-[13px] text-txt-4">{t(lang, 'mycard.intro')}</p>
+      <div class="mk-card rounded-card border border-line bg-card px-[clamp(16px,5vw,24px)] py-[clamp(14px,2.6dvh,36px)] text-center">
+        <div class="mk-id">
+          <img
+            src={logoBlack.src}
+            alt="MAKRAZ"
+            width="56"
+            height="56"
+            class="mx-auto h-[clamp(32px,6dvh,56px)] w-[clamp(32px,6dvh,56px)] object-contain"
+          />
+          <h1 class="mt-[clamp(8px,2dvh,20px)] mb-0 text-[clamp(21px,3.2dvh,26px)] font-bold leading-tight tracking-[-0.02em]">MAKRAZ SARLAU</h1>
+          <p class="mt-[clamp(4px,1dvh,8px)] mb-0 text-[clamp(13px,1.8dvh,14px)] text-txt-3">{t(lang, 'mycard.tagline')}</p>
+          <p class="mt-[clamp(2px,0.6dvh,4px)] mb-0 text-[clamp(12px,1.7dvh,13px)] text-txt-4">{t(lang, 'mycard.intro')}</p>
+        </div>
 
-        <div class="mt-8 flex flex-col gap-3">
+        <div class="mk-actions mt-[clamp(12px,2.6dvh,32px)] flex flex-col gap-[clamp(7px,1.4dvh,12px)]">
           {actions.map((a) => (
             <a
               href={a.href}
               class:list={[
-                'btn w-full flex-col gap-0.5 px-5 py-4 text-[16px] no-underline',
+                'btn w-full flex-col gap-0 px-5 py-[clamp(9px,1.8dvh,16px)] text-[clamp(15px,2.2dvh,16px)] leading-[1.25] no-underline',
                 a.primary ? 'btn-primary' : 'btn-ghost',
               ]}
             >
               <span>{a.label}</span>
               <span
                 dir="ltr"
-                class:list={['text-[12px] font-normal', a.primary ? 'text-ondark-1' : 'text-txt-4']}
+                class:list={[
+                  'text-[clamp(11px,1.5dvh,12px)] font-normal leading-[1.4]',
+                  a.primary ? 'text-ondark-1' : 'text-txt-4',
+                ]}
               >{a.sub}</span>
             </a>
           ))}
 
           <!-- download: the .vcf is a static asset, so the browser saves it instead of navigating. -->
-          <a href="/makraz.vcf" download="makraz.vcf" class="btn btn-ghost w-full px-5 py-4 text-[16px] no-underline">
+          <a
+            href="/makraz.vcf"
+            download="makraz.vcf"
+            class="btn btn-ghost w-full px-5 py-[clamp(9px,1.8dvh,16px)] text-[clamp(15px,2.2dvh,16px)] leading-[1.25] no-underline"
+          >
             {t(lang, 'mycard.save')}
           </a>
         </div>
@@ -105,17 +126,46 @@ const actions = [
           href={MAPS}
           target="_blank"
           rel="noopener"
-          class="mt-8 block text-[13px] leading-relaxed text-txt-2 no-underline hover:text-ink"
+          class="mk-addr mt-[clamp(14px,2.6dvh,32px)] block text-[clamp(12px,1.7dvh,13px)] leading-[1.5] text-txt-2 no-underline hover:text-ink"
         >
           <span class="text-kicker block">{t(lang, 'mycard.address_label')}</span>
-          <span class="mt-2 block">{t(lang, 'mycard.address')}</span>
+          <span class="mt-[clamp(4px,1dvh,8px)] block">{t(lang, 'mycard.address')}</span>
         </a>
       </div>
 
       <a
         href={localePath(lang, '/')}
-        class="mt-6 block text-center text-[14px] font-semibold text-txt-2 no-underline hover:text-ink"
+        class="mt-[clamp(10px,2dvh,24px)] block text-center text-[clamp(13px,1.9dvh,14px)] font-semibold text-txt-2 no-underline hover:text-ink"
       >{t(lang, 'mycard.website')} {dir(lang) === 'rtl' ? '←' : '→'}</a>
     </main>
+
+    <style>
+      /*
+        Landscape / short-and-wide: stacking everything vertically cannot fit ~360px of height, so
+        the card turns two-column — identity and address on one side, the action stack on the other.
+        Scoped to short AND wide so portrait phones (which the clamps above already handle) and
+        narrow windows are untouched.
+      */
+      @media (max-height: 560px) and (min-width: 640px) {
+        main { max-width: 760px; }
+        .mk-card {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          column-gap: 28px;
+          text-align: start;
+        }
+        /*
+          Explicit placement, not auto-flow: identity leads and the action stack sits beside it,
+          spanning both rows so it stays vertically centred. Column 1 resolves to the right-hand
+          side under dir="rtl" on its own, so Arabic needs no override.
+        */
+        .mk-id { grid-column: 1; grid-row: 1; }
+        .mk-actions { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+        .mk-addr { grid-column: 1; grid-row: 2; }
+        .mk-id img { margin-inline: 0; }
+        .mk-addr { margin-top: 14px; }
+      }
+    </style>
   </body>
 </html>
