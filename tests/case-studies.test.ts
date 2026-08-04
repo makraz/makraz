@@ -5,10 +5,11 @@ import { locales, t } from '../src/i18n';
 const DIR = new URL('../src/content/case-studies/', import.meta.url);
 const read = (file: string) => readFileSync(new URL(file, DIR), 'utf8');
 
-// Both case studies follow the same shape, so assert against the pair rather than one of them.
+// Every case study follows the same shape, so assert across the set rather than one of them.
 const STUDIES = [
   { slug: 'farblieferant', keyspace: 'case_farblieferant' },
   { slug: 'phpmorocco', keyspace: 'case_phpmorocco' },
+  { slug: 'aya', keyspace: 'case_aya' },
 ];
 
 describe('case study content', () => {

@@ -4,6 +4,7 @@ import Kicker from '../../components/Kicker.astro';
 import Screenshot from '../../components/Screenshot.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import fbCard from '../../assets/farblieferant-card.png';
+import ayaCard from '../../assets/aya-hero.png';
 import phpCard from '../../assets/phpmorocco-card.png';
 import mphpCard from '../../assets/marrakechphp-card.png';
 import { locales, t, localePath, type Locale } from '../../i18n';
@@ -45,10 +46,35 @@ const description = t(lang, 'seo.portfolio_desc');
     </div>
   </section>
 
-  <!-- PHP Morocco -->
+  {/*
+    Second flagship, directly after Farblieferant. Mirrored column order so the page keeps
+    alternating image/text down the list.
+  */}
   <section class="border-t border-line">
     <div class="mk-container mk-section grid grid-cols-[1fr_1.25fr] items-center gap-16 max-[900px]:grid-cols-1">
       <div class="max-[900px]:order-2">
+        <Kicker class="mb-[18px]">{t(lang, 'portfolio.f4_kicker')}</Kicker>
+        <h2 class="text-h2-sub m-0 mb-[18px]">Cabinet Aya Alaoui El Hadari</h2>
+        <p class="m-0 mb-7 text-[16px] leading-[1.65] text-txt-2">{t(lang, 'portfolio.f4_desc')}</p>
+        <div class="mb-7 flex flex-col gap-2.5 text-[14px] text-ink">
+          <span>{t(lang, 'portfolio.f4_s1')}</span>
+          <span>{t(lang, 'portfolio.f4_s2')}</span>
+          <span>{t(lang, 'portfolio.f4_s3')}</span>
+        </div>
+        <div class="flex flex-wrap gap-7">
+          <a href={localePath(lang, '/portfolio/aya')} class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">{t(lang, 'portfolio.f4_case')}</a>
+          <a href="https://www.ayapsychomotricite.ma" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">ayapsychomotricite.ma ↗</a>
+        </div>
+      </div>
+      <Screenshot src={ayaCard} alt={t(lang, 'img.aya_card')} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" class="max-[900px]:order-1" />
+    </div>
+  </section>
+
+  <!-- PHP Morocco -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section grid grid-cols-[1.25fr_1fr] items-center gap-16 max-[900px]:grid-cols-1">
+      <Screenshot src={phpCard} alt={t(lang, 'img.php_card')} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" />
+      <div>
         <Kicker class="mb-[18px]">{t(lang, 'portfolio.f2_kicker')}</Kicker>
         <h2 class="text-h2-sub m-0 mb-[18px]">PHP Morocco</h2>
         <p class="m-0 mb-7 text-[16px] leading-[1.65] text-txt-2">{t(lang, 'portfolio.f2_desc')}</p>
@@ -62,7 +88,6 @@ const description = t(lang, 'seo.portfolio_desc');
           <a href="https://phpmorocco.ma" target="_blank" rel="noopener" class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">phpmorocco.ma ↗</a>
         </div>
       </div>
-      <Screenshot src={phpCard} alt={t(lang, 'img.php_card')} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" class="max-[900px]:order-1" />
     </div>
   </section>
 

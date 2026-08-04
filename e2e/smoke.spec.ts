@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const langs = ['fr', 'en', 'ar'] as const;
-const paths = ['', '/services', '/portfolio', '/portfolio/farblieferant', '/portfolio/phpmorocco', '/a-propos', '/contact', '/blog', '/mentions-legales'];
+const paths = ['', '/services', '/portfolio', '/portfolio/farblieferant', '/portfolio/phpmorocco', '/portfolio/aya', '/a-propos', '/contact', '/blog', '/mentions-legales'];
 
 for (const lang of langs) {
   for (const path of paths) {
@@ -311,3 +311,33 @@ test('the home page presents four service lines', async ({ page }) => {
   // Stale "trois métiers" copy anywhere would contradict the fourth card.
   await expect(page.getByText('Trois métiers')).toHaveCount(0);
 });
+
+// --- Aya Alaoui El Hadari case study ---
+
+test('the portfolio lists Aya directly after Farblieferant', async ({ page }) => {
+  await page.goto('/fr/portfolio');
+  const order = await page.getByRole('heading', { level: 2 }).allInnerTexts();
+  const fb = order.findIndex((h) => h.includes('Farblieferant'));
+  const aya = order.findIndex((h) => h.includes('Aya Alaoui El Hadari'));
+  const php = order.findIndex((h) => h.includes('PHP Morocco'));
+  expect(aya).toBe(fb + 1);
+  expect(aya).toBeLessThan(php);
+});
+
+test('the Aya portfolio entry links to both the case study and the live site', async ({ page }) => {
+  await page.goto('/fr/portfolio');
+  await expect(page.locator('a[href="/fr/portfolio/aya"]')).toBeVisible();
+  await expect(page.locator('a[href="https://www.ayapsychomotricite.ma"]').first()).toBeVisible();
+});
+
+for (const lang of langs) {
+  test(`the Aya case study renders in ${lang}`, async ({ page }) => {
+    await page.goto(`/${lang}/portfolio/aya`);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    // Three body sections from the content collection, plus the CTA band heading.
+    await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4);
+    await expect(page.locator('a[href="https://www.ayapsychomotricite.ma"]')).toBeVisible();
+    // The gallery pairs the French services grid with the Arabic RTL view.
+    await expect(page.locator('section img')).toHaveCount(3);
+  });
+}
