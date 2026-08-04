@@ -3,6 +3,12 @@
 // physical cards. Deliberately does NOT use Base.astro: someone who just scanned a card wants
 // contact actions, not site chrome (header, CTA band, footer). Kept noindex, since the three
 // localized versions would otherwise read as thin duplicate contact pages.
+//
+// Every vertical measurement in the markup is clamp(floor, Ndvh, ceiling) rather than a fixed
+// value. A business card that scrolls is a broken card — the whole point is that everything is
+// reachable the instant the QR resolves. Short screens (a 320x568 iPhone SE is the worst case)
+// compress toward the floors; tall screens get the comfortable ceilings. Nothing is hidden at any
+// size. The landscape two-column fallback lives in the <style> block at the end of this file.
 import { dir, locales, localePath, t, type Locale } from '../../i18n';
 import logoBlack from '../../assets/logo-black.png';
 import '../../styles/global.css';
@@ -55,15 +61,9 @@ const actions = [
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
     )}
   </head>
-  <!--
-    Every vertical measurement below is clamp(floor, Ndvh, ceiling) rather than a fixed value.
-    A business card that scrolls is a broken card — the whole point is that everything is reachable
-    the instant the QR resolves. Short screens (a 320x568 iPhone SE is the worst case) compress
-    toward the floors; tall screens get the comfortable ceilings. Nothing is hidden at any size.
-  -->
   <body class="bg-paper">
     <main class="mx-auto flex min-h-[100dvh] w-full max-w-[440px] flex-col justify-center px-[clamp(14px,4vw,24px)] py-[clamp(10px,1.6dvh,40px)]">
-      <!-- Language switcher: auto-detection on /mycard can guess wrong, so all three are always one tap away. -->
+      {/* Language switcher: auto-detection on /mycard can guess wrong, so all three are always one tap away. */}
       <nav aria-label={t(lang, 'mycard.lang_label')} class="mb-[clamp(10px,3dvh,32px)] flex items-center justify-center gap-2">
         {locales.map((l) => (
           <a
@@ -112,7 +112,7 @@ const actions = [
             </a>
           ))}
 
-          <!-- download: the .vcf is a static asset, so the browser saves it instead of navigating. -->
+          {/* download: the .vcf is a static asset, so the browser saves it instead of navigating. */}
           <a
             href="/makraz.vcf"
             download="makraz.vcf"

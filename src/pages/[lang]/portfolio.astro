@@ -66,11 +66,11 @@ const description = t(lang, 'seo.portfolio_desc');
     </div>
   </section>
 
-  <!--
+  {/*
     Secondary row. Marrakech PHP sits here rather than in its own full-bleed section: it is the
     same community-platform story as PHP Morocco, so giving both equal weight made the page
     repeat itself. Pairing it with the upcoming project reads as a deliberate group.
-  -->
+  */}
   <section class="border-t border-line bg-card">
     <div class="mk-container mk-section">
       <Kicker class="mb-9">{t(lang, 'portfolio.also_kicker')}</Kicker>
@@ -87,7 +87,7 @@ const description = t(lang, 'seo.portfolio_desc');
           <Kicker class="mb-3">{t(lang, 'portfolio.f3_kicker')}</Kicker>
           <h3 class="m-0 mb-3 text-[24px] font-bold leading-[1.15] tracking-[-0.02em]">Marrakech PHP</h3>
           <p class="m-0 mb-6 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'portfolio.f3_short')}</p>
-          <!-- mt-auto keeps the two cards' links aligned when the copy lengths differ. -->
+          {/* mt-auto keeps the two cards' links aligned when the copy lengths differ. */}
           <a
             href="https://marrakechphp.ma"
             target="_blank"
@@ -96,7 +96,7 @@ const description = t(lang, 'seo.portfolio_desc');
           >marrakechphp.ma ↗</a>
         </article>
 
-        <!-- Upcoming project: intentionally unnamed until the client launch. -->
+        {/* Upcoming project: intentionally unnamed until the client launch. */}
         <article class="flex flex-col rounded-card border border-dashed border-line-mid bg-paper p-7">
           <ImagePlaceholder ratio="16/10" label={t(lang, 'portfolio.soon_visual')} class="mb-6" />
           <Kicker class="mb-3">{t(lang, 'portfolio.soon_kicker')}</Kicker>

@@ -22,12 +22,12 @@ const capabilities = [
 ] as const;
 ---
 <Base lang={lang} path="/" title={title} description={description} active="home">
-  <!--
+  {/*
     Dual-typed: Organization alone gives no local signal, and ProfessionalService is a LocalBusiness
     subtype, which is what earns a place in local results for "agence développement web Marrakech".
     The offer catalogue mirrors the capability links below, so the markup and the visible page agree
     — nothing is declared here that a visitor cannot also read.
-  -->
+  */}
   <script slot="head" type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
     '@type': ['Organization', 'ProfessionalService'],
@@ -58,24 +58,24 @@ const capabilities = [
   <!-- Hero -->
   <section class="mk-container pb-[90px] pt-[110px]">
     <Kicker class="mb-7">{t(lang, 'home.hero_kicker')}</Kicker>
-    <!--
+    {/*
       Not `text-h1`: this headline names the three service lines, so it runs ~5x longer than the
       short statements that class was sized for (88px over 14ch). Own clamp and measure, tuned so
       the longest locale (FR, 86 chars) sets in three lines on desktop without dominating the fold.
-    -->
+    */}
     <h1 class="m-0 max-w-[24ch] text-[clamp(32px,4.2vw,58px)] font-bold leading-[1.08] tracking-[-0.03em]">{t(lang, 'home.hero_title')}</h1>
     <p class="mb-11 mt-7 max-w-[62ch] text-[clamp(17px,1.4vw,19px)] leading-[1.65] text-txt-2">{t(lang, 'home.hero_sub')}</p>
     <div class="flex flex-wrap items-center gap-4">
       <a href={localePath(lang, '/contact')} class="btn btn-primary">{t(lang, 'home.hero_cta1')}</a>
       <a href={localePath(lang, '/portfolio')} class="btn btn-ghost">{t(lang, 'home.hero_cta2')}</a>
     </div>
-    <!--
+    {/*
       Replaces the old 10+/4/FR·EN·AR figures. Those read as decoration to a crawler; this block
       carries the same credibility (the decade abroad, the markets served) as indexable prose and
       adds the long-tail terms people actually search — "site vitrine", "application iOS et
       Android", "logiciel métier" — each linking into /services. Deliberately does NOT restate the
       three service lines: the Pillars section below already owns Développement/Design/Communication.
-    -->
+    */}
     <div class="mt-20 border-t border-line pt-11">
       <p class="m-0 max-w-[70ch] text-[16px] leading-[1.7] text-txt-2">{t(lang, 'home.seo_intro')}</p>
       <nav aria-label={t(lang, 'home.cap_label')} class="mt-7">
