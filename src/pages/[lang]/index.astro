@@ -30,8 +30,13 @@ const description = t(lang, 'seo.home_desc');
   <!-- Hero -->
   <section class="mk-container pb-[90px] pt-[110px]">
     <Kicker class="mb-7">{t(lang, 'home.hero_kicker')}</Kicker>
-    <h1 class="text-h1 m-0 max-w-[14ch]">{t(lang, 'home.hero_title')}</h1>
-    <p class="mb-11 mt-8 max-w-[56ch] text-[20px] leading-[1.6] text-txt-2">{t(lang, 'home.hero_sub')}</p>
+    <!--
+      Not `text-h1`: this headline names the three service lines, so it runs ~5x longer than the
+      short statements that class was sized for (88px over 14ch). Own clamp and measure, tuned so
+      the longest locale (FR, 86 chars) sets in three lines on desktop without dominating the fold.
+    -->
+    <h1 class="m-0 max-w-[24ch] text-[clamp(32px,4.2vw,58px)] font-bold leading-[1.08] tracking-[-0.03em]">{t(lang, 'home.hero_title')}</h1>
+    <p class="mb-11 mt-7 max-w-[62ch] text-[clamp(17px,1.4vw,19px)] leading-[1.65] text-txt-2">{t(lang, 'home.hero_sub')}</p>
     <div class="flex flex-wrap items-center gap-4">
       <a href={localePath(lang, '/contact')} class="btn btn-primary">{t(lang, 'home.hero_cta1')}</a>
       <a href={localePath(lang, '/portfolio')} class="btn btn-ghost">{t(lang, 'home.hero_cta2')}</a>
