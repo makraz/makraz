@@ -14,17 +14,45 @@ const lang = Astro.params.lang as Locale;
 
 const title = t(lang, 'seo.home_title');
 const description = t(lang, 'seo.home_desc');
+
+// Concrete deliverables, in rough order of how often they're searched for. Kept as keys so the
+// order lives in one place and every locale stays in step.
+const capabilities = [
+  'home.cap1', 'home.cap2', 'home.cap3', 'home.cap4', 'home.cap5', 'home.cap6', 'home.cap7',
+] as const;
 ---
 <Base lang={lang} path="/" title={title} description={description} active="home">
+  <!--
+    Dual-typed: Organization alone gives no local signal, and ProfessionalService is a LocalBusiness
+    subtype, which is what earns a place in local results for "agence développement web Marrakech".
+    The offer catalogue mirrors the capability links below, so the markup and the visible page agree
+    — nothing is declared here that a visitor cannot also read.
+  -->
   <script slot="head" type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     name: 'MAKRAZ SARLAU',
     url: 'https://makraz.com',
     logo: 'https://makraz.com/og-image.png',
+    image: 'https://makraz.com/og-image.png',
+    description: t(lang, 'seo.home_desc'),
     email: 'contact@makraz.com',
     telephone: '+212661764392',
     address: { '@type': 'PostalAddress', addressLocality: 'Marrakech', addressCountry: 'MA', streetAddress: "Centre d'affaires Itrane" },
+    areaServed: [
+      { '@type': 'Country', name: 'Morocco' },
+      { '@type': 'Place', name: 'Europe' },
+    ],
+    knowsLanguage: ['fr', 'en', 'ar'],
+    knowsAbout: capabilities.map((key) => t(lang, key)),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: t(lang, 'home.cap_label'),
+      itemListElement: capabilities.map((key) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: t(lang, key), url: new URL(localePath(lang, '/services'), Astro.site).href },
+      })),
+    },
   })} />
 
   <!-- Hero -->
@@ -41,19 +69,27 @@ const description = t(lang, 'seo.home_desc');
       <a href={localePath(lang, '/contact')} class="btn btn-primary">{t(lang, 'home.hero_cta1')}</a>
       <a href={localePath(lang, '/portfolio')} class="btn btn-ghost">{t(lang, 'home.hero_cta2')}</a>
     </div>
-    <div class="mt-24 grid grid-cols-3 gap-8 border-t border-line pt-11 max-[900px]:grid-cols-1">
-      <div>
-        <div class="text-[40px] font-bold leading-none tracking-[-0.02em]">10+</div>
-        <div class="mt-1.5 text-[15px] leading-[1.5] text-txt-3">{t(lang, 'home.stat1')}</div>
-      </div>
-      <div>
-        <div class="text-[40px] font-bold leading-none tracking-[-0.02em]">4</div>
-        <div class="mt-1.5 text-[15px] leading-[1.5] text-txt-3">{t(lang, 'home.stat2')}</div>
-      </div>
-      <div>
-        <div class="text-[40px] font-bold leading-none tracking-[-0.02em]">FR·EN·AR</div>
-        <div class="mt-1.5 text-[15px] leading-[1.5] text-txt-3">{t(lang, 'home.stat3')}</div>
-      </div>
+    <!--
+      Replaces the old 10+/4/FR·EN·AR figures. Those read as decoration to a crawler; this block
+      carries the same credibility (the decade abroad, the markets served) as indexable prose and
+      adds the long-tail terms people actually search — "site vitrine", "application iOS et
+      Android", "logiciel métier" — each linking into /services. Deliberately does NOT restate the
+      three service lines: the Pillars section below already owns Développement/Design/Communication.
+    -->
+    <div class="mt-20 border-t border-line pt-11">
+      <p class="m-0 max-w-[70ch] text-[16px] leading-[1.7] text-txt-2">{t(lang, 'home.seo_intro')}</p>
+      <nav aria-label={t(lang, 'home.cap_label')} class="mt-7">
+        <ul class="m-0 flex list-none flex-wrap gap-2.5 p-0">
+          {capabilities.map((key) => (
+            <li>
+              <a
+                href={localePath(lang, '/services')}
+                class="inline-block rounded-pill border border-line-mid px-4 py-2 text-[14px] font-medium text-txt-2 no-underline transition-colors hover:border-ink hover:text-ink"
+              >{t(lang, key)}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   </section>
 

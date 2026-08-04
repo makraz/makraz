@@ -192,3 +192,29 @@ test('the arabic case study is RTL and points its back link the right way', asyn
   // Matched by text: a bare href selector also hits the header nav's portfolio link.
   await expect(page.getByRole('link', { name: /العودة إلى الأعمال/ })).toContainText('→');
 });
+
+// --- Home SEO block (replaced the 10+/4/FR·EN·AR stat row) ---
+
+test('the home page carries indexable positioning copy and capability links', async ({ page }) => {
+  await page.goto('/fr');
+  await expect(page.getByText(/Agence de développement web et mobile basée à Marrakech/)).toBeVisible();
+  const chips = page.locator('nav ul li a[href="/fr/services"]');
+  await expect(chips).toHaveCount(7);
+  await expect(chips.filter({ hasText: 'Applications iOS et Android' })).toBeVisible();
+  // The old vanity figures are gone; a stray "10+" would mean the stat row came back.
+  await expect(page.getByText('FR·EN·AR')).toHaveCount(0);
+});
+
+test('the home page declares a local business with an offer catalogue', async ({ page }) => {
+  await page.goto('/fr');
+  const raw = await page.locator('script[type="application/ld+json"]').first().textContent();
+  const data = JSON.parse(raw ?? '{}');
+  // ProfessionalService is the LocalBusiness subtype that earns local results.
+  expect(data['@type']).toContain('ProfessionalService');
+  expect(data.address.addressLocality).toBe('Marrakech');
+  expect(data.hasOfferCatalog.itemListElement).toHaveLength(7);
+  // Structured data must not claim services the visible page doesn't list.
+  const offered = data.hasOfferCatalog.itemListElement.map((i: any) => i.itemOffered.name);
+  const visible = await page.locator('nav ul li a[href="/fr/services"]').allInnerTexts();
+  expect(offered.sort()).toEqual(visible.map((s) => s.trim()).sort());
+});

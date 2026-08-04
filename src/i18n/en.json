@@ -358,5 +358,14 @@
   "portfolio.f2_case": "Read the case study →",
   "img.php_hero": "PHP Morocco — community platform home page",
   "img.php_events": "PHP Morocco events listing: meetups and workshops by city and date",
-  "img.php_sponsors": "PHP Morocco sponsorship tiers with their benefits"
+  "img.php_sponsors": "PHP Morocco sponsorship tiers with their benefits",
+  "home.seo_intro": "A web and mobile development agency based in Marrakech. Ten years of software engineering in Switzerland, Italy and Dubai, working with clients across Morocco, Europe and beyond.",
+  "home.cap_label": "What we build",
+  "home.cap1": "Business websites",
+  "home.cap2": "E-commerce",
+  "home.cap3": "Web apps & SaaS",
+  "home.cap4": "iOS and Android apps",
+  "home.cap5": "Custom business software",
+  "home.cap6": "APIs & integrations",
+  "home.cap7": "SEO"
 }
