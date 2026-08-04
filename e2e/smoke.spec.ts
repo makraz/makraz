@@ -235,3 +235,40 @@ test('the home page declares a local business with an offer catalogue', async ({
     expect(item.itemOffered.url).toBe('https://makraz.com/fr/services');
   }
 });
+
+// --- Services anchor index ---
+
+for (const lang of langs) {
+  test(`/${lang}/services jump chips all resolve to a real row`, async ({ page }) => {
+    await page.goto(`/${lang}/services`);
+    const chips = page.locator('nav ul li a[href^="#"]');
+    await expect(chips).toHaveCount(7);
+    const hrefs = await chips.evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
+    for (const href of hrefs) {
+      // A chip pointing at a missing id is a dead link that still looks fine — assert the target.
+      await expect(page.locator(href)).toHaveCount(1);
+    }
+  });
+}
+
+test('services chips are labelled with the row titles they point at', async ({ page }) => {
+  await page.goto('/fr/services');
+  const chips = page.locator('nav ul li a[href^="#"]');
+  for (let i = 0; i < await chips.count(); i++) {
+    const chip = chips.nth(i);
+    const href = await chip.getAttribute('href');
+    const label = (await chip.innerText()).trim();
+    // The row's own bold title must read the same as the chip, so the index can't drift.
+    await expect(page.locator(`${href} > div`).first()).toHaveText(label);
+  }
+});
+
+test('jumping to a service clears the sticky header', async ({ page }) => {
+  await page.goto('/fr/services');
+  const headerH = await page.locator('header').evaluate((el) => el.getBoundingClientRect().height);
+  await page.locator('a[href="#d3"]').click();
+  await page.waitForFunction(() => Math.abs(location.hash === '#d3' ? 0 : 1) === 0);
+  const top = await page.locator('#d3').evaluate((el) => el.getBoundingClientRect().top);
+  // Without scroll-margin the row would sit underneath the sticky header after the jump.
+  expect(top).toBeGreaterThanOrEqual(headerH);
+});

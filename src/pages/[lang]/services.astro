@@ -11,6 +11,18 @@ const lang = Astro.params.lang as Locale;
 
 const title = t(lang, 'seo.services_title');
 const description = t(lang, 'seo.services_desc');
+
+// The anchor index under the hero. `id` matches the id on the corresponding row further down, and
+// `key` is that row's own title key — one source of truth for the wording in all three locales.
+const jumpTo = [
+  { id: 'd1', key: 'services.d1_t' }, // Applications web & SaaS
+  { id: 'd2', key: 'services.d2_t' }, // Applications mobiles
+  { id: 'd3', key: 'services.d3_t' }, // Sites internet
+  { id: 'd4', key: 'services.d4_t' }, // E-commerce
+  { id: 'd6', key: 'services.d6_t' }, // API & intégrations
+  { id: 'c1', key: 'services.c1_t' }, // Référencement naturel (SEO)
+  { id: 'c2', key: 'services.c2_t' }, // Publicité en ligne (SEA)
+] as const;
 ---
 <Base lang={lang} path="/services" title={title} description={description} active="services" ctaPage="services">
   <!-- Hero -->
@@ -18,6 +30,24 @@ const description = t(lang, 'seo.services_desc');
     <Kicker class="mb-7">{t(lang, 'services.kicker_page')}</Kicker>
     <h1 class="text-h1 m-0 max-w-[16ch]">{t(lang, 'services.hero_title')}</h1>
     <p class="mt-8 max-w-[58ch] text-[19px] leading-[1.6] text-txt-2">{t(lang, 'services.hero_sub')}</p>
+    {/*
+      Anchor index, not decoration. It puts the most-searched service names near the top of the page
+      where they carry weight, and each one jumps to the row that describes it — so it earns its
+      place for a visitor too, rather than restating the list below. Labels are the page's own item
+      titles (same i18n keys as the rows), so the index can never drift from the content it points at.
+    */}
+    <nav aria-label={t(lang, 'services.jump_label')} class="mt-10">
+      <ul class="m-0 flex list-none flex-wrap gap-2.5 p-0">
+        {jumpTo.map(({ id, key }) => (
+          <li>
+            <a
+              href={`#${id}`}
+              class="inline-block rounded-pill border border-line-mid px-4 py-2 text-[14px] font-medium text-txt-2 no-underline transition-colors hover:border-ink hover:text-ink"
+            >{t(lang, key)}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   </section>
 
   <!-- Développement -->
@@ -27,19 +57,19 @@ const description = t(lang, 'seo.services_desc');
         <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.dev_desc')}</p>
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="d1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.d1_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d1_d')}</p>
         </div>
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="d2" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.d2_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d2_d')}</p>
         </div>
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="d3" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.d3_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d3_d')}</p>
         </div>
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="d4" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.d4_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d4_d')}</p>
         </div>
@@ -47,7 +77,7 @@ const description = t(lang, 'seo.services_desc');
           <div class="text-[17px] font-bold">{t(lang, 'services.d5_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d5_d')}</p>
         </div>
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="d6" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.d6_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d6_d')}</p>
         </div>
@@ -93,11 +123,11 @@ const description = t(lang, 'seo.services_desc');
         <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.com_desc')}</p>
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="c1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.c1_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c1_d')}</p>
         </div>
-        <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+        <div id="c2" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.c2_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c2_d')}</p>
         </div>
