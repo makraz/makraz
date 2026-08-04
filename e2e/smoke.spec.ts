@@ -195,11 +195,15 @@ test('the arabic case study is RTL and points its back link the right way', asyn
 
 // --- Home page structure (stat row replaced; method leads the page) ---
 
-test('the home page carries indexable positioning copy', async ({ page }) => {
+test('the hero is headline, sub and CTAs only', async ({ page }) => {
   await page.goto('/fr');
-  await expect(page.getByText(/Agence de développement web et mobile basée à Marrakech/)).toBeVisible();
-  // The old vanity figures are gone; a stray "FR·EN·AR" would mean the stat row came back.
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Développement Web');
+  await expect(page.locator('a[href="/fr/contact"].btn-primary')).toBeVisible();
+  // Everything that used to sit below the CTAs is gone: the vanity figures, the capability chips,
+  // and the positioning paragraph. Any of these reappearing means a revert slipped through.
   await expect(page.getByText('FR·EN·AR')).toHaveCount(0);
+  await expect(page.getByText(/Agence de développement web et mobile basée à Marrakech/)).toHaveCount(0);
+  await expect(page.locator('a[href="/fr/services"].inline-block')).toHaveCount(0);
 });
 
 test('the method comes before the service lines and appears only once', async ({ page }) => {
