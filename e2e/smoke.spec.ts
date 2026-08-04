@@ -193,16 +193,28 @@ test('the arabic case study is RTL and points its back link the right way', asyn
   await expect(page.getByRole('link', { name: /العودة إلى الأعمال/ })).toContainText('→');
 });
 
-// --- Home SEO block (replaced the 10+/4/FR·EN·AR stat row) ---
+// --- Home page structure (stat row replaced; method leads the page) ---
 
-test('the home page carries indexable positioning copy and capability links', async ({ page }) => {
+test('the home page carries indexable positioning copy', async ({ page }) => {
   await page.goto('/fr');
   await expect(page.getByText(/Agence de développement web et mobile basée à Marrakech/)).toBeVisible();
-  const chips = page.locator('nav ul li a[href="/fr/services"]');
-  await expect(chips).toHaveCount(7);
-  await expect(chips.filter({ hasText: 'Applications iOS et Android' })).toBeVisible();
-  // The old vanity figures are gone; a stray "10+" would mean the stat row came back.
+  // The old vanity figures are gone; a stray "FR·EN·AR" would mean the stat row came back.
   await expect(page.getByText('FR·EN·AR')).toHaveCount(0);
+});
+
+test('the method comes before the service lines and appears only once', async ({ page }) => {
+  await page.goto('/fr');
+  const headings = await page.getByRole('heading', { level: 2 }).allInnerTexts();
+  const method = headings.findIndex((h) => h.includes("De la découverte à l'adoption"));
+  const pillars = headings.findIndex((h) => h.includes('Trois métiers'));
+  expect(method).toBeGreaterThanOrEqual(0);
+  // Answer "how do you work?" before listing what you sell.
+  expect(method).toBeLessThan(pillars);
+  // Moved, not copied — two method sections would mean the old one was left behind.
+  expect(headings.filter((h) => h.includes("De la découverte à l'adoption"))).toHaveLength(1);
+  for (const step of ['Écouter', 'Concevoir', 'Construire', 'Lancer', 'Accompagner']) {
+    await expect(page.getByText(step, { exact: true })).toBeVisible();
+  }
 });
 
 test('the home page declares a local business with an offer catalogue', async ({ page }) => {
@@ -213,8 +225,9 @@ test('the home page declares a local business with an offer catalogue', async ({
   expect(data['@type']).toContain('ProfessionalService');
   expect(data.address.addressLocality).toBe('Marrakech');
   expect(data.hasOfferCatalog.itemListElement).toHaveLength(7);
-  // Structured data must not claim services the visible page doesn't list.
-  const offered = data.hasOfferCatalog.itemListElement.map((i: any) => i.itemOffered.name);
-  const visible = await page.locator('nav ul li a[href="/fr/services"]').allInnerTexts();
-  expect(offered.sort()).toEqual(visible.map((s) => s.trim()).sort());
+  // The catalogue is no longer mirrored by chips on this page, so it must point at the page that
+  // does set the services out in full.
+  for (const item of data.hasOfferCatalog.itemListElement) {
+    expect(item.itemOffered.url).toBe('https://makraz.com/fr/services');
+  }
 });

@@ -15,8 +15,9 @@ const lang = Astro.params.lang as Locale;
 const title = t(lang, 'seo.home_title');
 const description = t(lang, 'seo.home_desc');
 
-// Concrete deliverables, in rough order of how often they're searched for. Kept as keys so the
-// order lives in one place and every locale stays in step.
+// Concrete deliverables, in rough order of how often they're searched for. No longer rendered as
+// chips on this page — they feed the structured-data offer catalogue, and /services is where a
+// visitor reads them in full.
 const capabilities = [
   'home.cap1', 'home.cap2', 'home.cap3', 'home.cap4', 'home.cap5', 'home.cap6', 'home.cap7',
 ] as const;
@@ -25,8 +26,9 @@ const capabilities = [
   {/*
     Dual-typed: Organization alone gives no local signal, and ProfessionalService is a LocalBusiness
     subtype, which is what earns a place in local results for "agence développement web Marrakech".
-    The offer catalogue mirrors the capability links below, so the markup and the visible page agree
-    — nothing is declared here that a visitor cannot also read.
+    The offer catalogue lists the same services the linked /services page sets out in full, so the
+    markup claims nothing a visitor cannot also read — it just isn't restated on this page since the
+    capability chips were removed in favour of leading with the method.
   */}
   <script slot="head" type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
@@ -70,26 +72,49 @@ const capabilities = [
       <a href={localePath(lang, '/portfolio')} class="btn btn-ghost">{t(lang, 'home.hero_cta2')}</a>
     </div>
     {/*
-      Replaces the old 10+/4/FR·EN·AR figures. Those read as decoration to a crawler; this block
-      carries the same credibility (the decade abroad, the markets served) as indexable prose and
-      adds the long-tail terms people actually search — "site vitrine", "application iOS et
-      Android", "logiciel métier" — each linking into /services. Deliberately does NOT restate the
-      three service lines: the Pillars section below already owns Développement/Design/Communication.
+      Replaces the old 10+/4/FR·EN·AR figures, which read as decoration to a crawler. This keeps the
+      same credibility — the decade abroad, the markets served — as indexable prose, and carries the
+      local terms that matter most ("développement web", "mobile", "Marrakech"). The capability chips
+      that used to sit here were dropped in favour of leading with the method: the Process section
+      immediately below now answers "how do you work?" before the service lines are listed.
     */}
     <div class="mt-20 border-t border-line pt-11">
       <p class="m-0 max-w-[70ch] text-[16px] leading-[1.7] text-txt-2">{t(lang, 'home.seo_intro')}</p>
-      <nav aria-label={t(lang, 'home.cap_label')} class="mt-7">
-        <ul class="m-0 flex list-none flex-wrap gap-2.5 p-0">
-          {capabilities.map((key) => (
-            <li>
-              <a
-                href={localePath(lang, '/services')}
-                class="inline-block rounded-pill border border-line-mid px-4 py-2 text-[14px] font-medium text-txt-2 no-underline transition-colors hover:border-ink hover:text-ink"
-              >{t(lang, key)}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-5">{t(lang, 'home.process_kicker')}</Kicker>
+      <h2 class="text-h2 m-0 mb-14 max-w-[22ch]">{t(lang, 'home.process_title')}</h2>
+      <div class="grid grid-cols-5 gap-6 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1">
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">01</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s1_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s1_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">02</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s2_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s2_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">03</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s3_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s3_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">04</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s4_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s4_d')}</p>
+        </div>
+        <div class="border-t-2 border-ink pt-6">
+          <div class="mb-3 text-[13px] font-semibold text-txt-4">05</div>
+          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s5_t')}</div>
+          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s5_d')}</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -172,40 +197,6 @@ const capabilities = [
     </div>
   </section>
 
-  <!-- Process -->
-  <section class="border-t border-line bg-card">
-    <div class="mk-container mk-section">
-      <Kicker class="mb-5">{t(lang, 'home.process_kicker')}</Kicker>
-      <h2 class="text-h2 m-0 mb-14 max-w-[22ch]">{t(lang, 'home.process_title')}</h2>
-      <div class="grid grid-cols-5 gap-6 max-[900px]:grid-cols-2 max-[560px]:grid-cols-1">
-        <div class="border-t-2 border-ink pt-6">
-          <div class="mb-3 text-[13px] font-semibold text-txt-4">01</div>
-          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s1_t')}</div>
-          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s1_d')}</p>
-        </div>
-        <div class="border-t-2 border-ink pt-6">
-          <div class="mb-3 text-[13px] font-semibold text-txt-4">02</div>
-          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s2_t')}</div>
-          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s2_d')}</p>
-        </div>
-        <div class="border-t-2 border-ink pt-6">
-          <div class="mb-3 text-[13px] font-semibold text-txt-4">03</div>
-          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s3_t')}</div>
-          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s3_d')}</p>
-        </div>
-        <div class="border-t-2 border-ink pt-6">
-          <div class="mb-3 text-[13px] font-semibold text-txt-4">04</div>
-          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s4_t')}</div>
-          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s4_d')}</p>
-        </div>
-        <div class="border-t-2 border-ink pt-6">
-          <div class="mb-3 text-[13px] font-semibold text-txt-4">05</div>
-          <div class="mb-2.5 text-[19px] font-bold">{t(lang, 'home.s5_t')}</div>
-          <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, 'home.s5_d')}</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Audience -->
   <section class="border-t border-line">
