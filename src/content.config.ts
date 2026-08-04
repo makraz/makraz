@@ -33,7 +33,14 @@ const blog = defineCollection({
 const serviceItem = z.object({ title: z.string(), description: z.string() });
 
 const services = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
+  // generateId is required, not cosmetic: a `slug` field in frontmatter otherwise becomes the entry
+  // id, so design.fr.md / design.en.md / design.ar.md would all collapse onto the id "design" and
+  // two of the three locales would silently vanish from the collection.
+  loader: glob({
+    pattern: '**/*.md',
+    base: './src/content/services',
+    generateId: ({ entry }) => entry.replace(/\.md$/, ''),
+  }),
   schema: z
     .object({
       slug: z.string(),
@@ -48,7 +55,7 @@ const services = defineCollection({
       steps: z.array(serviceItem).optional(),
       engagement: z.object({ model: z.string(), drivers: z.string() }),
       faq: z.array(z.object({ q: z.string(), a: z.string() })).min(2),
-      project: z.enum(['farblieferant', 'phpmorocco', 'marrakechphp']).optional(),
+      project: z.enum(['farblieferant', 'phpmorocco', 'marrakechphp', 'aya']).optional(),
     })
     .superRefine((d, ctx) => {
       if (d.kind === 'leaf') {

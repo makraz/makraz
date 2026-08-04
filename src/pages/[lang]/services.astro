@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Kicker from '../../components/Kicker.astro';
 import SectionIntro from '../../components/SectionIntro.astro';
-import { locales, t, type Locale } from '../../i18n';
+import { locales, t, localePath, type Locale } from '../../i18n';
 
 export function getStaticPaths() {
   return locales.map((lang) => ({ params: { lang } }));
@@ -64,6 +64,10 @@ const phases = [
     <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
       <SectionIntro number="01" title={t(lang, 'services.dev_title')}>
         <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.dev_desc')}</p>
+        <a
+          href={localePath(lang, '/services/developpement')}
+          class="mt-6 inline-block border-b-2 border-ink pb-[3px] text-[15px] font-semibold"
+        >{t(lang, 'services.pillar_link')}</a>
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div id="d1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
@@ -107,6 +111,10 @@ const phases = [
     <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
       <SectionIntro number="02" title={t(lang, 'services.des_title')}>
         <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.des_desc')}</p>
+        <a
+          href={localePath(lang, '/services/design')}
+          class="mt-6 inline-block border-b-2 border-ink pb-[3px] text-[15px] font-semibold"
+        >{t(lang, 'services.pillar_link')}</a>
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
@@ -130,6 +138,10 @@ const phases = [
     <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
       <SectionIntro number="03" title={t(lang, 'services.com_title')}>
         <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.com_desc')}</p>
+        <a
+          href={localePath(lang, '/services/communication')}
+          class="mt-6 inline-block border-b-2 border-ink pb-[3px] text-[15px] font-semibold"
+        >{t(lang, 'services.pillar_link')}</a>
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div id="c1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
@@ -165,6 +177,10 @@ const phases = [
     <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
       <SectionIntro number="04" title={t(lang, 'services.tech_title')}>
         <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.tech_desc')}</p>
+        <a
+          href={localePath(lang, '/services/direction-technique')}
+          class="mt-6 inline-block border-b-2 border-ink pb-[3px] text-[15px] font-semibold"
+        >{t(lang, 'services.pillar_link')}</a>
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div id="t1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">

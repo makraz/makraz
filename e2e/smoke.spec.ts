@@ -366,3 +366,36 @@ test('the blog hub is noindex while the articles stay indexable', async ({ page 
   await page.goto('/fr/blog/seo-multilingue-maroc');
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
 });
+
+// --- Service pages (pillar level) ---
+
+const PILLARS = ['developpement', 'design', 'communication', 'direction-technique'];
+
+for (const lang of langs) {
+  for (const slug of PILLARS) {
+    test(`/${lang}/services/${slug} renders as a pillar page`, async ({ page }) => {
+      const res = await page.goto(`/${lang}/services/${slug}`);
+      // Every locale must exist: a frontmatter slug once collapsed all three onto one page.
+      expect(res?.status()).toBe(200);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      await expect(page.locator(`a[href="/${lang}/services"]`).last()).toBeVisible();
+      // Investment + FAQ are required by the schema, so they must always render.
+      await expect(page.locator('details')).not.toHaveCount(0);
+      await expect(page.locator(`a[href="/${lang}/contact"]`).first()).toBeVisible();
+    });
+  }
+}
+
+test('the services hub links through to each pillar page', async ({ page }) => {
+  await page.goto('/fr/services');
+  for (const slug of PILLARS) {
+    await expect(page.locator(`a[href="/fr/services/${slug}"]`)).toBeVisible();
+  }
+});
+
+test('a pillar page carries no leaf-only sections yet', async ({ page }) => {
+  await page.goto('/fr/services/design');
+  // included/steps are leaf-only; if they appear on a pillar the schema guard has been bypassed.
+  await expect(page.getByText('Ce qui est inclus')).toHaveCount(0);
+  await expect(page.getByText('Comment nous travaillons')).toHaveCount(0);
+});

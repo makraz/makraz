@@ -1,5 +1,5 @@
 export type ServiceKind = 'pillar' | 'leaf';
-export type ServiceProject = 'farblieferant' | 'phpmorocco' | 'marrakechphp';
+export type ServiceProject = 'farblieferant' | 'phpmorocco' | 'marrakechphp' | 'aya';
 export type ServiceItem = { title: string; description: string };
 
 export type ServiceData = {

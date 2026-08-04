@@ -1,0 +1,22 @@
+---
+// The only new component the service pages introduce: used for a pillar's child grid and for the
+// sibling grid on a leaf page. Same card treatment as the home pillars so nothing new is invented.
+import { localePath, type Locale } from '../i18n';
+
+interface Props {
+  lang: Locale;
+  slug: string;
+  title: string;
+  lead: string;
+  number?: string;
+}
+const { lang, slug, title, lead, number } = Astro.props;
+---
+<a
+  href={localePath(lang, `/services/${slug}`)}
+  class="flex flex-col gap-3 rounded-card border border-line bg-paper p-6 no-underline transition-colors hover:border-ink"
+>
+  {number && <div class="text-[13px] font-semibold text-txt-4">{number}</div>}
+  <h3 class="m-0 text-[20px] font-bold leading-[1.2] tracking-[-0.01em]">{title}</h3>
+  <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{lead}</p>
+</a>

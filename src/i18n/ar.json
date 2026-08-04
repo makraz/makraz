@@ -412,5 +412,20 @@
   "img.aya_hero": "عيادة آية العلوي الحضري — الصفحة الرئيسية وحجز المواعيد",
   "img.aya_soins": "خدمات العيادة معروضة بحسب مرحلة العمر",
   "img.aya_ar": "النسخة العربية من الموقع، من اليمين إلى اليسار بالكامل",
-  "blog.read_more": "اقرأ المقال →"
+  "blog.read_more": "اقرأ المقال →",
+  "service.back": "→ كل الخدمات",
+  "service.problem": "المشكلة",
+  "service.included": "ما يشمله العمل",
+  "service.how": "كيف نعمل",
+  "service.case": "دراسة حالة",
+  "service.engagement": "الاستثمار",
+  "service.engagement_model": "نموذج العمل",
+  "service.engagement_drivers": "ما يُحدّد الميزانية",
+  "service.faq": "أسئلة شائعة",
+  "service.related": "خدمات ذات صلة",
+  "service.children": "ما يغطّيه هذا المجال",
+  "service.discuss": "لنتحدّث عن ذلك →",
+  "service.read_case": "اقرأ دراسة الحالة →",
+  "service.see_project": "اطّلع على المشروع →",
+  "services.pillar_link": "استكشف هذا المجال →"
 }

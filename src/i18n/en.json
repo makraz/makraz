@@ -412,5 +412,20 @@
   "img.aya_hero": "Cabinet Aya Alaoui El Hadari — home page and appointment booking",
   "img.aya_soins": "The practice's services, presented by life stage",
   "img.aya_ar": "The Arabic version of the site, fully right-to-left",
-  "blog.read_more": "Read the article →"
+  "blog.read_more": "Read the article →",
+  "service.back": "← All services",
+  "service.problem": "The problem",
+  "service.included": "What is included",
+  "service.how": "How we work",
+  "service.case": "Case study",
+  "service.engagement": "Investment",
+  "service.engagement_model": "Model",
+  "service.engagement_drivers": "What moves the budget",
+  "service.faq": "Frequently asked questions",
+  "service.related": "Related services",
+  "service.children": "What this craft covers",
+  "service.discuss": "Discuss it with us →",
+  "service.read_case": "Read the case study →",
+  "service.see_project": "See the project →",
+  "services.pillar_link": "Explore this craft →"
 }

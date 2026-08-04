@@ -1,0 +1,184 @@
+---
+// One route for both kinds of service page. A pillar is a category landing page listing its
+// children; a leaf adds what's included, how we work, and an optional case study. The taxonomy
+// itself lives in src/lib/services.ts so this template only arranges what it is handed.
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Kicker from '../../../components/Kicker.astro';
+import ServiceCard from '../../../components/ServiceCard.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import fbCard from '../../../assets/farblieferant-card.png';
+import phpCard from '../../../assets/phpmorocco-card.png';
+import mphpCard from '../../../assets/marrakechphp-card.png';
+import ayaCard from '../../../assets/aya-hero.png';
+import { getChildren, getParent, getSiblings, type ServiceData } from '../../../lib/services';
+import { locales, t, localePath, type Locale } from '../../../i18n';
+
+export async function getStaticPaths() {
+  const all = await getCollection('services');
+  return all.map((entry) => ({
+    params: { lang: entry.data.lang, slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Locale;
+const data = entry.data as ServiceData;
+const { Content } = await render(entry);
+
+// The whole locale's services, so the taxonomy helpers can resolve parents, children and siblings.
+const all = (await getCollection('services', (e) => e.data.lang === lang)).map((e) => e.data as ServiceData);
+const children = data.kind === 'pillar' ? getChildren(all, data.slug) : [];
+const siblings = data.kind === 'leaf' ? getSiblings(all, data.slug) : [];
+const parent = getParent(all, data.slug);
+
+// Only genuine matches carry a case study — an invented mapping would imply experience the project
+// does not evidence. Portfolio entries link to the portfolio; Farblieferant and Aya have their own.
+const PROJECTS = {
+  farblieferant: { name: 'Farblieferant', img: fbCard, href: '/portfolio/farblieferant', alt: 'img.fb_card', deep: true },
+  phpmorocco: { name: 'PHP Morocco', img: phpCard, href: '/portfolio/phpmorocco', alt: 'img.php_card', deep: true },
+  aya: { name: 'Cabinet Aya Alaoui El Hadari', img: ayaCard, href: '/portfolio/aya', alt: 'img.aya_card', deep: true },
+  marrakechphp: { name: 'Marrakech PHP', img: mphpCard, href: '/portfolio', alt: 'img.mphp_card', deep: false },
+} as const;
+const project = data.project ? PROJECTS[data.project] : undefined;
+
+const title = `${data.title} — MAKRAZ`;
+const description = data.lead;
+---
+<Base lang={lang} path={`/services/${data.slug}`} title={title} description={description} active="services" ctaPage="services">
+  <!-- Hero -->
+  <section class="mk-container pb-14 pt-[90px]">
+    <a href={localePath(lang, '/services')} class="text-[14px] font-semibold text-txt-4 hover:text-ink">{t(lang, 'service.back')}</a>
+    <Kicker class="mb-5 mt-9">{parent ? parent.title : data.number}</Kicker>
+    <h1 class="text-h1 m-0 max-w-[20ch]">{data.title}</h1>
+    <p class="mt-[26px] max-w-[58ch] text-[19px] leading-[1.6] text-txt-2">{data.lead}</p>
+  </section>
+
+  <!-- Le problème -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section mx-auto max-w-[840px]">
+      <Kicker class="mb-6">{t(lang, 'service.problem')}</Kicker>
+      <div class="[&_p]:m-0 [&_p+p]:mt-6 [&_p]:text-[17px] [&_p]:leading-[1.75] [&_p]:text-[#3a3a3a]">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  {children.length > 0 && (
+    <section class="border-t border-line">
+      <div class="mk-container mk-section">
+        <Kicker class="mb-9">{t(lang, 'service.children')}</Kicker>
+        <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
+          {children.map((child) => (
+            <ServiceCard lang={lang} slug={child.slug} title={child.title} lead={child.lead} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {data.included && data.included.length > 0 && (
+    <section class="border-t border-line">
+      <div class="mk-container mk-section">
+        <Kicker class="mb-9">{t(lang, 'service.included')}</Kicker>
+        <div class="border-t border-line">
+          {data.included.map((item, i) => (
+            <div
+              class:list={[
+                'grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1',
+                i < data.included!.length - 1 && 'border-b border-line',
+              ]}
+            >
+              <div class="text-[17px] font-bold">{item.title}</div>
+              <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {data.steps && data.steps.length > 0 && (
+    <section class="border-t border-line bg-card">
+      <div class="mk-container mk-section">
+        <Kicker class="mb-9">{t(lang, 'service.how')}</Kicker>
+        <div class="grid gap-7" style={`grid-template-columns: repeat(${Math.min(data.steps.length, 4)}, minmax(0, 1fr));`}>
+          {data.steps.map((step, i) => (
+            <div class="border-t-2 border-ink pt-6">
+              <div class="mb-3 text-[13px] font-semibold text-txt-4">{String(i + 1).padStart(2, '0')}</div>
+              <div class="mb-2.5 text-[19px] font-bold">{step.title}</div>
+              <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {project && (
+    <section class="border-t border-line">
+      <div class="mk-container mk-section grid grid-cols-[1.25fr_1fr] items-center gap-16 max-[900px]:grid-cols-1">
+        <Screenshot src={project.img} alt={t(lang, project.alt)} ratio="16/11" radius="media" sizes="(max-width: 900px) 100vw, 690px" />
+        <div>
+          <Kicker class="mb-[18px]">{t(lang, 'service.case')}</Kicker>
+          <h2 class="text-h2-sub m-0 mb-[18px]">{project.name}</h2>
+          <a href={localePath(lang, project.href)} class="border-b-2 border-ink pb-[3px] text-[15px] font-semibold">
+            {t(lang, project.deep ? 'service.read_case' : 'service.see_project')}
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Investissement -->
+  <section class="border-t border-line bg-card">
+    <div class="mk-container mk-section">
+      <Kicker class="mb-9">{t(lang, 'service.engagement')}</Kicker>
+      {/* Kicker sits above the grid so both column labels share one baseline. */}
+      <div class="grid grid-cols-2 gap-16 max-[900px]:grid-cols-1">
+        <div>
+          <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'service.engagement_model')}</div>
+          <p class="m-0 text-[16px] leading-[1.65] text-txt-2">{data.engagement.model}</p>
+        </div>
+        <div>
+          <div class="mb-2 text-[12px] font-semibold uppercase tracking-[.2em] text-txt-4">{t(lang, 'service.engagement_drivers')}</div>
+          <p class="m-0 text-[16px] leading-[1.65] text-txt-2">{data.engagement.drivers}</p>
+        </div>
+      </div>
+      <a href={localePath(lang, '/contact')} class="mt-10 inline-block border-b-2 border-ink pb-[3px] text-[15px] font-semibold">{t(lang, 'service.discuss')}</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section mx-auto max-w-[840px]">
+      <Kicker class="mb-9">{t(lang, 'service.faq')}</Kicker>
+      <div class="border-t border-line">
+        {data.faq.map((item) => (
+          <details class="group border-b border-line py-[22px]">
+            <summary class="flex cursor-pointer items-center justify-between gap-6 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <span class="text-[20px] text-txt-4 group-open:hidden">+</span>
+              <span class="hidden text-[20px] text-txt-4 group-open:inline">−</span>
+            </summary>
+            <p class="m-0 mt-4 text-[15px] leading-[1.7] text-txt-2">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {siblings.length > 0 && (
+    <section class="border-t border-line bg-card">
+      <div class="mk-container mk-section">
+        <Kicker class="mb-9">{t(lang, 'service.related')}</Kicker>
+        <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
+          {siblings.map((s) => (
+            <ServiceCard lang={lang} slug={s.slug} title={s.title} lead={s.lead} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>

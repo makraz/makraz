@@ -412,5 +412,20 @@
   "img.aya_hero": "Cabinet Aya Alaoui El Hadari — page d'accueil et prise de rendez-vous",
   "img.aya_soins": "Les prises en charge du cabinet, présentées par étape de vie",
   "img.aya_ar": "La version arabe du site, entièrement en RTL",
-  "blog.read_more": "Lire l'article →"
+  "blog.read_more": "Lire l'article →",
+  "service.back": "← Tous les services",
+  "service.problem": "Le problème",
+  "service.included": "Ce qui est inclus",
+  "service.how": "Comment nous travaillons",
+  "service.case": "Étude de cas",
+  "service.engagement": "Investissement",
+  "service.engagement_model": "Modèle",
+  "service.engagement_drivers": "Ce qui fait varier le budget",
+  "service.faq": "Questions fréquentes",
+  "service.related": "Services liés",
+  "service.children": "Ce que couvre ce métier",
+  "service.discuss": "En parler avec nous →",
+  "service.read_case": "Lire l'étude de cas →",
+  "service.see_project": "Voir le projet →",
+  "services.pillar_link": "Découvrir ce métier →"
 }
