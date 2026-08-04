@@ -20,6 +20,7 @@ const description = t(lang, 'seo.home_desc');
 // visitor reads them in full.
 const capabilities = [
   'home.cap1', 'home.cap2', 'home.cap3', 'home.cap4', 'home.cap5', 'home.cap6', 'home.cap7',
+  'home.cap8', 'home.cap9',
 ] as const;
 ---
 <Base lang={lang} path="/" title={title} description={description} active="home">
@@ -113,7 +114,7 @@ const capabilities = [
     <div class="mk-container mk-section">
       <Kicker class="mb-5">{t(lang, 'home.pillars_kicker')}</Kicker>
       <h2 class="text-h2 m-0 mb-14">{t(lang, 'home.pillars_title')}</h2>
-      <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
+      <div class="grid grid-cols-2 gap-7 max-[900px]:grid-cols-1">
         <div class="flex flex-col gap-5 rounded-card border border-line bg-paper p-[40px_36px] hover:border-ink max-[900px]:p-[28px_22px]">
           <div class="text-[13px] font-semibold text-txt-4">01</div>
           <h3 class="m-0 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'home.p1_title')}</h3>
@@ -142,6 +143,16 @@ const capabilities = [
             <span>{t(lang, 'home.p3_i1')}</span>
             <span>{t(lang, 'home.p3_i2')}</span>
             <span>{t(lang, 'home.p3_i3')}</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-5 rounded-card border border-line bg-paper p-[40px_36px] hover:border-ink max-[900px]:p-[28px_22px]">
+          <div class="text-[13px] font-semibold text-txt-4">04</div>
+          <h3 class="m-0 text-[26px] font-bold tracking-[-0.02em]">{t(lang, 'home.p4_title')}</h3>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'home.p4_desc')}</p>
+          <div class="mt-auto flex flex-col gap-2.5 text-[14px] text-ink">
+            <span>{t(lang, 'home.p4_i1')}</span>
+            <span>{t(lang, 'home.p4_i2')}</span>
+            <span>{t(lang, 'home.p4_i3')}</span>
           </div>
         </div>
       </div>

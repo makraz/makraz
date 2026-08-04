@@ -210,7 +210,7 @@ test('the method comes before the service lines and appears only once', async ({
   await page.goto('/fr');
   const headings = await page.getByRole('heading', { level: 2 }).allInnerTexts();
   const method = headings.findIndex((h) => h.includes("De la découverte à l'adoption"));
-  const pillars = headings.findIndex((h) => h.includes('Trois métiers'));
+  const pillars = headings.findIndex((h) => /métiers\. Un seul partenaire/.test(h));
   expect(method).toBeGreaterThanOrEqual(0);
   // Answer "how do you work?" before listing what you sell.
   expect(method).toBeLessThan(pillars);
@@ -228,7 +228,7 @@ test('the home page declares a local business with an offer catalogue', async ({
   // ProfessionalService is the LocalBusiness subtype that earns local results.
   expect(data['@type']).toContain('ProfessionalService');
   expect(data.address.addressLocality).toBe('Marrakech');
-  expect(data.hasOfferCatalog.itemListElement).toHaveLength(7);
+  expect(data.hasOfferCatalog.itemListElement).toHaveLength(9);
   // The catalogue is no longer mirrored by chips on this page, so it must point at the page that
   // does set the services out in full.
   for (const item of data.hasOfferCatalog.itemListElement) {
@@ -242,7 +242,7 @@ for (const lang of langs) {
   test(`/${lang}/services jump chips all resolve to a real row`, async ({ page }) => {
     await page.goto(`/${lang}/services`);
     const chips = page.locator('nav ul li a[href^="#"]');
-    await expect(chips).toHaveCount(7);
+    await expect(chips).toHaveCount(9);
     const hrefs = await chips.evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''));
     for (const href of hrefs) {
       // A chip pointing at a missing id is a dead link that still looks fine — assert the target.
@@ -271,4 +271,43 @@ test('jumping to a service clears the sticky header', async ({ page }) => {
   const top = await page.locator('#d3').evaluate((el) => el.getBoundingClientRect().top);
   // Without scroll-margin the row would sit underneath the sticky header after the jump.
   expect(top).toBeGreaterThanOrEqual(headerH);
+});
+
+// --- Technical leadership line (section 04) ---
+
+for (const lang of langs) {
+  test(`/${lang}/services lists the technical leadership offers`, async ({ page }) => {
+    await page.goto(`/${lang}/services`);
+    for (const id of ['t1', 't2', 't3']) {
+      await expect(page.locator(`#${id}`)).toHaveCount(1);
+    }
+    // The three audit phases sit under the offers, numbered 01-03.
+    for (const n of ['01', '02', '03']) {
+      await expect(page.locator(`#t2 ~ div >> text=${n}`).first()).toBeVisible();
+    }
+  });
+}
+
+test('the CTO row names both phrasings so either search term lands', async ({ page }) => {
+  await page.goto('/en/services');
+  await expect(page.locator('#t1')).toContainText('Fractional CTO');
+  await expect(page.locator('#t1')).toContainText('CTO on demand');
+});
+
+test('the audit phases read in order', async ({ page }) => {
+  await page.goto('/en/services');
+  const titles = await page.locator('#t2 ~ div .text-\\[19px\\]').allInnerTexts();
+  expect(titles.map((s) => s.trim())).toEqual([
+    'The engineering audit',
+    'Staff and process review',
+    'An action plan you can execute',
+  ]);
+});
+
+test('the home page presents four service lines', async ({ page }) => {
+  await page.goto('/fr');
+  await expect(page.getByRole('heading', { level: 2, name: /Quatre métiers/ })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 3, name: 'Direction technique' })).toBeVisible();
+  // Stale "trois métiers" copy anywhere would contradict the fourth card.
+  await expect(page.getByText('Trois métiers')).toHaveCount(0);
 });

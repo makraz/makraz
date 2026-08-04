@@ -22,6 +22,15 @@ const jumpTo = [
   { id: 'd6', key: 'services.d6_t' }, // API & intégrations
   { id: 'c1', key: 'services.c1_t' }, // Référencement naturel (SEO)
   { id: 'c2', key: 'services.c2_t' }, // Publicité en ligne (SEA)
+  { id: 't1', key: 'services.t1_t' }, // CTO à la demande (Fractional CTO)
+  { id: 't2', key: 'services.t2_t' }, // Équipe produit dédiée
+] as const;
+
+// How an audit engagement starts. Kept as data so the three phases stay in one order across locales.
+const phases = [
+  { n: '01', title: 'services.ph1_t', desc: 'services.ph1_d' },
+  { n: '02', title: 'services.ph2_t', desc: 'services.ph2_d' },
+  { n: '03', title: 'services.ph3_t', desc: 'services.ph3_d' },
 ] as const;
 ---
 <Base lang={lang} path="/services" title={title} description={description} active="services" ctaPage="services">
@@ -146,6 +155,47 @@ const jumpTo = [
         <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
           <div class="text-[17px] font-bold">{t(lang, 'services.c6_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c6_d')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Direction technique -->
+  <section class="border-t border-line">
+    <div class="mk-container mk-section flex items-start gap-16 max-[900px]:flex-col">
+      <SectionIntro number="04" title={t(lang, 'services.tech_title')}>
+        <p class="m-0 mt-[18px] text-[15px] leading-[1.65] text-txt-2">{t(lang, 'services.tech_desc')}</p>
+      </SectionIntro>
+      <div class="min-w-0 flex-1 border-t border-line">
+        <div id="t1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.t1_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.t1_d')}</p>
+        </div>
+        <div id="t3" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.t3_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.t3_d')}</p>
+        </div>
+        <div id="t2" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
+          <div class="text-[17px] font-bold">{t(lang, 'services.t2_t')}</div>
+          <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.t2_d')}</p>
+        </div>
+
+        {/*
+          The three phases belong to the audit row above, not to the section as a whole — an audit is
+          the concrete thing a prospect buys first, and these say what they get. Numbered like the
+          home page method so the two read as the same house style.
+        */}
+        <div class="mt-14 border-t border-line pt-11">
+          <div class="text-kicker mb-9">{t(lang, 'services.ph_label')}</div>
+          <div class="grid grid-cols-3 gap-7 max-[760px]:grid-cols-1">
+            {phases.map(({ n, title, desc }) => (
+              <div class="border-t-2 border-ink pt-6">
+                <div class="mb-3 text-[13px] font-semibold text-txt-4">{n}</div>
+                <div class="mb-2.5 text-[19px] font-bold">{t(lang, title)}</div>
+                <p class="m-0 text-[14px] leading-[1.6] text-txt-2">{t(lang, desc)}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
