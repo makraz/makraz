@@ -24,6 +24,9 @@ const blog = defineCollection({
     date: z.coerce.date(),
     author: z.string(),
     authorRole: z.string(),
+    // Shown in the card's meta line. Localized per file rather than looked up, since the set of
+    // categories is editorial and each translation names it in its own words.
+    category: z.string(),
   }),
 });
 

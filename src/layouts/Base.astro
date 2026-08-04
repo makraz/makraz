@@ -13,8 +13,9 @@ interface Props {
   active: 'home' | 'services' | 'portfolio' | 'blog' | 'about' | 'contact' | null;
   ctaPage?: string; // namespace for CtaBand keys, default 'home'
   hideCta?: boolean;
+  noindex?: boolean; // keep a page out of search results while it is too thin to earn a place
 }
-const { lang, path, title, description, active, ctaPage = 'home', hideCta = false } = Astro.props;
+const { lang, path, title, description, active, ctaPage = 'home', hideCta = false, noindex = false } = Astro.props;
 const canonical = new URL(localePath(lang, path), Astro.site);
 ---
 <!doctype html>
@@ -25,6 +26,7 @@ const canonical = new URL(localePath(lang, path), Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     {locales.map((l) => (
       <link rel="alternate" hreflang={l} href={new URL(localePath(l, path), Astro.site)} />
     ))}

@@ -91,9 +91,10 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'fr', locales: { fr: 'fr', en: 'en', ar: 'ar' } },
-      // The business-card pages are a QR destination, not search-engine content, and they carry
-      // noindex — keep them out of the sitemap so the two signals agree.
-      filter: (page) => !/\/mycard\/?$/.test(page),
+      // Pages that carry noindex are kept out of the sitemap too, so the two signals agree:
+      // /mycard is a QR destination rather than search content, and the /blog hub is too thin to
+      // index while the journal holds one article. Individual articles stay listed.
+      filter: (page) => !/\/mycard\/?$/.test(page) && !/\/blog\/?$/.test(page),
       serialize(item) {
         const lastmod = lastmodFor(item.url);
         if (lastmod) item.lastmod = lastmod;

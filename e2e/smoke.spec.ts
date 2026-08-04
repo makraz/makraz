@@ -341,3 +341,28 @@ for (const lang of langs) {
     await expect(page.locator('section img')).toHaveCount(3);
   });
 }
+
+// --- Blog index ---
+
+for (const lang of langs) {
+  test(`/${lang}/blog lists only real, clickable articles`, async ({ page }) => {
+    await page.goto(`/${lang}/blog`);
+    const cards = page.locator('section a[href*="/blog/"]');
+    const count = await cards.count();
+    expect(count).toBeGreaterThanOrEqual(3);
+    // It used to render two teaser cards for unwritten articles with no href, so every headline
+    // on this page must now lead somewhere.
+    const headings = page.locator('section .text-\\[21px\\]');
+    await expect(headings).toHaveCount(count);
+    for (const href of await cards.evaluateAll((els) => els.map((e) => e.getAttribute('href') ?? ''))) {
+      expect((await page.request.get(href)).status()).toBe(200);
+    }
+  });
+}
+
+test('the blog hub is noindex while the articles stay indexable', async ({ page }) => {
+  await page.goto('/fr/blog');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  await page.goto('/fr/blog/seo-multilingue-maroc');
+  await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+});

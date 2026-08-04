@@ -5,6 +5,7 @@ lang: fr
 slug: choisir-agence
 date: 2026-07-01
 author: "Hamza Makraz"
+category: "Ingénierie"
 authorRole: "Fondateur, MAKRAZ — ingénieur logiciel"
 ---
 

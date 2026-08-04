@@ -5,6 +5,7 @@ lang: ar
 slug: choisir-agence
 date: 2026-07-01
 author: "Hamza Makraz"
+category: "هندسة"
 authorRole: "المؤسس، MAKRAZ — مهندس برمجيات"
 ---
 
