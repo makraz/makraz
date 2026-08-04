@@ -1,0 +1,18 @@
+# Cloudflare edge caching rules. The adapter appends its own /_astro/* Cache-Control line to this
+# file during the build; everything here is ours.
+#
+# Why HTML is not edge-cached: HTML is served through the Worker, and those responses carry no ETag
+# and no Last-Modified (static assets like /_astro/* and /makraz.vcf do). `must-revalidate` with no
+# validator gives the edge nothing to revalidate against, so it keeps serving whatever it cached.
+# That bit three deploys in a row on 2026-08-04 — stale pages twice, and once a cached 404 for
+# /en/blog/vitrine-ou-plateforme, which is the kind of thing that gets a URL dropped from an index.
+#
+# CDN-Cache-Control targets the edge only, so browsers still honour the Cache-Control below and
+# fingerprinted assets stay cached at the edge for a year.
+/*
+  CDN-Cache-Control: no-store
+
+# Fingerprinted filenames, so these are safe to cache hard in both places.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+  CDN-Cache-Control: public, max-age=31536000, immutable
