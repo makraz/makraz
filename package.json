@@ -17,6 +17,22 @@
     "test": "vitest run",
     "test:e2e": "playwright test"
   },
+  "//overrides": [
+    "Dependabot/npm-audit fixes for build- and test-time dependencies. None of these packages ship",
+    "in the deployed Worker (verified: dist/server contains only our code plus the Astro runtime),",
+    "so these close a local/CI toolchain exposure rather than a live-site one.",
+    "undici: miniflare pins 7.28.0 exactly, so upgrading wrangler cannot lift it; 7.29.0 is the",
+    "patched release for GHSA-8xcm-r25x-g524 and four related advisories. Also reached via cheerio.",
+    "fast-uri: 3.1.5 patches GHSA in the 3.0.0-3.1.4 range; reached only via @astrojs/check's",
+    "language server. postcss: 8.5.23+ completes the GHSA-6g55-p6wh-862q source-map fix.",
+    "Do NOT run `npm audit fix --force` here: it proposes wrangler@4.35.0, a large DOWNGRADE from",
+    "the pinned 4.114.x, which would regress the deploy tooling to fix nothing."
+  ],
+  "overrides": {
+    "undici": "^7.29.0",
+    "fast-uri": "^3.1.5",
+    "postcss": "^8.5.25"
+  },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.4",
     "@astrojs/sitemap": "^3.7.3",
