@@ -1,10 +1,43 @@
 # Dedicated Service Pages Implementation Plan
 
+> **STATUS — updated 2026-08-04, after partial implementation.** Read this block before the plan body:
+> the plan was written on 2026-07-26 and the site has moved since.
+>
+> **Done and deployed:**
+> - Task 1 in full — `services` collection schema, `src/lib/services.ts`, `tests/services.test.ts`.
+> - The route (`src/pages/[lang]/services/[slug].astro`), `ServiceCard.astro`, the `service.*` UI
+>   strings, `tests/services-content.test.ts`, and hub links to each pillar (part of Tasks 2, 6, 7, 8).
+> - **All four pillar pages in all three locales** (12 files in `src/content/services/`).
+>
+> **Remaining:** the 20 leaf pages × 3 locales = 60 content files, and their hub line-item links.
+>
+> **Four corrections to the plan below, from what the build actually required:**
+> 1. **There are now four pillars, not three.** `direction-technique` (`04`, Direction technique &
+>    équipes) was added on 2026-08-04 with three leaves: `cto-a-la-demande`, `audit-ingenierie`,
+>    `equipe-produit-dediee`. Total is 24 services (4 pillars + 20 leaves), not 20.
+> 2. **The `services` collection needs an explicit `generateId`.** A `slug` field in frontmatter
+>    becomes the entry id, so `design.{fr,en,ar}.md` all collapsed onto the id `design` and two of
+>    every three locales vanished from the collection — the build produced 4 pages instead of 12,
+>    silently. `generateId: ({ entry }) => entry.replace(/\.md$/, '')`, as the blog collection does.
+> 3. **Quote any frontmatter value containing `": "`.** An unquoted Arabic answer containing
+>    `نعم: ` was parsed as a nested mapping and failed the build. `tests/services-content.test.ts`
+>    now guards this.
+> 4. **The project mapping changed.** `sites-internet` → `aya` (a showcase site, which is what that
+>    service is) rather than `phpmorocco`; `applications-web-saas` → `phpmorocco` (a platform).
+>    `aya` was added to the `project` enum. Farblieferant and Aya link to their case studies;
+>    Marrakech PHP has no case study page and links to the portfolio instead.
+>
+> **One constraint below is now wrong and must not be followed:** "New UI strings go into ... and into
+> `MANUAL_KEYS` in `scripts/extract-i18n.mjs`". That script rebuilds the locale files from the design
+> prototypes and deletes everything else. A run on 2026-08-04 destroyed 88 keys and reverted 10
+> values. It now refuses to run without `--force`. **The locale files are the source of truth; edit
+> them directly.**
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Give every service its own page — `/services` links to 3 pillar pages and 17 leaf pages, each with substantially more information, in `fr`/`en`/`ar`.
+**Goal:** Give every service its own page — `/services` links to 4 pillar pages and 20 leaf pages, each with substantially more information, in `fr`/`en`/`ar`.
 
-**Architecture:** One new Astro content collection (`services`) holds 60 markdown files (20 services × 3 locales): structured frontmatter for lists, markdown body for prose. A single dynamic route `src/pages/[lang]/services/[slug].astro` renders both pillar and leaf pages. All taxonomy logic (parent/child/sibling resolution) lives in pure functions in `src/lib/services.ts` so it is unit-testable without rendering.
+**Architecture:** One new Astro content collection (`services`) holds 72 markdown files (24 services × 3 locales): structured frontmatter for lists, markdown body for prose. A single dynamic route `src/pages/[lang]/services/[slug].astro` renders both pillar and leaf pages. All taxonomy logic (parent/child/sibling resolution) lives in pure functions in `src/lib/services.ts` so it is unit-testable without rendering.
 
 **Tech Stack:** Astro 7.1.3 (`output: 'static'`, `@astrojs/cloudflare` 14), Tailwind CSS 4, Zod (via `astro:content`), Vitest, Playwright.
 
@@ -19,7 +52,7 @@
 - **French slugs in all three locales**, matching the existing `/a-propos` and `/mentions-legales` convention.
 - **Reuse existing components and tokens.** `SectionIntro`, `Kicker`, `Screenshot`, `CtaBand`, the `grid-cols-[260px_1fr]` row pattern, the `<details>` FAQ pattern. Only one new component is authorised: `ServiceCard.astro`.
 - **Case-study section only where genuine:** `e-commerce` → Farblieferant, `sites-internet` → PHPMorocco, `reseaux-sociaux` → MarrakechPHP. Every other service has no case-study section. Do not invent mappings.
-- **New UI strings** go into all three `src/i18n/*.json` under the `service.*` namespace **and** into `MANUAL_KEYS` in `scripts/extract-i18n.mjs`, or `npm run extract:i18n` will drop them.
+- **New UI strings** go into all three `src/i18n/*.json` under the `service.*` namespace. Do **not** add them to `MANUAL_KEYS` in `scripts/extract-i18n.mjs` and do **not** run that script: it rebuilds the locale files from the prototypes and deletes every key it does not recognise (88 lost on 2026-08-04). The locale files are the source of truth.
 - **Commit after every task.** Single-line commit messages, no body, no `Co-Authored-By` trailers (see `~/.claude/CLAUDE.md`).
 - **A push does not deploy.** Cloudflare Workers Builds is not connected. Production updates require `npm run build && npx wrangler deploy`.
 

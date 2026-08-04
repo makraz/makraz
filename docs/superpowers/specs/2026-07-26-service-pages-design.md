@@ -34,7 +34,8 @@ French slugs in all three locales, consistent with the existing `/a-propos` and 
 /{lang}/services/developpement              pillar 01
 /{lang}/services/design                     pillar 02
 /{lang}/services/communication              pillar 03
-/{lang}/services/<leaf-slug>                17 leaves
+/{lang}/services/direction-technique        pillar 04   (added 2026-08-04)
+/{lang}/services/<leaf-slug>                20 leaves
 ```
 
 ### Slug map
@@ -70,6 +71,14 @@ French slugs in all three locales, consistent with the existing `/a-propos` and 
 | `strategie-digitale` | `services.c4_t` |
 | `contenu-copywriting` | `services.c5_t` |
 | `conseil-accompagnement` | `services.c6_t` |
+
+**Direction technique & équipes** (`direction-technique`, number `04`, 3 leaves) — added 2026-08-04
+
+| Slug | Source key |
+|---|---|
+| `cto-a-la-demande` | `services.t1_t` |
+| `audit-ingenierie` | `services.t3_t` |
+| `equipe-produit-dediee` | `services.t2_t` |
 
 20 slugs × 3 locales = **60 prerendered pages**. `@astrojs/sitemap` picks them up with no config change.
 
@@ -122,8 +131,12 @@ Only genuine matches. Anything not listed has no case-study section:
 | Service | Project |
 |---|---|
 | `e-commerce` | `farblieferant` (case study page exists) |
-| `sites-internet` | `phpmorocco` (portfolio entry) |
-| `reseaux-sociaux` | `marrakechphp` (portfolio entry) |
+| `sites-internet` | `aya` (case study page exists — a showcase site, which is what this service is) |
+| `applications-web-saas` | `phpmorocco` (case study page exists — a platform) |
+| `reseaux-sociaux` | `marrakechphp` (portfolio entry only) |
+
+Updated 2026-08-04: `aya` joined the enum when that case study shipped, and it is a better match for
+`sites-internet` than PHP Morocco, which is a platform rather than a showcase site.
 
 Rationale: the site has one published case study and two portfolio entries. Mapping all 17 services to
 one of them would imply experience those projects do not evidence.
