@@ -2,6 +2,30 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { load } from 'cheerio';
 import { execSync } from 'node:child_process';
 
+// GUARD — read this before removing it.
+//
+// This script was the one-off tool that seeded src/i18n/*.json from the design-handoff prototypes.
+// The site has since moved well past those prototypes, so THEY ARE NO LONGER THE SOURCE OF TRUTH:
+// src/i18n/*.json is. Anything this script cannot find in a prototype or in MANUAL_KEYS below is
+// deleted from the locale files, and `t()` throws on a missing key — so a run breaks the build.
+//
+// It has already happened once. On 2026-08-04 a run removed 88 keys (414 → 326: every mycard.*,
+// case_aya.*, case_phpmorocco.*, services.t*/ph*, home.cap*/p4*, portfolio.f4*/soon*) and reverted
+// 10 values to prototype copy, including the home hero and the page titles that had just been
+// de-duplicated for SEO. Recovery was `git checkout -- src/i18n`.
+//
+// If you genuinely need to re-seed from the prototypes, pass --force and diff the result carefully
+// before committing.
+if (!process.argv.includes('--force')) {
+  console.error(
+    '\nrefusing to run: this would rebuild src/i18n/*.json from the prototypes and delete every key\n' +
+    'added since the handoff (88 keys, last time), breaking the build.\n\n' +
+    'The locale files are the source of truth now — edit them directly.\n' +
+    'If you really mean it: npm run extract:i18n -- --force\n',
+  );
+  process.exit(1);
+}
+
 const SRC = 'design_handoff_makraz_website';
 const PAGES = {
   home: 'Home.dc.html', services: 'Services.dc.html', portfolio: 'Portfolio.dc.html',

@@ -298,9 +298,9 @@ test('the audit phases read in order', async ({ page }) => {
   await page.goto('/en/services');
   const titles = await page.locator('#t2 ~ div .text-\\[19px\\]').allInnerTexts();
   expect(titles.map((s) => s.trim())).toEqual([
-    'The engineering audit',
-    'Staff and process review',
-    'An action plan you can execute',
+    'Where the engineering really stands',
+    'The team and the way it works',
+    'Decisions, not a report',
   ]);
 });
 
