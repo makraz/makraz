@@ -6,6 +6,7 @@ pillar: design
 order: 2
 number: "02"
 title: Design
+seoTitle: "UX/UI design and brand identity — MAKRAZ"
 lead: Interfaces your users understand without explanation, and an identity that holds up over time.
 engagement:
   model: Fixed price for an identity or a full redesign, in batches for a product that keeps growing. You leave with the source files and a reusable system, not just images.

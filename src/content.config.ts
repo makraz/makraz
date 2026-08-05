@@ -50,6 +50,9 @@ const services = defineCollection({
       order: z.number(),
       number: z.string().optional(),
       title: z.string(),
+      // Optional: overrides the <title>. Needed where a service name is identical across
+      // locales ("Design", "E-commerce"), which would otherwise ship duplicate titles.
+      seoTitle: z.string().optional(),
       lead: z.string(),
       included: z.array(serviceItem).optional(),
       steps: z.array(serviceItem).optional(),

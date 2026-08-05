@@ -12,7 +12,7 @@ import phpCard from '../../../assets/phpmorocco-card.png';
 import mphpCard from '../../../assets/marrakechphp-card.png';
 import ayaCard from '../../../assets/aya-hero.png';
 import { getChildren, getParent, getSiblings, type ServiceData } from '../../../lib/services';
-import { locales, t, localePath, type Locale } from '../../../i18n';
+import { t, localePath, type Locale } from '../../../i18n';
 
 export async function getStaticPaths() {
   const all = await getCollection('services');
@@ -43,7 +43,7 @@ const PROJECTS = {
 } as const;
 const project = data.project ? PROJECTS[data.project] : undefined;
 
-const title = `${data.title} — MAKRAZ`;
+const title = data.seoTitle ?? `${data.title} — MAKRAZ`;
 const description = data.lead;
 ---
 <Base lang={lang} path={`/services/${data.slug}`} title={title} description={description} active="services" ctaPage="services">

@@ -424,3 +424,42 @@ for (const lang of langs) {
     }
   });
 }
+
+// --- Development leaves ---
+
+const DEV_LEAVES = [
+  'applications-web-saas', 'applications-mobiles', 'sites-internet', 'e-commerce',
+  'mvp-lancement-rapide', 'api-integrations', 'devops-cloud', 'maintenance-optimisation',
+];
+
+for (const lang of langs) {
+  test(`/${lang}/services leaf pages all render`, async ({ page }) => {
+    for (const slug of DEV_LEAVES) {
+      const res = await page.goto(`/${lang}/services/${slug}`);
+      expect(res?.status(), `${lang}/${slug}`).toBe(200);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    }
+  });
+}
+
+test('a leaf page carries the sections a pillar does not', async ({ page }) => {
+  await page.goto('/fr/services/e-commerce');
+  await expect(page.getByText('Ce qui est inclus')).toBeVisible();
+  await expect(page.getByText('Comment nous travaillons')).toBeVisible();
+  // Only genuine matches get a case study: e-commerce -> Farblieferant.
+  await expect(page.locator('a[href="/fr/portfolio/farblieferant"]')).toBeVisible();
+  // And it offers its siblings rather than dead-ending.
+  await expect(page.locator('a[href="/fr/services/applications-mobiles"]')).toBeVisible();
+});
+
+test('the development pillar lists all eight of its children', async ({ page }) => {
+  await page.goto('/fr/services/developpement');
+  for (const slug of DEV_LEAVES) {
+    await expect(page.locator(`a[href="/fr/services/${slug}"]`)).toBeVisible();
+  }
+});
+
+test('services with no genuine project show no case study', async ({ page }) => {
+  await page.goto('/fr/services/devops-cloud');
+  await expect(page.getByText('Étude de cas')).toHaveCount(0);
+});

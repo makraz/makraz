@@ -6,6 +6,7 @@ pillar: communication
 order: 3
 number: "03"
 title: Communication
+seoTitle: "SEO, publicité en ligne et réseaux sociaux — MAKRAZ"
 lead: Être bien construit ne suffit pas. Référencement, publicité et contenu pour que les bonnes personnes vous trouvent.
 engagement:
   model: Un audit ponctuel pour savoir où vous en êtes, puis un accompagnement mensuel quand il faut produire et mesurer dans la durée. Les comptes publicitaires et les accès restent les vôtres.

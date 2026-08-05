@@ -6,6 +6,7 @@ pillar: design
 order: 2
 number: "02"
 title: Design
+seoTitle: "Design UX/UI et identité de marque — MAKRAZ"
 lead: Des interfaces que vos utilisateurs comprennent sans explication, et une identité qui tient dans le temps.
 engagement:
   model: Au forfait pour une identité ou une refonte complète, par lots pour un produit qui grandit. Vous repartez avec les fichiers sources et un système réutilisable, pas seulement des images.

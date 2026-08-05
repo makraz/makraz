@@ -10,6 +10,7 @@ export type ServiceData = {
   order: number;
   number?: string;
   title: string;
+  seoTitle?: string;
   lead: string;
   included?: ServiceItem[];
   steps?: ServiceItem[];

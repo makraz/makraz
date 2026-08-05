@@ -6,6 +6,7 @@ pillar: communication
 order: 3
 number: "03"
 title: Communication
+seoTitle: "SEO, online advertising and social media — MAKRAZ"
 lead: Being well built is not enough. Search, advertising and content so the right people find you.
 engagement:
   model: A one-off audit to establish where you stand, then monthly support when there is content to produce and results to measure over time. Ad accounts and access stay yours.
