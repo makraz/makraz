@@ -399,3 +399,28 @@ test('a pillar page carries no leaf-only sections yet', async ({ page }) => {
   await expect(page.getByText('Ce qui est inclus')).toHaveCount(0);
   await expect(page.getByText('Comment nous travaillons')).toHaveCount(0);
 });
+
+// --- Home selected work + legal page ---
+
+test('the home work grid mirrors the portfolio and links to each case study', async ({ page }) => {
+  await page.goto('/fr');
+  for (const [href, name] of [
+    ['/fr/portfolio/farblieferant', 'Farblieferant'],
+    ['/fr/portfolio/aya', 'Cabinet Aya Alaoui El Hadari'],
+    ['/fr/portfolio/phpmorocco', 'PHP Morocco'],
+  ] as const) {
+    await expect(page.locator(`a[href="${href}"]`).filter({ hasText: name })).toBeVisible();
+  }
+  // Marrakech PHP is a secondary project on the portfolio; it should not headline the home page.
+  await expect(page.getByText('Marrakech PHP')).toHaveCount(0);
+});
+
+for (const lang of langs) {
+  test(`/${lang}/mentions-legales carries no unfinished placeholders`, async ({ page }) => {
+    await page.goto(`/${lang}/mentions-legales`);
+    const body = (await page.locator('body').innerText()).toLowerCase();
+    for (const marker of ['à compléter', 'to be completed', 'يُستكمل', '[tbd]']) {
+      expect(body, `${lang} legal page still shows "${marker}"`).not.toContain(marker);
+    }
+  });
+}

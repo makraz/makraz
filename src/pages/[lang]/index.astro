@@ -4,7 +4,7 @@ import Kicker from '../../components/Kicker.astro';
 import Screenshot from '../../components/Screenshot.astro';
 import fbCard from '../../assets/farblieferant-card.png';
 import phpCard from '../../assets/phpmorocco-card.png';
-import mphpCard from '../../assets/marrakechphp-card.png';
+import ayaCard from '../../assets/aya-hero.png';
 import { locales, t, localePath, type Locale } from '../../i18n';
 
 export function getStaticPaths() {
@@ -172,26 +172,28 @@ const capabilities = [
         </div>
         <a href={localePath(lang, '/portfolio')} class="whitespace-nowrap border-b-2 border-ink pb-[3px] text-[16px] font-semibold">{t(lang, 'home.work_link')}</a>
       </div>
+      {/* Mirrors the portfolio order, and each card now opens its own case study rather than
+          dropping every visitor on the portfolio index. */}
       <div class="grid grid-cols-3 gap-7 max-[900px]:grid-cols-1">
-        <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
+        <a href={localePath(lang, '/portfolio/farblieferant')} class="flex flex-col gap-[18px]">
           <Screenshot src={fbCard} alt={t(lang, 'img.fb_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
           <div>
             <div class="text-[19px] font-bold tracking-[-0.01em]">Farblieferant</div>
             <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w1_tag')}</div>
           </div>
         </a>
-        <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
+        <a href={localePath(lang, '/portfolio/aya')} class="flex flex-col gap-[18px]">
+          <Screenshot src={ayaCard} alt={t(lang, 'img.aya_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
+          <div>
+            <div class="text-[19px] font-bold tracking-[-0.01em]">Cabinet Aya Alaoui El Hadari</div>
+            <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w4_tag')}</div>
+          </div>
+        </a>
+        <a href={localePath(lang, '/portfolio/phpmorocco')} class="flex flex-col gap-[18px]">
           <Screenshot src={phpCard} alt={t(lang, 'img.php_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
           <div>
             <div class="text-[19px] font-bold tracking-[-0.01em]">PHP Morocco</div>
             <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w2_tag')}</div>
-          </div>
-        </a>
-        <a href={localePath(lang, '/portfolio')} class="flex flex-col gap-[18px]">
-          <Screenshot src={mphpCard} alt={t(lang, 'img.mphp_card')} ratio="4/3" radius="card" sizes="(max-width: 900px) 100vw, 392px" />
-          <div>
-            <div class="text-[19px] font-bold tracking-[-0.01em]">Marrakech PHP</div>
-            <div class="mt-1 text-[14px] text-txt-4">{t(lang, 'home.w3_tag')}</div>
           </div>
         </a>
       </div>
