@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Kicker from '../../components/Kicker.astro';
 import SectionIntro from '../../components/SectionIntro.astro';
@@ -11,6 +12,24 @@ const lang = Astro.params.lang as Locale;
 
 const title = t(lang, 'seo.services_title');
 const description = t(lang, 'seo.services_desc');
+
+// Row key -> leaf slug, from the spec's slug map. A row's title becomes a link to its page only once
+// that page's content exists, so shipping a leaf needs no edit here.
+const LEAF_SLUGS: Record<string, string> = {
+  d1: 'applications-web-saas', d2: 'applications-mobiles', d3: 'sites-internet', d4: 'e-commerce',
+  d5: 'mvp-lancement-rapide', d6: 'api-integrations', d7: 'devops-cloud', d8: 'maintenance-optimisation',
+  g1: 'ux-ui-design', g2: 'branding-identite', g3: 'motion-contenu-visuel',
+  c1: 'referencement-naturel-seo', c2: 'publicite-en-ligne-sea', c3: 'reseaux-sociaux',
+  c4: 'strategie-digitale', c5: 'contenu-copywriting', c6: 'conseil-accompagnement',
+  t1: 'cto-a-la-demande', t2: 'equipe-produit-dediee', t3: 'audit-ingenierie',
+};
+const liveSlugs = new Set(
+  (await getCollection('services', (e) => e.data.lang === lang && e.data.kind === 'leaf')).map((e) => e.data.slug),
+);
+const leafHref = (key: string) => {
+  const slug = LEAF_SLUGS[key];
+  return slug && liveSlugs.has(slug) ? localePath(lang, `/services/${slug}`) : undefined;
+};
 
 // The anchor index under the hero. `id` matches the id on the corresponding row further down, and
 // `key` is that row's own title key — one source of truth for the wording in all three locales.
@@ -71,35 +90,51 @@ const phases = [
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div id="d1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d1_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d1')
+            ? <a href={leafHref('d1')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d1_t')}</a>
+            : t(lang, 'services.d1_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d1_d')}</p>
         </div>
         <div id="d2" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d2_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d2')
+            ? <a href={leafHref('d2')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d2_t')}</a>
+            : t(lang, 'services.d2_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d2_d')}</p>
         </div>
         <div id="d3" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d3_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d3')
+            ? <a href={leafHref('d3')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d3_t')}</a>
+            : t(lang, 'services.d3_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d3_d')}</p>
         </div>
         <div id="d4" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d4_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d4')
+            ? <a href={leafHref('d4')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d4_t')}</a>
+            : t(lang, 'services.d4_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d4_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d5_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d5')
+            ? <a href={leafHref('d5')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d5_t')}</a>
+            : t(lang, 'services.d5_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d5_d')}</p>
         </div>
         <div id="d6" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d6_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d6')
+            ? <a href={leafHref('d6')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d6_t')}</a>
+            : t(lang, 'services.d6_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d6_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d7_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d7')
+            ? <a href={leafHref('d7')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d7_t')}</a>
+            : t(lang, 'services.d7_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d7_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.d8_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('d8')
+            ? <a href={leafHref('d8')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.d8_t')}</a>
+            : t(lang, 'services.d8_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.d8_d')}</p>
         </div>
       </div>
@@ -118,15 +153,21 @@ const phases = [
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.g1_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('g1')
+            ? <a href={leafHref('g1')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.g1_t')}</a>
+            : t(lang, 'services.g1_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.g1_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.g2_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('g2')
+            ? <a href={leafHref('g2')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.g2_t')}</a>
+            : t(lang, 'services.g2_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.g2_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.g3_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('g3')
+            ? <a href={leafHref('g3')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.g3_t')}</a>
+            : t(lang, 'services.g3_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.g3_d')}</p>
         </div>
       </div>
@@ -145,27 +186,39 @@ const phases = [
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div id="c1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.c1_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('c1')
+            ? <a href={leafHref('c1')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.c1_t')}</a>
+            : t(lang, 'services.c1_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c1_d')}</p>
         </div>
         <div id="c2" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.c2_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('c2')
+            ? <a href={leafHref('c2')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.c2_t')}</a>
+            : t(lang, 'services.c2_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c2_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.c3_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('c3')
+            ? <a href={leafHref('c3')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.c3_t')}</a>
+            : t(lang, 'services.c3_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c3_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.c4_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('c4')
+            ? <a href={leafHref('c4')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.c4_t')}</a>
+            : t(lang, 'services.c4_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c4_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.c5_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('c5')
+            ? <a href={leafHref('c5')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.c5_t')}</a>
+            : t(lang, 'services.c5_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c5_d')}</p>
         </div>
         <div class="grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.c6_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('c6')
+            ? <a href={leafHref('c6')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.c6_t')}</a>
+            : t(lang, 'services.c6_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.c6_d')}</p>
         </div>
       </div>
@@ -184,15 +237,21 @@ const phases = [
       </SectionIntro>
       <div class="min-w-0 flex-1 border-t border-line">
         <div id="t1" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.t1_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('t1')
+            ? <a href={leafHref('t1')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.t1_t')}</a>
+            : t(lang, 'services.t1_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.t1_d')}</p>
         </div>
         <div id="t3" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 border-b border-line py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.t3_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('t3')
+            ? <a href={leafHref('t3')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.t3_t')}</a>
+            : t(lang, 'services.t3_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.t3_d')}</p>
         </div>
         <div id="t2" class="scroll-mt-[92px] grid grid-cols-[260px_1fr] gap-6 py-[26px] max-[900px]:grid-cols-1">
-          <div class="text-[17px] font-bold">{t(lang, 'services.t2_t')}</div>
+          <div class="text-[17px] font-bold">{leafHref('t2')
+            ? <a href={leafHref('t2')} class="border-b-2 border-ink pb-[2px] no-underline">{t(lang, 'services.t2_t')}</a>
+            : t(lang, 'services.t2_t')}</div>
           <p class="m-0 text-[15px] leading-[1.6] text-txt-2">{t(lang, 'services.t2_d')}</p>
         </div>
 
