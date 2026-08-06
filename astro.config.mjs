@@ -11,7 +11,7 @@ const LOCALES = ['fr', 'en', 'ar'];
 /**
  * What a page is actually made of: its template/markdown, plus the slice of the locale JSON that
  * holds its copy. The JSON is shared by every page, so it is queried per key namespace rather than
- * whole-file — otherwise one translation edit marks all 33 URLs as changed on the same timestamp,
+ * whole-file — otherwise one translation edit marks every URL as changed on the same timestamp,
  * which is no more informative than stamping them all with the build time.
  * @param {string} url
  * @returns {{ files: string[], keyspace?: { file: string, prefix: string } }}
@@ -31,6 +31,11 @@ function sourcesFor(url) {
   else if (/^\/portfolio\/[^/]+$/.test(rest)) {
     files.push(`src/pages/[lang]/portfolio/${slug}.astro`, `src/content/case-studies/${slug}.${lang}.md`);
     prefix = `case_${slug}.`;
+  }
+  // Service pages are one dynamic route over a content collection, so the page's own source is the
+  // markdown file, not a per-slug .astro. Without this branch they shipped with no lastmod at all.
+  else if (/^\/services\/[^/]+$/.test(rest)) {
+    files.push(`src/content/services/${slug}.${lang}.md`, 'src/pages/[lang]/services/[slug].astro');
   } else {
     files.push(`src/pages/[lang]${rest}.astro`);
     prefix = { '/services': 'services.', '/portfolio': 'portfolio.', '/a-propos': 'about.', '/contact': 'contact.', '/blog': 'blog.', '/mentions-legales': 'legal.' }[rest];
@@ -92,8 +97,8 @@ export default defineConfig({
     sitemap({
       i18n: { defaultLocale: 'fr', locales: { fr: 'fr', en: 'en', ar: 'ar' } },
       // Pages that carry noindex are kept out of the sitemap too, so the two signals agree:
-      // /mycard is a QR destination rather than search content, and the /blog hub is too thin to
-      // index while the journal holds one article. Individual articles stay listed.
+      // /mycard is a QR destination rather than search content, and the /blog hub stays out until
+      // its articles have had an editorial pass. Individual articles stay listed.
       filter: (page) => !/\/mycard\/?$/.test(page) && !/\/blog\/?$/.test(page),
       serialize(item) {
         const lastmod = lastmodFor(item.url);
