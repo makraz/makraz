@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://makraz.com/sitemap-index.xml
+
+# Content map for language models, per https://llmstxt.org — not a robots directive, listed here
+# because /llms.txt has no discovery mechanism of its own: https://makraz.com/llms.txt
